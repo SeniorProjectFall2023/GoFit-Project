@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up - GoFit ChatBot</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png">
+ 
+
+    <style>
+		.button-68 {
+		appearance: none;
+		backface-visibility: hidden;
+		background-color: #1bbd36;
+		border-radius: 8px;
+		border-style: none;
+		box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
+		box-sizing: border-box;
+		color: #fff;
+		cursor: pointer;
+		display: inline-block;
+		font-family: Inter,-apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: normal;
+		line-height: 1.5;
+		outline: none;
+		overflow: hidden;
+		padding: 13px 20px;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		transform: translate3d(0, 0, 0);
+		transition: all .3s;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+		vertical-align: top;
+		white-space: nowrap;
+		}
+
+		.button-68:hover {
+		background-color: #1e8449;
+		opacity: 1;
+		transform: translateY(0);
+		transition-duration: .35s;
+		}
+
+		.button-68:active {
+		transform: translateY(2px);
+		transition-duration: .35s;
+		}
+
+		.button-68:hover {
+		box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
+		}
+
+    /* Position the button in the top right corner */
+    .button-68-container {
+      position: fixed;
+      top: 20px; /* Adjust the top position as needed */
+      left: 20px; /* Adjust the right position as needed */
+    }
+
+                /* Add CSS for password input */
+                .password-input {
+                position: relative;
+            }
+
+            .password-toggle {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #777; /* Change the color to your preference */
+            }
+
+            .password-toggle:hover {
+                color: #333; /* Change the hover color to your preference */
+            }
+
+            /* Style the eye icon */
+            .password-toggle::before {
+                content: "\f06e"; /* Unicode for the eye icon */
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                font-size: 18px; /* Adjust the size to your preference */
+            }
+
+            /* Hide the password input's browser-generated tooltip */
+            input[type="password"]::-ms-reveal,
+            input[type="password"]::-ms-clear {
+                display: none;
+            }
+  </style>
+
+  	<body style="background-color: #e6e4e4;">
+			<!-- <div class="button-68-container">
+			  <a href="../index.html"> Add this anchor tag
+				<button class="button-68" role="button">Home</button>  
+			  </a>
+			</div> -->
+            <br>
+            <br>
+            <br>
+            <br>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-Ff538cBED08fD6ab9EBA5A7f52FFf6e25Bc9b90b4b36f61d42f0f90e7d2d9615" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background-color: #e6e4e4;">
+
+    <div class="main">
+
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-img">
+                    <img style="height: 645px;" src="images/signupImg.jpg" alt="">
+                    <div class="signup-img-content">
+                        <h2 style="color: white;">Sign Up</h2>
+                    </div>
+                </div>
+
+                <div class="signup-form">
+
+                    <form method="POST" action="/register" class="register-form" id="register-form">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                          
+                                <div class="form-input">
+                                    <label for="first_name" class="required">Full Name</label>
+                                    <input type="text" name="name" placeholder="John Doe" id="name" required/>
+                                </div>
+
+                                <div class="form-input">
+                                    <label for="username" class="required">Username</label>
+                                    <input type="text" name="username" placeholder="Johndoe23" id="username" required/>
+                                </div>
+
+                                <div class="form-input">
+                                    <div class="input-container">
+                                        <label for="email" class="required">Email</label>
+                                        <input type="email" name="email" placeholder="johndoe@email.com" id="email" required/>
+                                    </div>
+                                </div>
+
+                                <div class="form-input password-input">
+                                    <label for="password" class="required">Password</label>
+                                    <input type="password" name="password" placeholder="************" id="password" required/>
+                                    <br>
+                                    <span class="password-toggle" id="togglePasswordSignUp">
+                                      
+                                    </span>
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-group">
+                                <br>
+                                <div class="form-select">
+                                    <div class="label-flex">
+                                        <label for="meal_preference" class="required">Fitness Goal</label>
+                                        <!-- <a href="#" class="form-link">Lunch detail</a> -->
+                                    </div>
+                                    <div class="select-list">
+                                        <select name="meal_preference" id="meal_preference">
+                                            <option value="Select" selected disabled>- Select -</option>
+                                            <option value="Weight Loss">Weight Loss</option>
+                                            <option value="Muscle Gain">Muscle Gain</option>
+                                            <option value="Running Distance">Running Distance</option>
+                                            <option value="Endurance">Endurance</option>
+                                            <option value="Balance">Balance</option>
+                                            <option value="Nutrition">Nutrition</option>
+                                            <option value="Stress Reduction">Stress Reduction</option>
+                                            <option value="Body Composition">Body Composition</option>
+                                            <option value="Weightlifting">Weightlifting</option>
+                                            <option value="Bodybuilding">Bodybuilding</option>
+                                            <option value="CrossFit">CrossFit</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="gender" class="form-radio">
+                                    <div class="label-flex">
+                                        <label for="male" class="required">Gender</label>
+                                    </div>
+                                    <div class="form-radio-group">            
+                                        <div class="form-radio-item">
+                                            <input type="radio" name="gender" id="male">
+                                            <label for="male">Male</label>
+                                            <span class="check"></span>
+                                        </div>
+                                        <div class="form-radio-item">
+                                            <input type="radio" name="gender" id="female">
+                                            <label for="female">Female</label>
+                                            <span class="check"></span>
+                                        </div>
+                                        <div class="form-radio-item">
+                                            <input type="radio" name="gender" id="other">
+                                            <label for="other">Other</label>
+                                            <span class="check"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-input">
+                                    <label for="weight" class="required">Weight (lb)</label>
+                                    <input type="number" name="weight" placeholder="156" id="weight" />
+                                </div>
+
+                                <div class="form-input">
+                                    <label for="dateofbirth"class="required">Date of Birth</label>
+                                    <input type="date" name="dateofbirth" id="dateofbirth" />
+                                </div>
+
+                                <br>
+                            </div>
+                        </div>
+
+
+                        <caption>Already Have an Account?</caption> 
+                        <a href="../signin/signin.html" class="button-3" id=""  role="button">Sign In</a>
+                        <!-- <button class="button-3"  role="button">Sign In</button> -->
+
+                        
+                        <div class="form-submit">
+                            <input type="submit" value="Submit" class="submit" id="submit" name="submit" />
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+ <!-- JavaScript -->
+ <script src="vendor/jquery/jquery.min.js"></script>
+ <script src="vendor/nouislider/nouislider.min.js"></script>
+ <script src="vendor/wnumb/wNumb.js"></script>
+ <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+ <script src="vendor/jquery-validation/dist/additional-methods.min.js"></script>
+ <script src="js/main.js"></script>
+
+ <!-- Custom JavaScript for the form -->
+ <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+  const registrationForm = document.getElementById('register-form');
+  registrationForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(registrationForm);
+    const userData = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert(result.message); // Display a success message
+      } else {
+        alert('Registration failed'); // Display an error message
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred'); // Display an error message
+    }
+  });
+});
+
+ </script>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png">
+
+
+  <title>Settings - GoFit ChatBot</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style type="text/css">
+    body {
+      margin-top: 20px;
+      background: #F0F8FF;
+      font-family: "Roboto", sans-serif; /* Add the font-family property */
+    }
+
+    .card {
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+    }
+    .card {
+      position: relative;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 1px solid #e5e9f2;
+      border-radius: .2rem;
+    }
+    .card-header:first-child {
+      border-radius: calc(.2rem - 1px) calc(.2rem - 1px) 0 0;
+    }
+    .card-header {
+      border-bottom-width: 1px;
+    }
+    .card-header {
+      padding: .75rem 1.25rem;
+      margin-bottom: 0;
+      color: inherit;
+      background-color: #fff;
+      border-bottom: 1px solid #e5e9f2;
+    }
+    /* Change the background color and border color of buttons and list selections */
+    .list-group-item.active,
+    .list-group-item-action.active,
+    .btn-primary {
+      background-color: #1bbd36 !important;
+      border-color: #1bbd36 !important;
+    }
+
+    /* Change the text color of buttons to white for better visibility */
+    .btn-primary {
+      color: white !important;
+    }
+  </style>
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <!-- Insert the GoFit logo here -->
+      <h1 class="logo me-auto">
+        <a href="index.html"> 
+          <img src="assets/img/GoFitLogo.png" alt="GoFit Logo"> 
+           <span>GoFit<br></span>ChatBot
+        </a>
+      </h1>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="chatbot.html">Chatbot</a></li>
+          <li><a href="settings.html" class="active">Settings</a></li>
+          <li><a href="faqs.html">FAQs</a></li> 
+          <li><a href="contact.html">Contact</a></li> 
+          <!-- <li><a href="signin/signin.html">Login</a></li>
+          <li><a href="signup/signup.html">Signup</a></li> -->
+        
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= --><br>
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Settings</h2>
+          <ol>
+            <li><a href="index.html"><u>Home</u></a></li>
+            <li>Settings</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <div class="container p-0">
+  <br><br>
+  <div class="row">
+  <div class="col-md-5 col-xl-4">
+  <div class="card">
+  <div class="card-header">
+  <h5 class="card-title mb-0">Profile Settings</h5>
+  </div>
+  <div class="list-group list-group-flush" role="tablist">
+  <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
+  Account
+  </a>
+  <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
+  Privacy and safety
+  </a>
+  <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
+  Sign Out
+  </a>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-md-7 col-xl-8">
+<div class="tab-content">
+<div class="tab-pane fade show active" id="account" role="tabpanel">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-actions float-right">
+        <div class="dropdown show">
+          <a href="#" data-toggle="dropdown" data-display="static"></a>
+          <div class="dropdown-menu dropdown-menu-right"></div>
+        </div>
+      </div>
+      <h5 class="card-title mb-0">Change Password</h5>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group col-md-12">
+              <label for="inputPasswordCurrent">Current password</label>
+              <input type="password" class="form-control" id="inputPasswordCurrent" >
+              <small><a href="#">Forgot your password?</a></small>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="inputPasswordNew">New password</label>
+              <input type="text" class="form-control" id="inputPasswordNew" >
+            </div>
+            <div class="form-group col-md-12">
+              <label for="inputPasswordNew2">Verify password</label>
+              <input type="text" class="form-control" id="inputPasswordNew2" >
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="text-center">
+              <div class="mt-2"></div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-actions float-right">
+      <div class="dropdown show">
+        <a href="#" data-toggle="dropdown" data-display="static"></a>
+        <div class="dropdown-menu dropdown-menu-right"></div>
+      </div>
+    </div>
+    <h5 class="card-title mb-0">Updater User Information</h5>
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputUsername">Username</label>
+          <input type="text" class="form-control" id="inputUsername" placeholder="Johndoe23">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputFullName">Full Name</label>
+          <input type="text" class="form-control" id="inputFullName" placeholder="John Doe">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-5">
+          <label for="inputEmail4">Email</label>
+          <input type="email" class="form-control" id="inputEmail4" placeholder="johndoe23@email.com">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputWeight">Weight (lb)</label>
+          <input type="text" class="form-control" id="inputWeight" placeholder="156">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputDateofbirth">Date Of Birth</label>
+          <input type="date" class="form-control" id="inputDateofbirth" placeholder="mm/dd/yyyy">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputFitnessgoal">Fitness Goal</label>
+          <select id="inputFitnessgoal" class="form-control">
+            <option selected>- Select -</option>
+            <option value="Weight Loss">Weight Loss</option>
+            <option value="Muscle Gain">Muscle Gain</option>
+            <option value="Running Distance">Running Distance</option>
+            <option value="Endurance">Endurance</option>
+            <option value="Balance">Balance</option>
+            <option value="Nutrition">Nutrition</option>
+            <option value="Stress Reduction">Stress Reduction</option>
+            <option value="Body Composition">Body Composition</option>
+            <option value="Weightlifting">Weightlifting</option>
+            <option value="Bodybuilding">Bodybuilding</option>
+            <option value="CrossFit">CrossFit</option>
+
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputGender">Gender</label>
+          <select id="inputGender" class="form-control">
+            <option selected>- Select -</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+  </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+</script>
+
+
+  </main><!-- End #main -->
+  <br><br><br>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>GoFit ChatBot</h3>
+            <p>
+              3001 S Congress Ave <br>
+              Austin, TX 78704<br>
+              United States <br><br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="index.html">HOME</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="chatbot.html">CHATBOT</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="settings.html"><u>SETTINGS</u></a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="faqs.html">FAQS</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="contact.html">CONTACT</a></li>
+            </ul>
+          </div>
+
+          <!-- <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            </ul>
+          </div> -->
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Newsletter</h4>
+            <p>Stay Updated with Health Tips, Exercise Advice, & More!</p>
+            <form action="" style="color: black;"  method="post"> 
+                <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+        </div>
+        
+        
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright" style="text-align: center;">
+          &copy; Copyright <strong><span>GoFit ChatBot</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/company-free-html-bootstrap-template/ -->
+        </div>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
