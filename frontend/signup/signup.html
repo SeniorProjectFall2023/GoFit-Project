@@ -133,7 +133,7 @@
 
                 <div class="signup-form">
 
-                    <form method="POST" action="/register" class="register-form" id="register-form">
+                    <form method="POST" action="/signup" class="register-form" id="register-form">
 
                         <div class="form-row">
 
@@ -265,7 +265,7 @@
     const userData = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch('/register', {
+      const response = await fetch('/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
