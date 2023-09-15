@@ -1,7 +1,8 @@
 #### Repo Description <br>
 ​
-The GoFit-Project repo contains the folders, assests and forms for all the pages except the sign up and sign in folder which contain seperate folder for each. Within our assests folder, there is six sub folders ranging from css styles to the font families used, to the images that are being rendered on the frontend side. In our forms folder, we have a. In the both the signin and signup folders there contains everything that is needed for the pages to be rendered properly such as css, fonts, and images.<br>
-In the backend folder it contains the app.js as well as the installed node.js packages and files that are generated when installing node.js onto the droplet. This folder also provides a variety of functions that provide our common service functionality for the user.<br>
+The GoFit-Project repo contains the folders, assests and forms for all the pages except the sign up and sign in folder which contain seperate folder for each. Within our assests folder, there is six sub folders ranging from css styles to the font families used, to the images that are being rendered on the frontend side. In our forms folder, we have a. In the both the signin and signup folders there contains everything that is needed for the pages to be rendered properly such as css, fonts, and images.  
+<br>
+In the backend folder it contains the app.js as well as the installed node.js packages and files that are generated when installing node.js onto the droplet. This folder also provides a variety of functions that provide our common service functionality for the user.  <br>
 ​
 #### Contribution guidelines <br>
 ​
