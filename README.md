@@ -1,13 +1,13 @@
 #### Repo Description <br>
 ​
-The GoFit-Project repo contains the folders, assests and forms for all the pages except the sign up and sign in folder which contain seperate folder for each. Within our assests folder, there is six sub folders ranging from css styles to the font families used, to the images that are being rendered on the frontend side. In our forms folder, we have a. In the both the signin and signup folders there contains everything that is needed for the pages to be rendered properly such as css, fonts, and images.  
+The GoFit-Project repo contains the folders, assets, and forms for all the pages except the signup and sign-in folders which contain separate folders for each. Within our assets folder, six sub-folders range from CSS styles to the font families used, to the images that are being rendered on the frontend side. In our forms folder, we have a. The sign-in and signup folders contain everything needed for the pages to be rendered properly, such as CSS, fonts, and images.  
 <br>
-In the backend folder it contains the app.js as well as the installed node.js packages and files that are generated when installing node.js onto the droplet. This folder also provides a variety of functions that provide our common service functionality for the user.  <br>
+The backend folder contains the PHP files corresponding to the HTML files to be compatible with the user registration system. The PHP files are settings, signing, and signup.php. This folder also provides a variety of functions that provide our common service functionality for the user. <br>
 ​
 #### Contribution guidelines <br>
 ​
-When contributing to the repo we want to make sure we are taking the right steps. This consists of using pull requests, documentation and doing frequent merging to avoid any conflicts. This can happen when two teammates modify the same lines in a file and each merges to the master branch.  <br>
-How do you solve this? Either change the modification on the spot while in the master branch or choose between either developers change. Along with that we need to use branching instead of solely merging into the mast branch. Having a variety of branches for different sectors of our code allows for better collaboration and improvement on code quality  <br>
+When contributing to the repo we want to make sure we are taking the right steps. This consists of using pull requests, documentation, and frequent merging to avoid any conflicts. This can happen when two teammates modify the same lines in a file and each merges with the master branch.  <br>
+How do you solve this? Either change the modification on the spot while in the master branch or choose between either developer change. We also need to use branching instead of solely merging into the mast branch. Having a variety of branches for different sectors of our code allows for better collaboration and improvement in code quality  <br>
 ​
 #### Connections  <br>
 
