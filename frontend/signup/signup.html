@@ -110,23 +110,14 @@
             <br>
 
     <!-- Font Icon -->
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-Ff538cBED08fD6ab9EBA5A7f52FFf6e25Bc9b90b4b36f61d42f0f90e7d2d9615" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
-
-   <!-- Add the AWS Amplify and AWS SDK scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-amplify/4.3.5/amplify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1077.0/aws-sdk.min.js"></script>
-
-
 </head>
-
-
-
 <body style="background-color: #e6e4e4;">
 
     <div class="main">
@@ -142,7 +133,7 @@
 
                 <div class="signup-form">
 
-                    <form method="POST" action="/signup" class="register-form" id="register-form">
+                    <form class="register-form" id="register-form" action="backend/register.php" method="POST">
 
                         <div class="form-row">
 
@@ -168,11 +159,9 @@
                                 <div class="form-input password-input">
                                     <label for="password" class="required">Password</label>
                                     <input type="password" name="password" placeholder="************" id="password" required/>
-                                    <br>
                                     <span class="password-toggle" id="togglePasswordSignUp">
+                                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </span>
-                                    
-                                    
                                 </div>
 
                             </div>
@@ -231,8 +220,8 @@
                                 </div>
 
                                 <div class="form-input">
-                                    <label for="birthdate"class="required">Date of Birth</label>
-                                    <input type="date" name="birthdate" id="birthdate" />
+                                    <label for="dateofbirth"class="required">Date of Birth</label>
+                                    <input type="date" name="dateofbirth" id="dateofbirth" />
                                 </div>
 
                                 <br>
@@ -265,65 +254,24 @@
  <script src="js/main.js"></script>
 
  <!-- Custom JavaScript for the form -->
-
-
-    <script>
-        // Initialize AWS Amplify with your configuration
-        Amplify.configure({
-            Auth: {
-                region: 'us-east-2',
-                userPoolId: 'us-east-2_augbrImm0',
-                userPoolWebClientId: 'to092vs96fpava8unprjmefb8',
-            },
-        });
-
-        // Handle the signup form submission
-        document.getElementById('register-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const fitnessGoal = document.getElementById('meal_preference').value;
-            const gender = document.querySelector('input[name="gender"]:checked').value;
-            const weight = document.getElementById('weight').value;
-            const birthdate = document.getElementById('birthdate').value;
-
-            try {
-                // Sign up the user
-                const { user } = await Auth.signUp({
-                    username: email,
-                    password,
-                    attributes: {
-                        name,
-                        preferred_username: username,
-                        email,
-                        'custom:fitnessGoal': fitnessGoal,
-                        'custom:gender': gender,
-                        'custom:weight': weight,
-                        'custom:birthdate': birthdate,
-                    },
-                });
-
-                // Redirect to a confirmation page
-                window.location.href = '../signin/signin.html';
-            } catch (error) {
-                console.error('Error signing up:', error);
-            }
-        });
-
-        // Toggle password visibility
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
         const passwordInput = document.getElementById('password');
-        const passwordToggle = document.getElementById('togglePasswordSignUp');
-        passwordToggle.addEventListener('click', () => {
+        const togglePasswordSignUp = document.getElementById('togglePasswordSignUp');
+
+        togglePasswordSignUp.addEventListener('click', function () {
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
+                togglePasswordSignUp.querySelector('i').classList.remove('fa-eye-slash');
+                togglePasswordSignUp.querySelector('i').classList.add('fa-eye');
             } else {
                 passwordInput.type = 'password';
+                togglePasswordSignUp.querySelector('i').classList.remove('fa-eye');
+                togglePasswordSignUp.querySelector('i').classList.add('fa-eye-slash');
             }
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
