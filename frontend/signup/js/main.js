@@ -43,7 +43,7 @@
 
   $('#register-form').validate({
     rules : {
-        first_name : { 
+        first_name : {
             required: true,
         },
         last_name : {
