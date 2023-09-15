@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Connect to the MySQL database (Replace with your database credentials)
-    $db = new mysqli('localhost', 'your_db_username', 'your_db_password', 'your_db_name');
+    $db = new mysqli('localhost', 'root', '', 'GoFit');
 
     if ($db->connect_error) {
         die('Connection failed: ' . $db->connect_error);
