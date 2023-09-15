@@ -1,0 +1,25 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gofitchatbot-staging-220508-authRole",
+      "UnauthRoleArn": "arn:aws:iam::974650521746:role/amplify-gofitchatbot-staging-220508-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::974650521746:role/amplify-gofitchatbot-staging-220508-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-gofitchatbot-staging-220508-deployment",
+      "UnauthRoleName": "amplify-gofitchatbot-staging-220508-unauthRole",
+      "StackName": "amplify-gofitchatbot-staging-220508",
+      "StackId": "arn:aws:cloudformation:us-east-2:974650521746:stack/amplify-gofitchatbot-staging-220508/c4a77c20-534a-11ee-a229-06712a052105",
+      "AmplifyAppId": "dk1mf17diawla"
+    },
+    "categories": {
+      "auth": {
+        "gofitchatbot": {
+          "nativeClientId": "to092vs96fpava8unprjmefb8",
+          "userPoolId": "us-east-2_augbrImm0",
+          "userPoolName": "GoFitUserPool",
+          "webClientId": "to092vs96fpava8unprjmefb8"
+        }
+      }
+    }
+  }
+}

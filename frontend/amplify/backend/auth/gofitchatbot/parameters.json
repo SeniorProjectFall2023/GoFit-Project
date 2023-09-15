@@ -1,0 +1,27 @@
+{
+  "authSelections": "userPoolOnly",
+  "resourceName": "gofitchatbot",
+  "serviceType": "imported",
+  "region": "us-east-2",
+  "aliasAttributes": [
+    "preferred_username"
+  ],
+  "requiredAttributes": [
+    "name",
+    "email",
+    "gender",
+    "birthdate"
+  ],
+  "passwordPolicyMinLength": 8,
+  "passwordPolicyCharacters": [
+    "Requires Lowercase",
+    "Requires Uppercase",
+    "Requires Numbers",
+    "Requires Symbols"
+  ],
+  "mfaConfiguration": "OFF",
+  "autoVerifiedAttributes": [
+    "email"
+  ],
+  "mfaTypes": []
+}
