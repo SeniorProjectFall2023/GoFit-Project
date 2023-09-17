@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^$ /frontend/signin/signin.html [L]
+RewriteRule ^$ /signin/signin.html [L]
