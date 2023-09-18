@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 function handlePasswordChange() {
     // Check if the user is logged in (you can implement your own login logic here)
     if (!isset($_SESSION["user_id"])) {
-        header("Location: ../frontend/signin/signin.html"); // Redirect to login page if not logged in
+        header("Location: /signin/signin.html"); // Redirect to login page if not logged in
         exit;
     }
 
@@ -38,16 +38,16 @@ function handlePasswordChange() {
             // Implement your database update logic here
 
             // Redirect back to settings.html with a success message
-            header("Location: ../settings.html?password_change_success=1");
+            header("Location: settings.html?password_change_success=1");
             exit;
         } else {
             // Passwords do not match, show an error message
-            header("Location: ../settings.html?password_change_error=Passwords do not match.");
+            header("Location: settings.html?password_change_error=Passwords do not match.");
             exit;
         }
     } else {
         // Current password is incorrect, show an error message
-        header("Location: ../settings.html?password_change_error=Current password is incorrect.");
+        header("Location: settings.html?password_change_error=Current password is incorrect.");
         exit;
     }
 }
@@ -56,7 +56,7 @@ function handlePasswordChange() {
 function updateUserInfo() {
     // Check if the user is logged in (you can implement your own login logic here)
     if (!isset($_SESSION["user_id"])) {
-        header("Location: ../frontend/signin/signin.html"); // Redirect to login page if not logged in
+        header("Location: /signin/signin.html"); // Redirect to login page if not logged in
         exit;
     }
 
