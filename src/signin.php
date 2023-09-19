@@ -14,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate and sanitize user input
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
     $password = $_POST['password'];
-    $_SESSION['user_name'] = $_POST['name'];
 
     // Query the database to check if the user exists
     $query = "SELECT userID, username, password FROM `user` WHERE username=?";
@@ -34,9 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($password, $db_password)) {
                     // Sign-in successful, create a session
                     session_start();
-                    $_SESSION['username'] = $db_username; // Set the username in the session
+                    $_SESSION['user_name'] = $db_username; // Set the username in the session
                     $_SESSION['userID'] = $userID; // Optionally, set the user's ID in the session
-                    $_SESSION['user_name'] = $name;
 
                     // Redirect to the home page
                     header("Location: index.html");
