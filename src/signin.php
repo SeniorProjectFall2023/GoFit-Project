@@ -1,7 +1,10 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Establish a database connection
-    $db = new mysqli("localhost", "gofit", "cosc4360-McCurry", "GoFit");
+    $db = new mysqli("localhost", "root", "cosc4360-McCurry", "GoFit");
 
     // Check for connection errors
     if ($db->connect_error) {
@@ -9,30 +12,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validate and sanitize user input
-    $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
     $password = $_POST['password'];
 
     // Query the database to check if the user exists
-    $query = "SELECT * FROM user WHERE username='$username'";
-    $result = $db->query($query);
+    $query = "SELECT userID, username, password FROM `user` WHERE username=?";
+    $stmt = $db->prepare($query);
 
-
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            // Sign-in successful, create a session
-            session_start();
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['username'] = $row['username'];
-            
-            // Redirect to the home page
-            header("Location: index.html");
-            exit();
-        } else {
-            echo "Incorrect password.";
-        }
+    if (!$stmt) {
+        echo "<script>alert('Error preparing statement: " . $db->error . "');</script>";
     } else {
-        echo "User not found.";
+        $stmt->bind_param("s", $username);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+
+            if ($stmt->num_rows == 1) {
+                $stmt->bind_result($userID, $db_username, $db_password);
+                $stmt->fetch();
+
+                if (password_verify($password, $db_password)) {
+                    // Sign-in successful, create a session
+                    session_start();
+                    $_SESSION['user_name'] = $db_username; // Set the username in the session
+                    $_SESSION['userID'] = $userID; // Optionally, set the user's ID in the session
+
+                    // Redirect to the home page
+                    header("Location: index.html");
+                    exit();
+                } else {
+                    echo "<script>alert('Incorrect password.');</script>";
+                }
+            } else {
+                echo "<script>alert('User not found.');</script>";
+            }
+            $stmt->close();
+        } else {
+            echo "<script>alert('Error executing statement: " . $stmt->error . "');</script>";
+        }
     }
 
     // Close the database connection

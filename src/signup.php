@@ -1,35 +1,72 @@
 <?php
+session_start();
+$_SESSION['user_name'] = $_POST['username'];
+
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Establish a database connection
-    $db = new mysqli("localhost", "gofit", "cosc4360-McCurry", "GoFit");
+    $db = new mysqli("localhost", "root", "cosc4360-McCurry", "GoFit");
 
     // Check for connection errors
     if ($db->connect_error) {
         die("Connection failed: " . $db->connect_error);
     }
 
+    // Custom filter function to sanitize input
+    function custom_sanitize($input) {
+        return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+    }
+
     // Validate and sanitize user input
-    $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-    $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+    $name = custom_sanitize($_POST['name']);
+    $username = custom_sanitize($_POST['username']);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password']; // No need to sanitize, but validate password complexity here if needed.
-    $meal_preference = $_POST['meal_preference'];
-    $gender = $_POST['gender'];
-    $weight = filter_var($_POST['weight'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $dateofbirth = $_POST['dateofbirth'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+
+    // Check if meal_preference and gender are set in $_POST
+    $meal_preference = isset($_POST['meal_preference']) ? custom_sanitize($_POST['meal_preference']) : null;
+    $gender = isset($_POST['gender']) ? custom_sanitize($_POST['gender']) : null;
+
+    $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
+    $dateofbirth = custom_sanitize($_POST['dateofbirth']);
 
     // Perform additional validation as needed
 
     // Insert user data into the database
-    $query = "INSERT INTO user (name, username, email, password, meal_preference, gender, weight, dateofbirth)
-              VALUES ('$name', '$username', '$email', '$password', '$meal_preference', '$gender', '$weight', '$dateofbirth')";
-    
-    if ($db->query($query) === TRUE) {
-        // Registration successful, display a success message
-        echo "<h1>Registration Successful!</h1>";
-        echo "<p>Thank you for signing up with GoFit. You can now <a href='/signin/signin.html'>sign in here</a>.</p>";
+    $query = "INSERT INTO `user` (name, username, email, password, meal_preference, gender, weight, dateofbirth)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $db->prepare($query);
+
+    if (!$stmt) {
+        ?>
+        <script>
+            alert("Error: <?php echo $db->error; ?>");
+            window.location.href = '/signup/signup.html';
+        </script>
+        <?php
     } else {
-        echo "Error: " . $query . "<br>" . $db->error;
+        $stmt->bind_param("ssssssss", $name, $username, $email, $password, $meal_preference, $gender, $weight, $dateofbirth);
+        if ($stmt->execute()) {
+            ?>
+            <script>
+                alert("Registration Successful!\nThank you for signing up with GoFit.");
+                window.location.href = '/signin/signin.html';
+            </script>
+            <?php
+        } else {
+            ?>
+            <script>
+                alert("Error: <?php echo $stmt->error; ?>");
+                window.location.href = '/signup/signup.html';
+            </script>
+            <?php
+        }
+        $stmt->close();
     }
 
     // Close the database connection

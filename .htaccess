@@ -1,2 +1,2 @@
-RewriteEngine On
-RewriteRule ^$ /signin/signin.html [L]
+AddHandler application/x-httpd-php .html
+

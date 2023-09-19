@@ -1,3 +1,16 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<?php
+session_start();
+if (isset($_SESSION['user_name'])) {
+    $userName = $_SESSION['user_name'];
+} else {
+    $userName = "Guest"; // Default value if user is not logged in
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,19 +69,27 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="chatbot.html">Chatbot</a></li>
           <li><a href="settings.html">Settings</a></li>
           <li><a href="faqs.html">FAQs</a></li> 
           <li><a href="contact.html">Contact</a></li> 
-          <li><a>Hello, <?php echo $_SESSION['username']; ?></a></li>
-
-        </ul>
+          <li><a>Hello, <?php echo "  " . $userName; ?></a></li>
+          <?php if ($userName === "Guest"): ?>
+          <li><a href="/signin/signin.html"><u><i>Sign In</i></u></a></li> 
+          <li><a>|</a></li> <!-- Adjust the margin-right to reduce spacing -->
+          <li><a href="/signin/signup.html"><u><i>Sign Up</i></u></a></li> 
+          <?php endif; ?>
+          <?php if ($userName !== "Guest"): ?>
+          <li><a href="logout.php" class="logout-button" style="color: red"><u>Logout</u></a></li>
+          <?php endif; ?>
+      </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
     </div>
   </header><!-- End Header -->
+
+  
 
 <!-- ======= Hero Section ======= -->
 <section id="hero">
