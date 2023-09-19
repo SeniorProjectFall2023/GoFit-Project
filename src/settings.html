@@ -152,146 +152,177 @@ if (isset($_SESSION['user_name'])) {
     </section><!-- End Breadcrumbs -->
 
 
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-  <div class="container p-0">
-  <br><br>
-  <div class="row">
-  <div class="col-md-5 col-xl-4">
-  <div class="card">
-  <div class="card-header">
-  <h5 class="card-title mb-0">Profile Settings</h5>
-  </div>
-  <div class="list-group list-group-flush" role="tablist">
-  <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
-  Account
-  </a>
-  <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
-  Privacy and safety
-  </a>
-  <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
-  Sign Out
-  </a>
-</div>
-</div>
-</div>
-
-
-
-<div class="col-md-7 col-xl-8">
-<div class="tab-content">
-<div class="tab-pane fade show active" id="account" role="tabpanel">
-  <div class="card">
-    <div class="card-header">
-      <div class="card-actions float-right">
-        <div class="dropdown show">
-          <a href="#" data-toggle="dropdown" data-display="static"></a>
-          <div class="dropdown-menu dropdown-menu-right"></div>
-        </div>
-      </div>
-      <h5 class="card-title mb-0">Change Password</h5>
-    </div>
-    <div class="card-body">
-      <form>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <div class="container p-0">
+        <br><br>
         <div class="row">
-          <div class="col-md-12">
-            <div class="form-group col-md-12">
-              <label for="inputPasswordCurrent">Current password</label>
-              <input type="password" class="form-control" id="inputPasswordCurrent" >
-              <small><a href="#">Forgot your password?</a></small>
+            <div class="col-md-5 col-xl-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Profile Settings</h5>
+                    </div>
+                    <div class="list-group list-group-flush" role="tablist">
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account"
+                            role="tab" id="account-tab">
+                            Account
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="privacy-security-tab"
+                            data-toggle="list" href="#privacy-security-content" role="tab">
+                            Privacy and Security
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-md-12">
-              <label for="inputPasswordNew">New password</label>
-              <input type="text" class="form-control" id="inputPasswordNew" >
-            </div>
-            <div class="form-group col-md-12">
-              <label for="inputPasswordNew2">Verify password</label>
-              <input type="text" class="form-control" id="inputPasswordNew2" >
-            </div>
+
+            <div class="col-md-7 col-xl-8">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="account" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-actions float-right">
+                                    <div class="dropdown show">
+                                        <a href="#" data-toggle="dropdown" data-display="static"></a>
+                                        <div class="dropdown-menu dropdown-menu-right"></div>
+                                    </div>
+                                </div>
+                                <h5 class="card-title mb-0">Change Password</h5>
+                            </div>
+                            <div class="card-body">
+                        <form>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group col-md-12">
+                                <label for="inputPasswordCurrent">Current password</label>
+                                <input type="password" class="form-control" id="inputPasswordCurrent" >
+                                <small><a href="#">Forgot your password?</a></small>
+                              </div>
+                              <div class="form-group col-md-12">
+                                <label for="inputPasswordNew">New password</label>
+                                <input type="text" class="form-control" id="inputPasswordNew" >
+                              </div>
+                              <div class="form-group col-md-12">
+                                <label for="inputPasswordNew2">Verify password</label>
+                                <input type="text" class="form-control" id="inputPasswordNew2" >
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="text-center">
+                                <div class="mt-2"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-actions float-right">
+                        <div class="dropdown show">
+                          <a href="#" data-toggle="dropdown" data-display="static"></a>
+                          <div class="dropdown-menu dropdown-menu-right"></div>
+                        </div>
+                      </div>
+                      <h5 class="card-title mb-0">Updater User Information</h5>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputUsername">Username</label>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="Johndoe23">
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="inputFullName">Full Name</label>
+                            <input type="text" class="form-control" id="inputFullName" placeholder="John Doe">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-5">
+                            <label for="inputEmail4">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="johndoe23@email.com">
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label for="inputWeight">Weight (lb)</label>
+                            <input type="text" class="form-control" id="inputWeight" placeholder="156">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="inputDateofbirth">Date Of Birth</label>
+                            <input type="date" class="form-control" id="inputDateofbirth" placeholder="mm/dd/yyyy">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputFitnessgoal">Fitness Goal</label>
+                            <select id="inputFitnessgoal" class="form-control">
+                              <option selected>- Select -</option>
+                              <option value="Weight Loss">Weight Loss</option>
+                              <option value="Muscle Gain">Muscle Gain</option>
+                              <option value="Running Distance">Running Distance</option>
+                              <option value="Endurance">Endurance</option>
+                              <option value="Balance">Balance</option>
+                              <option value="Nutrition">Nutrition</option>
+                              <option value="Stress Reduction">Stress Reduction</option>
+                              <option value="Body Composition">Body Composition</option>
+                              <option value="Weightlifting">Weightlifting</option>
+                              <option value="Bodybuilding">Bodybuilding</option>
+                              <option value="CrossFit">CrossFit</option>
+
+                            </select>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="inputGender">Gender</label>
+                            <select id="inputGender" class="form-control">
+                              <option selected>- Select -</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Other">Other</option>
+
+                            </select>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      </form>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="tab-pane fade show active" id="privacy-security-content" role="tabpanel">
+                  <div class="card">
+                      <div class="card-header">
+                          <h5 class="card-title mb-0">Privacy and Security</h5>
+                      </div>
+                      <div class="card-body">
+                          <p>
+                              Your privacy and security are of utmost importance to us.
+                          </p>
+                          <p>
+                              We are committed to protecting your personal information and providing a secure
+                              environment for using our services. Here are some of the measures we take to
+                              ensure your privacy and security:
+                          </p>
+                          <ul>
+                              <li>Secure data encryption during transmission.</li>
+                              <li>Regular security audits and updates.</li>
+                              <li>Strict access controls to protect your data.</li>
+                              <li>Transparent privacy policies.</li>
+                          </ul>
+                          <p>
+                              If you have any concerns or questions regarding your privacy and security while
+                              using our website, please don't hesitate to contact us.
+                          </p>
+                      </div>
+                  </div>
+              </div>
           </div>
-          <div class="col-md-4">
-            <div class="text-center">
-              <div class="mt-2"></div>
-            </div>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </form>
-    </div>
+      </div>
   </div>
 </div>
 
-
-<div class="card">
-  <div class="card-header">
-    <div class="card-actions float-right">
-      <div class="dropdown show">
-        <a href="#" data-toggle="dropdown" data-display="static"></a>
-        <div class="dropdown-menu dropdown-menu-right"></div>
-      </div>
-    </div>
-    <h5 class="card-title mb-0">Updater User Information</h5>
-  </div>
-  <div class="card-body">
-    <form>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputUsername">Username</label>
-          <input type="text" class="form-control" id="inputUsername" placeholder="Johndoe23">
-        </div>
-        <div class="form-group col-md-6">
-          <label for="inputFullName">Full Name</label>
-          <input type="text" class="form-control" id="inputFullName" placeholder="John Doe">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-5">
-          <label for="inputEmail4">Email</label>
-          <input type="email" class="form-control" id="inputEmail4" placeholder="johndoe23@email.com">
-        </div>
-        <div class="form-group col-md-3">
-          <label for="inputWeight">Weight (lb)</label>
-          <input type="text" class="form-control" id="inputWeight" placeholder="156">
-        </div>
-        <div class="form-group col-md-4">
-          <label for="inputDateofbirth">Date Of Birth</label>
-          <input type="date" class="form-control" id="inputDateofbirth" placeholder="mm/dd/yyyy">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputFitnessgoal">Fitness Goal</label>
-          <select id="inputFitnessgoal" class="form-control">
-            <option selected>- Select -</option>
-            <option value="Weight Loss">Weight Loss</option>
-            <option value="Muscle Gain">Muscle Gain</option>
-            <option value="Running Distance">Running Distance</option>
-            <option value="Endurance">Endurance</option>
-            <option value="Balance">Balance</option>
-            <option value="Nutrition">Nutrition</option>
-            <option value="Stress Reduction">Stress Reduction</option>
-            <option value="Body Composition">Body Composition</option>
-            <option value="Weightlifting">Weightlifting</option>
-            <option value="Bodybuilding">Bodybuilding</option>
-            <option value="CrossFit">CrossFit</option>
-
-          </select>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="inputGender">Gender</label>
-          <select id="inputGender" class="form-control">
-            <option selected>- Select -</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-
-          </select>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Save changes</button>
-    </form>
-  </div>
-</div>
-
+</main>
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

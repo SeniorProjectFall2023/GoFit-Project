@@ -103,37 +103,22 @@ if (isset($_SESSION['user_name'])) {
           <div class="carousel-content animate__animated animate__fadeInUp">
             <h2>Welcome to <span>GoFit ChatBot!</span></h2>
             <p>Embark on a journey to a healthier you with GoFit ChatBot. Our mission is to be your fitness companion, providing tailored guidance and motivation every step of the way. Whether you're looking to lose weight, gain muscle, or just stay active, GoFit is here for you.</p>
-            <div class="text-center"><a href="/signup/signup.html" class="btn-get-started">Get Started</a></div>
+            <?php if ($userName === "Guest"): ?>
+              <div class="text-center"><a href="/signup/signup.html" class="btn-get-started">Get Started</a></div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
 
-      <!-- Slide 2
-      <div class="carousel-item" style="background-image: url(assets/img/slide/slide-2.jpg);">
-        <div class="carousel-container">
-          <div class="carousel-content animate__animated animate__fadeInUp">
-            <h2>Our Project Goals</h2>
-            <p>At GoFit, we are committed to delivering a responsive and interactive chatbot experience that empowers you to:</p>
-            <ul>
-              <li>Set and achieve your fitness goals</li>
-              <li>Learn about healthy living</li>
-              <li>Stay motivated and accountable</li>
-              <li>Avoid injuries</li>
-              <li>Make informed, healthy lifestyle choices</li>
-              <li>Feel confident about your health</li>
-            </ul>
-            <div class="text-center"><a href="" class="btn-get-started">Learn More</a></div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- Slide 3 -->
+      <!-- Slide 2 -->
       <div class="carousel-item" style="background-image: url(assets/img/slide/slide3.jpg);">
         <div class="carousel-container">
           <div class="carousel-content animate__animated animate__fadeInUp">
             <h2>Join Our Fitness Community</h2>
             <p>GoFit ChatBot is not just a tool; it's a supportive community that helps you transform your life. Share your progress, and receive expert advice. Your journey to a healthier, happier you begins here.</p>
-            <div class="text-center"><a href="/signup/signup.html" class="btn-get-started">Join Now</a></div>
+            <?php if ($userName === "Guest"): ?>
+              <div class="text-center"><a href="/signup/signup.html" class="btn-get-started">Join Now</a></div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -152,6 +137,7 @@ if (isset($_SESSION['user_name'])) {
 
   </div>
 </section><!-- End Hero -->
+
 
   <main id="main">
 
