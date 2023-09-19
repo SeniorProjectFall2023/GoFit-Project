@@ -96,7 +96,62 @@
             input[type="password"]::-ms-clear {
                 display: none;
             }
-  </style>
+
+            /* Style the select container */
+.form-select {
+    position: relative;
+    margin-bottom: 0; /* Add this line to remove margin */
+}
+
+/* Style the select label */
+.form-select .label-flex label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-select select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333; /* Set the font color to white */
+    cursor: pointer;
+    outline: none;
+}
+
+/* Style the select arrow */
+.form-select select::-ms-expand {
+    display: none;
+}
+
+/* Style the selected option */
+.form-select select option[selected] {
+    background-color: #1bbd36; /* Background color for the selected option */
+    color: white; /* Text color for the selected option */
+}
+
+/* Style the dropdown arrow icon (optional) */
+.form-select .select-list::after {
+    content: "\f078"; /* Unicode for the down arrow icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    color: #555;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Add this CSS to remove margin for the select-list */
+.form-select .select-list {
+    margin-bottom: 0;
+}
+
+
+    </style>
 
   	<body style="background-color: #e6e4e4;">
 			<!-- <div class="button-68-container">
@@ -125,7 +180,7 @@
         <div class="container">
             <div class="signup-content">
                 <div class="signup-img">
-                    <img style="height: 645px;" src="images/signupImg.jpg" alt="">
+                    <img style="height: 635px;" src="images/signupImg.jpg" alt="">
                     <div class="signup-img-content">
                         <h2 style="color: white;">Sign Up</h2>
                     </div>
@@ -140,7 +195,7 @@
                             <div class="form-group">
                           
                                 <div class="form-input">
-                                    <label for="first_name" class="required">Full Name</label>
+                                    <label for="name" class="required">Full Name</label>
                                     <input type="text" name="name" placeholder="John Doe" id="name" required/>
                                 </div>
 
@@ -157,7 +212,7 @@
                                 </div>
 
                                 <div class="form-input password-input">
-                                    <label for="password" class="required">Password</label>
+                                    <label for="passworad" class="required">Password</label>
                                     <input type="password" name="password" placeholder="************" id="password" required/>
                                     <span class="password-toggle" id="togglePasswordSignUp">
                                         <i class="fa fa-eye-slash" aria-hidden="true"></i>
@@ -171,11 +226,10 @@
                                 <div class="form-select">
                                     <div class="label-flex">
                                         <label for="meal_preference" class="required">Fitness Goal</label>
-                                        <!-- <a href="#" class="form-link">Lunch detail</a> -->
                                     </div>
                                     <div class="select-list">
-                                        <select name="meal_preference" id="meal_preference">
-                                            <option value="Select" selected disabled>- Select -</option>
+                                        <select name="meal_preference" id="meal_preference" required style="margin-bottom: 0;">
+                                            <option value="" selected disabled>- Select -</option>
                                             <option value="Weight Loss">Weight Loss</option>
                                             <option value="Muscle Gain">Muscle Gain</option>
                                             <option value="Running Distance">Running Distance</option>
@@ -190,42 +244,50 @@
                                         </select>
                                     </div>
                                 </div>
-
+                            
+                            <!-- Add the hidden input field here -->
+                             <!-- <input type="hidden" name="meal_preference_hidden" id="meal_preference_hidden" value="">  -->
+                            
+                                
                                 <div id="gender" class="form-radio">
                                     <div class="label-flex">
-                                        <label for="male" class="required">Gender</label>
+                                        <label for="gender" class="required">Gender</label>
                                     </div>
-                                    <div class="form-radio-group">            
+                                    <div class="form-radio-group">
                                         <div class="form-radio-item">
-                                            <input type="radio" name="gender" id="male">
+                                            <input type="radio" name="gender" id="male" value="Male" required>
                                             <label for="male">Male</label>
                                             <span class="check"></span>
                                         </div>
                                         <div class="form-radio-item">
-                                            <input type="radio" name="gender" id="female">
+                                            <input type="radio" name="gender" id="female" value="Female">
                                             <label for="female">Female</label>
                                             <span class="check"></span>
                                         </div>
                                         <div class="form-radio-item">
-                                            <input type="radio" name="gender" id="other">
+                                            <input type="radio" name="gender" id="other" value="Other">
                                             <label for="other">Other</label>
                                             <span class="check"></span>
                                         </div>
                                     </div>
                                 </div>
-
+                                
+                
                                 <div class="form-input">
                                     <label for="weight" class="required">Weight (lb)</label>
                                     <input type="number" name="weight" placeholder="156" id="weight" />
                                 </div>
-
+                
                                 <div class="form-input">
-                                    <label for="dateofbirth"class="required">Date of Birth</label>
-                                    <input type="date" name="dateofbirth" id="dateofbirth" />
+                                    <label for="dateofbirth" class="required">Date of Birth</label>
+                                    <input type="date" name="dateofbirth" id="dateofbirth" required />
                                 </div>
-
+                
                                 <br>
                             </div>
+                            
+                            
+                            
                         </div>
 
 
@@ -251,7 +313,7 @@
  <script src="vendor/wnumb/wNumb.js"></script>
  <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
  <script src="vendor/jquery-validation/dist/additional-methods.min.js"></script>
- <script src="js/main.js"></script>
+ <!-- <script src="js/main.js"></script> -->
 
  <!-- Custom JavaScript for the form -->
  <script>
