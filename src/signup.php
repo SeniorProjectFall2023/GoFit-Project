@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['user_name'] = $_POST['username'];
+$_SESSION['user_name'] = $_POST['name'];
 
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
