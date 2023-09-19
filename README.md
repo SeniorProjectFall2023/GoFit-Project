@@ -2,7 +2,7 @@
 ​
 The GoFit-Project repo contains the folders, assets, and forms for all the pages except the signup and sign-in folders which contain separate folders for each. Within our assets folder, six sub-folders range from CSS styles to the font families used, to the images that are being rendered on the frontend side. In our forms folder, we have a. The sign-in and signup folders contain everything needed for the pages to be rendered properly, such as CSS, fonts, and images.  
 <br>
-The backend folder contains the PHP files corresponding to the HTML files to be compatible with the user registration system. The PHP files are settings, signing, and signup.php. This folder also provides a variety of functions that provide our common service functionality for the user. <br>
+The folder also contains the PHP files corresponding to the HTML files to be compatible with the user registration system. The PHP files are settings, signin, signup, and logout.php. This folder also provides a variety of functions that provide our common service functionality for the user. <br>
 ​
 #### Contribution guidelines <br>
 ​
