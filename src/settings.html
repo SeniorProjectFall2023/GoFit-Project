@@ -188,21 +188,22 @@ if (isset($_SESSION['user_name'])) {
                                 <h5 class="card-title mb-0">Change Password</h5>
                             </div>
                             <div class="card-body">
-                        <form action="settings.php">
+                      <form action="settings.php" method="POST">
+                        <input type="hidden" name="form_type" value="change_password">
                           <div class="row">
                             <div class="col-md-12">
                               <div class="form-group col-md-12">
-                                <label for="inputPasswordCurrent">Current password</label>
-                                <input type="text" class="form-control" id="inputPasswordCurrent" value="<?php echo $password; ?>">
-                                <small><a href="#">Forgot your password?</a></small>
+                                <label for="password">Current password</label>
+                                <input type="text" class="form-control" id="password" name="password" value="<?php echo $_SESSION['password']; ?>">
+
                               </div>
                               <div class="form-group col-md-12">
                                 <label for="inputPasswordNew">New password</label>
-                                <input type="text" class="form-control" id="inputPasswordNew" >
+                                <input type="text" class="form-control" name="new_password" id="inputPasswordNew" >
                               </div>
                               <div class="form-group col-md-12">
                                 <label for="inputPasswordNew2">Verify password</label>
-                                <input type="text" class="form-control" id="inputPasswordNew2" >
+                                <input type="text" class="form-control" name="confirm_password" id="inputPasswordNew2" >
                               </div>
                             </div>
                             <div class="col-md-4">
@@ -229,54 +230,57 @@ if (isset($_SESSION['user_name'])) {
                       <h5 class="card-title mb-0">Updater User Information</h5>
                     </div>
                     <div class="card-body">
-                      <form action="settings.php">
+                      <form action="settings.php" method="POST">
+                        <input type="hidden" name="form_type" value="update_user_info">
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="inputUsername">Username</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="Enter your username" value="<?php echo $username; ?>">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Johndoe23" value="<?php echo $_SESSION['username']; ?>">
+
+                            
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputFullName">Full Name</label>
-                            <input type="text" class="form-control" id="inputFullName" placeholder="John Doe" value="<?php echo $name; ?>">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" value="<?php echo $_SESSION['name']; ?>">
+
                         </div>
                         <div class="form-group col-md-5">
                             <label for="inputEmail4">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="johndoe23@email.com" value="<?php echo $email; ?>">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="johndoe@email.com" value="<?php echo $_SESSION['email']; ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputWeight">Weight (lb)</label>
-                            <input type="text" class="form-control" id="inputWeight" placeholder="156" value="<?php echo $weight; ?>">
+                            <input type="number" class="form-control" name="weight" id="weight" placeholder="156" value="<?php echo $_SESSION['weight']; ?>">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="inputDateofbirth">Date Of Birth</label>
-                            <input type="date" class="form-control" id="inputDateofbirth" placeholder="mm/dd/yyyy" value="<?php echo $dateofbirth; ?>">
+                            <input type="date" class="form-control" name="dateofbirth" id="dateofbirth" placeholder="mm/dd/yyyy" value="<?php echo $_SESSION['dateofbirth']; ?>">
                         </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
-                            <label for="inputFitnessgoal">Fitness Goal</label>
+                            <label for="meal_preference">Fitness Goal</label>
                             <select id="meal_preference" name="meal_preference" class="form-control">
-                              <option selected>- Select -</option>
-                              <option value="Weight Loss" <?php if ($meal_preference == "Weight Loss") echo "selected"; ?>>Weight Loss</option>
-                              <option value="Muscle Gain" <?php if ($meal_preference == "Muscle Gain") echo "selected"; ?>>Muscle Gain</option>
-                              <option value="Running Distance" <?php if ($meal_preference == "Running Distance") echo "selected"; ?>>Running Distance</option>
-                              <option value="Endurance" <?php if ($meal_preference == "Endurance") echo "selected"; ?>>Endurance</option>
-                              <option value="Balance" <?php if ($meal_preference == "Balance") echo "selected"; ?>>Balance</option>
-                              <option value="Nutrition" <?php if ($meal_preference == "Nutrition") echo "selected"; ?>>Nutrition</option>
-                              <option value="Stress Reduction" <?php if ($meal_preference == "Stress Reduction") echo "selected"; ?>>Stress Reduction</option>
-                              <option value="Body Composition" <?php if ($meal_preference == "Body Composition") echo "selected"; ?>>Body Composition</option>
-                              <option value="Weightlifting" <?php if ($meal_preference == "Weightlifting") echo "selected"; ?>>Weightlifting</option>
-                              <option value="Bodybuilding" <?php if ($meal_preference == "Bodybuilding") echo "selected"; ?>>Bodybuilding</option>
-                              <option value="CrossFit" <?php if ($meal_preference == "CrossFit") echo "selected"; ?>>CrossFit</option>
+                              <option value="- Select -" <?php if ($_SESSION['meal_preference'] === "- Select -") echo "selected"; ?>>- Select -</option>
+                              <option value="Weight Loss" <?php if ($_SESSION['meal_preference'] === "Weight Loss") echo "selected"; ?>>Weight Loss</option>
+                              <option value="Muscle Gain" <?php if ($_SESSION['meal_preference'] === "Muscle Gain") echo "selected"; ?>>Muscle Gain</option>
+                              <option value="Endurance" <?php if ($_SESSION['meal_preference'] === "Endurance ") echo "selected"; ?>>Endurance</option>
+                              <option value="Balance" <?php if ($_SESSION['meal_preference'] === "Balance ") echo "selected"; ?>>Balance</option>
+                              <option value="Nutrition" <?php if ($_SESSION['meal_preference'] === "Nutrition ") echo "selected"; ?>>Nutrition</option>
+                              <option value="Stress Reduction" <?php if ($_SESSION['meal_preference'] === "Stress Reduction ") echo "selected"; ?>>Stress Reduction</option>
+                              <option value="Body Composition" <?php if ($_SESSION['meal_preference'] === "Body Composition ") echo "selected"; ?>>Body Composition</option>
+                              <option value="Weightlifting" <?php if ($_SESSION['meal_preference'] === "Weightlifting ") echo "selected"; ?>>Weightlifting</option>
+                              <option value="Bodybuilding" <?php if ($_SESSION['meal_preference'] === "Bodybuilding ") echo "selected"; ?>>Bodybuilding</option>
+                              <option value="CrossFit" <?php if ($_SESSION['meal_preference'] === "CrossFit ") echo "selected"; ?>>CrossFit</option>
                             </select>
                           </div>
                           <div class="form-group col-md-4">
-                            <label for="inputGender">Gender</label>
-                            <select id="inputGender" class="form-control">
-                              <option selected>- Select -</option>
-                              <option value="Male" <?php if ($gender == "Male") echo "selected"; ?>>Male</option>
-                              <option value="Female" <?php if ($gender == "Female") echo "selected"; ?>>Female</option>
-                              <option value="Other" <?php if ($gender == "Other") echo "selected"; ?>>Other</option>
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" class="form-control">
+                                <option value="- Select -" <?php if ($_SESSION['gender'] === "- Select -") echo "selected"; ?>>- Select -</option>
+                                <option value="Male" <?php if ($_SESSION['gender'] === "Male") echo "selected"; ?>>Male</option>
+                                <option value="Female" <?php if ($_SESSION['gender'] === "Female") echo "selected"; ?>>Female</option>
+                                <option value="Other" <?php if ($_SESSION['gender'] === "Other") echo "selected"; ?>>Other</option>
                             </select>
                           </div>
                         </div>
@@ -356,16 +360,7 @@ if (isset($_SESSION['user_name'])) {
             </ul>
           </div>
 
-          <!-- <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul>
-          </div> -->
+
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Join Our Newsletter</h4>
             <p>Stay Updated with Health Tips, Exercise Advice, & More!</p>
@@ -387,10 +382,7 @@ if (isset($_SESSION['user_name'])) {
           &copy; Copyright <strong><span>GoFit ChatBot</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/company-free-html-bootstrap-template/ -->
+       
         </div>
       </div>
     </div>

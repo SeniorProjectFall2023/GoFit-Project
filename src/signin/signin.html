@@ -23,16 +23,22 @@
                             </div>
                         </div>
                         <form class="signin-form" id="signin-form" action="../signin.php" method="POST">
+                                
                             <div class="form-group mt-3">
                                 <input type="text" class="form-control" name="username" required>
                                 <label class="form-control-placeholder" for="username">Username</label>
                             </div>
+                            
                             <div class="form-group">
                                 <input id="password-field" type="password" class="form-control" name="password" required>
                                 <label class="form-control-placeholder" for="password">Password</label>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
+                            
+                            <a href="forgotPassword.php">Forgot your password?</a>
+                            
                             <div class="form-group">
+                                <br>
                                 <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
                             </div>
                         </form>

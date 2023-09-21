@@ -1,133 +1,95 @@
 <?php
-// Initialize a session if not already started
 session_start();
 
-// Check if the request method is POST
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check which form was submitted based on the "form_type" field
-    if (isset($_POST["form_type"])) {
-        if ($_POST["form_type"] === "change_password") {
-            // Handle change password form submission
-            handlePasswordChange();
-        } elseif ($_POST["form_type"] === "update_user_info") {
-            // Handle update user information form submission
-            updateUserInfo();
-        }
-    }
-}
+    // Establish a database connection if needed
+    $db_host = "localhost";
+    $db_user = "root";
+    $db_password = "cosc4360-McCurry";
+    $db_name = "GoFit";
+    
+    $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-// Function to handle password change
-function handlePasswordChange() {
-    // Establish a database connection
-    $db = new mysqli("localhost", "root", "cosc4360-McCurry", "GoFit");
-
-    // Check if the user is logged in (you can implement your own login logic here)
-    if (!isset($_SESSION["user_id"])) {
-        header("Location: /signin/signin.html"); // Redirect to login page if not logged in
-        exit;
+    
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    $userID = $_SESSION["user_id"];
-
-    // Retrieve form data
-    $currentPassword = $_POST["current_password"];
-    $newPassword = $_POST["new_password"];
-    $confirmPassword = $_POST["confirm_password"];
-
-    // Add error handling for database connection
-    if ($db->connect_error) {
-        die("Connection failed: " . $db->connect_error);
+    // Custom filter function to sanitize input
+    function custom_sanitize($input) {
+        return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
     }
 
-    // Prepare and execute the query to retrieve the user's current password
-    $query = "SELECT password FROM `user` WHERE user_id=?";
-    $stmt = $db->prepare($query);
+    // Validate and sanitize user input
+    $form_type = custom_sanitize($_POST['form_type']);
 
-    if (!$stmt) {
-        echo "<script>alert('Error preparing statement: " . $db->error . "');</script>";
-    } else {
-        $stmt->bind_param("s", $userID);
-        if ($stmt->execute()) {
-            $stmt->store_result();
+    if ($form_type === "change_password") {
+        // Handle password change
+        $current_password = custom_sanitize($_POST['password']);
+        $new_password = custom_sanitize($_POST['new_password']);
+        $confirm_password = custom_sanitize($_POST['confirm_password']);
+        
+        // Check if the new password matches the confirm password
+        if ($new_password !== $confirm_password) {
+            echo "Passwords do not match. Please try again.";
+        } else {
+            // Check the current password for the user from the database
+            $user_id = $_SESSION['user_id'];
+            $stmt = $conn->prepare("SELECT password FROM user WHERE userID = ?");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stored_password = $row['password'];
 
-            if ($stmt->num_rows == 1) {
-                $stmt->bind_result($db_password);
-                $stmt->fetch();
-
-                if (password_verify($currentPassword, $db_password)) {
-                    // Check if the new passwords match
-                    if ($newPassword === $confirmPassword) {
-                        // Hash and update the new password in the database
-                        $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                        $updateQuery = "UPDATE user SET password = ? WHERE user_id = ?";
-                        $updateStmt = $db->prepare($updateQuery);
-                        $updateStmt->bind_param("ss", $hashedNewPassword, $userID);
-                        if ($updateStmt->execute()) {
-                            // Redirect back to settings.html with a success message
-                            header("Location: settings.html?password_change_success=1");
-                            exit;
-                        } else {
-                            // Error message here.
-                        }
-                        $updateStmt->close();
-                    } else {
-                        // Passwords do not match, show an error message
-                        header("Location: settings.html?password_change_error=Passwords do not match.");
-                        exit;
-                    }
+            // Verify the current password
+            if (password_verify($current_password, $stored_password)) {
+                // Password is correct, update the password in the database
+                $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                $stmt = $conn->prepare("UPDATE user SET password = ? WHERE userID = ?");
+                $stmt->bind_param("si", $new_password_hash, $user_id);
+                if ($stmt->execute()) {
+                    // Password updated successfully
+                    header("Location: settings.html");
+                    exit();
                 } else {
-                    // Current password is incorrect, show an error message
-                    header("Location: settings.html?password_change_error=Current password is incorrect.");
-                    exit;
+                    echo "Error updating password: " . $stmt->error;
                 }
+            } else {
+                // Current password is incorrect, show an error
+                echo "Current password is incorrect. Please try again.";
             }
         }
+    } elseif ($form_type === "update_user_info") {
+        // Handle user information update
+        $user_id = $_SESSION['user_id'];
+        $username = custom_sanitize($_POST['username']);
+        $name = custom_sanitize($_POST['name']);
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+        $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
+        $dateofbirth = custom_sanitize($_POST['dateofbirth']);
+        $meal_preference = custom_sanitize($_POST['meal_preference']);
+        $gender = custom_sanitize($_POST['gender']);
+        
+        // Update the user's information in the database
+        $stmt = $conn->prepare("UPDATE user SET username = ?, name = ?, email = ?, weight = ?, dateofbirth = ?, meal_preference = ?, gender = ? WHERE userID = ?");
+        $stmt->bind_param("sssdsssi", $username, $name, $email, $weight, $dateofbirth, $meal_preference, $gender, $user_id);
+        if ($stmt->execute()) {
+            // User information updated successfully
+            header("Location: settings.html");
+            exit();
+        } else {
+            echo "Error updating user information: " . $stmt->error;
+        }
     }
-    // Close the database connection
-    $db->close();
-}
-
-// Function to update user information
-function updateUserInfo() {
-    // Establish a database connection
-    $db = new mysqli("localhost", "root", "cosc4360-McCurry", "GoFit");
-
-    // Check if the user is logged in (you can implement your own login logic here)
-    if (!isset($_SESSION["user_id"])) {
-        header("Location: /signin/signin.html"); // Redirect to login page if not logged in
-        exit;
-    }
-
-    // Get UserID
-    $userID = $_SESSION["user_id"];
-
-    // Retrieve and sanitize form data (you can add more validation)
-    $username = htmlspecialchars($_POST["username"]);
-    $name = htmlspecialchars($_POST["name"]);
-    $email = htmlspecialchars($_POST["email"]);
-    $weight = htmlspecialchars($_POST["weight"]);
-    $dateofbirth = htmlspecialchars($_POST["dateofbirth"]);
-    $meal_preference = htmlspecialchars($_POST["meal_preference"]);
-    $gender = htmlspecialchars($_POST["gender"]);
-
-    // Add error handling for database connection
-    if ($db->connect_error) {
-        die("Connection failed: " . $db->connect_error);
-    }
-
-    // Prepare and execute the query to update user information
-    $updateQuery = "UPDATE user SET username = ?, name = ?, email = ?, weight = ?, dateofbirth = ?, meal_preference = ?, gender = ? WHERE user_id = ?";
-    $updateStmt = $db->prepare($updateQuery);
-    $updateStmt->bind_param("ssssssss", $username, $name, $email, $weight, $dateofbirth, $meal_preference, $gender, $userID);
-    if ($updateStmt->execute()) {
-        // Redirect back to settings.html with a success message
-        header("Location: settings.html?user_info_update_success=1");
-        exit;
-    } else {
-        // Error message here.
-    }
-
-    // Close the database connection
-    $db->close();
+    $conn->close();
+} else {
+    // Display a message if the page is accessed without a POST request
+    echo "<h1>This page is working.</h1>";
 }
 ?>
