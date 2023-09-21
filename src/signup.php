@@ -52,6 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $stmt->bind_param("ssssssss", $name, $username, $email, $password, $meal_preference, $gender, $weight, $dateofbirth);
         if ($stmt->execute()) {
+            // Set session variables for user data
+            $_SESSION['username'] = $username;
+            $_SESSION['name'] = $name;
+            $_SESSION['email'] = $email;
+            $_SESSION['weight'] = $weight;
+            $_SESSION['dateofbirth'] = $dateofbirth;
+            $_SESSION['meal_preference'] = $meal_preference;
+            $_SESSION['gender'] = $gender;
+            
             ?>
             <script>
                 alert("Registration Successful!\nThank you for signing up with GoFit.");
@@ -76,4 +85,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<h1>This page is working.</h1>";
 }
 ?>
-
