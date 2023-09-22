@@ -295,39 +295,38 @@ if (isset($_SESSION['user_name'])) {
 
               <script>
                 document.addEventListener('DOMContentLoaded', function () {
-                    // Fetch user data from the server
-                    fetch('/path-to-your/settings.php')
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data) {
-                                document.getElementById('name').value = data.name;
-                                document.getElementById('username').value = data.username;
-                                document.getElementById('email').value = data.email;
-                                document.getElementById('weight').value = data.weight;
-                                document.getElementById('dateofbirth').value = data.dateofbirth;
-              
-                                const mealPreference = data.meal_preference;
-                                const mealPreferenceSelect = document.getElementById('meal_preference');
-                                for (let i = 0; i < mealPreferenceSelect.options.length; i++) {
-                                    if (mealPreferenceSelect.options[i].value === mealPreference) {
-                                        mealPreferenceSelect.selectedIndex = i;
-                                        break;
-                                    }
-                                }
-              
-                                const gender = data.gender;
-                                const genderRadios = document.getElementsByName('gender');
-                                for (let i = 0; i < genderRadios.length; i++) {
-                                    if (genderRadios[i].value === gender) {
-                                        genderRadios[i].checked = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error fetching user data:', error);
-                        });
+                  // Fetch user data from the server
+                  fetch('settings.php') // Update the URL as needed
+                      .then(response => response.json())
+                      .then(data => {
+                          if (data) {
+                              document.getElementById('name').value = data.name;
+                              document.getElementById('username').value = data.username;
+                              document.getElementById('email').value = data.email;
+                              document.getElementById('weight').value = data.weight;
+                              document.getElementById('dateofbirth').value = data.dateofbirth;
+
+                              // Handle the meal_preference and gender fields appropriately
+                              const mealPreference = data.meal_preference;
+                              const gender = data.gender;
+
+                              // Update the meal_preference and gender fields based on their values
+                              // You may need to modify this part to match your HTML structure
+                              // For example, for select elements:
+                              const mealPreferenceSelect = document.getElementById('meal_preference');
+                              mealPreferenceSelect.value = mealPreference;
+
+                              const genderRadios = document.getElementsByName('gender');
+                              for (let i = 0; i < genderRadios.length; i++) {
+                                  if (genderRadios[i].value === gender) {
+                                      genderRadios[i].checked = true;
+                                  }
+                              }
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Error fetching user data:', error);
+                      });
 
                     // Show/Hide Password functionality
                     const passwordInput = document.getElementById('password');
