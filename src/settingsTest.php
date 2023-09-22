@@ -35,8 +35,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($form_type === "change_password") {
         // Handle password change
-        // ... (same code as before)
+        $current_password = custom_sanitize($_POST['password']);
+        $new_password = custom_sanitize($_POST['new_password']);
+        $confirm_password = custom_sanitize($_POST['confirm_password']);
 
+        // Check if the new password matches the confirm password
+        if ($new_password !== $confirm_password) {
+            echo "Passwords do not match. Please try again.";
+        } else {
+            // Check the current password for the user from the database
+            $user_id = $_SESSION['user_id'];
+            $stmt = $conn->prepare("SELECT password FROM user WHERE userID = ?");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stored_password = $row['password'];
+
+            // Verify the current password
+            if (password_verify($current_password, $stored_password)) {
+                // Password is correct, update the password in the database
+                $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                $stmt = $conn->prepare("UPDATE user SET password = ? WHERE userID = ?");
+                $stmt->bind_param("si", $new_password_hash, $user_id);
+                if ($stmt->execute()) {
+                    // Password updated successfully
+                    header("Location: settings.html");
+                    exit();
+                } else {
+                    echo "Error updating password: " . $stmt->error;
+                }
+            } else {
+                // Current password is incorrect, show an error
+                echo "Current password is incorrect. Please try again.";
+            }
+        }
     } elseif ($form_type === "update_user_info") {
         // Handle user information update
         $user_id = $_SESSION['user_id'];
@@ -71,21 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 } else {
     // Display a message if the page is accessed without a POST request
-
-    // Fetch user data and send it as JSON
-    if (isset($_SESSION['user_id'])) {
-        $userData = array(
-            'user_id' => $_SESSION['user_id'],
-            'username' => $_SESSION['username'],
-            'name' => $_SESSION['name'],
-            'email' => $_SESSION['email'],
-            'weight' => $_SESSION['weight'],
-            'dateofbirth' => $_SESSION['dateofbirth'],
-            'meal_preference' => $_SESSION['meal_preference'],
-            'gender' => $_SESSION['gender']
-        );
-
-        echo json_encode($userData);
-    }
+    echo "<h1>This page is working.</h1>";
 }
 ?>
