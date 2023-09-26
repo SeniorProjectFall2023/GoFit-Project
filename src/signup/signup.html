@@ -176,7 +176,6 @@
 <body style="background-color: #e6e4e4;">
 
     <div class="main">
-
         <div class="container">
             <div class="signup-content">
                 <div class="signup-img">
@@ -189,11 +188,8 @@
                 <div class="signup-form">
 
                     <form class="register-form" id="register-form" action="../signup.php" method="POST">
-
                         <div class="form-row">
-
                             <div class="form-group">
-                          
                                 <div class="form-input">
                                     <label for="name" class="required">Full Name</label>
                                     <input type="text" name="name" placeholder="John Doe" id="name" required/>
@@ -204,23 +200,22 @@
                                     <input type="text" name="username" placeholder="Johndoe23" id="username" required/>
                                 </div>
 
+                                <!-- Email input with Gmail validation -->
                                 <div class="form-input">
-                                    <div class="input-container">
-                                        <label for="email" class="required">Email</label>
-                                        <input type="email" name="email" placeholder="johndoe@email.com" id="email" required/>
-                                    </div>
+                                    <label for="email" class="required">Email</label>
+                                    <input type="email" name="email" placeholder="johndoe@gmail.com" id="email" required/>
+                                    <span id="emailCaption" style="color: red; display: none;">Please sign up with a valid Gmail account (e.g., example@gmail.com)</span>
                                 </div>
 
                                 <div class="form-input password-input">
-                                    <label for="passworad" class="required">Password</label>
+                                    <label for="password" class="required">Password</label>
                                     <input type="password" name="password" placeholder="************" id="password" required/>
                                     <span class="password-toggle" id="togglePasswordSignUp">
                                         <i class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </span>
                                 </div>
-
                             </div>
-                            
+
                             <div class="form-group">
                                 <br>
                                 <div class="form-select">
@@ -304,22 +299,22 @@
                 </div>
             </div>
         </div>
-        
     </div>
 
- <!-- JavaScript -->
- <script src="vendor/jquery/jquery.min.js"></script>
- <script src="vendor/nouislider/nouislider.min.js"></script>
- <script src="vendor/wnumb/wNumb.js"></script>
- <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
- <script src="vendor/jquery-validation/dist/additional-methods.min.js"></script>
- <!-- <script src="js/main.js"></script> -->
+    <!-- JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/nouislider/nouislider.min.js"></script>
+    <script src="vendor/wnumb/wNumb.js"></script>
+    <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="vendor/jquery-validation/dist/additional-methods.min.js"></script>
 
- <!-- Custom JavaScript for the form -->
- <script>
+    <!-- Custom JavaScript for the form -->
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
         const passwordInput = document.getElementById('password');
         const togglePasswordSignUp = document.getElementById('togglePasswordSignUp');
+        const emailInput = document.getElementById('email');
+        const emailCaption = document.getElementById('emailCaption');
 
         togglePasswordSignUp.addEventListener('click', function () {
             if (passwordInput.type === 'password') {
@@ -332,8 +327,18 @@
                 togglePasswordSignUp.querySelector('i').classList.add('fa-eye-slash');
             }
         });
-    });
-</script>
 
+        emailInput.addEventListener('input', function () {
+            const email = emailInput.value.trim();
+            const isGmail = /@gmail\.com$/.test(email);
+
+            if (isGmail) {
+                emailCaption.style.display = 'none';
+            } else {
+                emailCaption.style.display = 'block';
+            }
+        });
+    });
+    </script>
 </body>
 </html>
