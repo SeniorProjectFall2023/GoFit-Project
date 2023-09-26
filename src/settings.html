@@ -180,36 +180,37 @@ if (isset($_SESSION['user_name'])) {
 
             <div class="col-md-7 col-xl-8">
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="account" role="tabpanel">
+                    <!-- <div class="tab-pane fade show active" id="account" role="tabpanel">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="card-actions float-right">
+                            <div class="card-header"> -->
+                                <!-- <div class="card-actions float-right">
                                     <div class="dropdown show">
                                         <a href="#" data-toggle="dropdown" data-display="static"></a>
                                         <div class="dropdown-menu dropdown-menu-right"></div>
-                                    </div>
-                                </div>
-                                <h5 class="card-title mb-0">Change Password</h5>
-                            </div>
-                            <div class="card-body">
+                                    </div> -->
+                                <!-- </div>  -->
+<!--                              
+                                <h5 class="card-title mb-0">Change Password <button type="button" id="showPasswordBtn">Show</button> </h5>
+                     
+                            </div> -->
+                            <!-- <div class="card-body">
                       <form action="settings.php" method="POST">
                         <input type="hidden" name="form_type" value="change_password">
                           <div class="row">
                             <div class="col-md-12">
                               <div class="form-group col-md-12">
-
                                 <label for="password">Current password</label>
-                                <button type="button" id="showPasswordBtn">Show</button>
                                 <input type="password" placeholder="************" class="form-control" id="password" name="password" value="<?php echo $_SESSION['password']; ?>">
                               </div>
                               <div class="form-group col-md-12">
                                 <label for="inputPasswordNew">New password</label>
-                                <input type="text" class="form-control" name="new_password" id="inputPasswordNew" >
+                                <input type="password" class="form-control" name="new_password" id="inputPasswordNew" >
                               </div>
                               <div class="form-group col-md-12">
                                 <label for="inputPasswordNew2">Verify password</label>
-                                <input type="text" class="form-control" name="confirm_password" id="inputPasswordNew2" >
-                              </div>
+                                <input type="password" class="form-control" name="confirm_password" id="inputPasswordNew2" >
+                                <small id="passwordMatchError" class="text-danger"></small> Error message -->
+                              <!-- </div>
                             </div>
                             <div class="col-md-4">
                               <div class="text-center">
@@ -221,7 +222,7 @@ if (isset($_SESSION['user_name'])) {
                         </form>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
 
                   <div class="card">
@@ -293,57 +294,65 @@ if (isset($_SESSION['user_name'])) {
                   </div>
               </div>
 
+
               <script>
                 document.addEventListener('DOMContentLoaded', function () {
                   // Fetch user data from the server
                   fetch('settings.php') // Update the URL as needed
-                      .then(response => response.json())
-                      .then(data => {
-                          if (data) {
-                              document.getElementById('name').value = data.name;
-                              document.getElementById('username').value = data.username;
-                              document.getElementById('email').value = data.email;
-                              document.getElementById('weight').value = data.weight;
-                              document.getElementById('dateofbirth').value = data.dateofbirth;
-
-                              // Handle the meal_preference and gender fields appropriately
-                              const mealPreference = data.meal_preference;
-                              const gender = data.gender;
-
-                              // Update the meal_preference and gender fields based on their values
-                              // You may need to modify this part to match your HTML structure
-                              // For example, for select elements:
-                              const mealPreferenceSelect = document.getElementById('meal_preference');
-                              mealPreferenceSelect.value = mealPreference;
-
-                              const genderRadios = document.getElementsByName('gender');
-                              for (let i = 0; i < genderRadios.length; i++) {
-                                  if (genderRadios[i].value === gender) {
-                                      genderRadios[i].checked = true;
-                                  }
-                              }
+                    .then(response => response.json())
+                    .then(data => {
+                      if (data) {
+                        document.getElementById('name').value = data.name;
+                        document.getElementById('username').value = data.username;
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('weight').value = data.weight;
+                        document.getElementById('dateofbirth').value = data.dateofbirth;
+              
+                        // Handle the meal_preference and gender fields appropriately
+                        const mealPreference = data.meal_preference;
+                        const gender = data.gender;
+              
+                        // Update the meal_preference and gender fields based on their values
+                        // You may need to modify this part to match your HTML structure
+                        // For example, for select elements:
+                        const mealPreferenceSelect = document.getElementById('meal_preference');
+                        mealPreferenceSelect.value = mealPreference;
+              
+                        const genderRadios = document.getElementsByName('gender');
+                        for (let i = 0; i < genderRadios.length; i++) {
+                          if (genderRadios[i].value === gender) {
+                            genderRadios[i].checked = true;
                           }
-                      })
-                      .catch(error => {
-                          console.error('Error fetching user data:', error);
-                      });
-
-                    // Show/Hide Password functionality
-                    const passwordInput = document.getElementById('password');
-                      const showPasswordBtn = document.getElementById('showPasswordBtn');
-
-                      showPasswordBtn.addEventListener('click', function () {
-                        if (passwordInput.type === 'password') {
-                          passwordInput.type = 'text';
-                          showPasswordBtn.textContent = 'Hide';
-                        } else {
-                          passwordInput.type = 'password';
-                          showPasswordBtn.textContent = 'Show';
                         }
-                      });
+                      }
+                    })
+                    .catch(error => {
+                      console.error('Error fetching user data:', error);
                     });
-                  </script>
-               
+              
+                  // Show/Hide Password functionality
+                  const passwordInput = document.getElementById('password');
+                  const showPasswordBtn = document.getElementById('showPasswordBtn');
+                  const newPassword = document.getElementById('inputPasswordNew');
+                  const verifyPassword = document.getElementById('inputPasswordNew2');
+                  const passwordMatchError = document.getElementById('passwordMatchError');
+              
+                  showPasswordBtn.addEventListener('click', function () {
+                    if (passwordInput.type === 'password') {
+                      passwordInput.type = 'text';
+                      newPassword.type = 'text'; // Show new password
+                      verifyPassword.type = 'text'; // Show verify password
+                      showPasswordBtn.textContent = 'Hide';
+                    } else {
+                      passwordInput.type = 'password';
+                      newPassword.type = 'password'; // Hide new password
+                      verifyPassword.type = 'password'; // Hide verify password
+                      showPasswordBtn.textContent = 'Show';
+                    }
+                  });
+                });
+              </script>
+              
             
               <div class="tab-pane fade show active" id="privacy-security-content" role="tabpanel">
                   <div class="card">
