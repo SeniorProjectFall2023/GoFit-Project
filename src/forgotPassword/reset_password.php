@@ -1,10 +1,7 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/Exception.php';
 
 // Enable error reporting for debugging (remove in production)
 error_reporting(E_ALL);
@@ -48,41 +45,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         // Send an email with a reset link to the user's email address
                         $resetLink = "http://143.110.228.26/forgotPassword/reset_password_form.html?token=" . $resetToken;
 
-                        // Use PHPMailer to send the email via Brevo SMTP
-                        try {
-                            $mail = new PHPMailer(true);
+                        // Compose the email message
+                        $subject = 'Password Reset Link';
+                        $from = 'fayzan23@gmail.com';
+                        $fromName = 'GoFit ChatBot Team';
+                        $to = $email;
+                        $bodyHtml = "<p>Hello $username,</p>
+                            <p>You have requested a password reset. Please click the following link to reset your password:</p>
+                            <p><a href='$resetLink'>$resetLink</a></p>
+                            <p>If you did not request this, please ignore this email.</p>
+                            <p>Regards,<br>The GoFit ChatBot Team</p>";
 
-                            $mail->isSMTP();
-                            $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable debugging
-                            $mail->SMTPAuth = true;
-                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                            $mail->Host = 'smtp-relay.brevo.com'; // Brevo SMTP server
-                            $mail->Port = 587;
-                            $mail->Username = 'xsmtpsib-dbed0328278eb4281a1d060186d0f7103901cedd6ce8cdca61e4882f4dcd4ee3-pMDg4TBOkGqdjcSy'; // Your Brevo API key
-                            $mail->Password = 'xsmtpsib-dbed0328278eb4281a1d060186d0f7103901cedd6ce8cdca61e4882f4dcd4ee3-pMDg4TBOkGqdjcSy'; // Your Brevo API key
+                        // Send the email using Elastic Email API
+                        $elasticEmailApiKey = '9C862B6CBB7060829F9EE853E8ADDBACD90E6E842C3F19EAB55348A067FDE1C98B2CE8CF1FE0F3B2123CC04D75789931';
 
-                            $mail->setFrom('fayzan23@gmail.com', 'GoFit ChatBot'); // Sender's email and name
-                            $mail->addAddress($email, $username); // Recipient's email and name
+                        $data = [
+                            'apikey' => $elasticEmailApiKey,
+                            'subject' => $subject,
+                            'from' => $from,
+                            'fromName' => $fromName,
+                            'to' => $to,
+                            'bodyHtml' => $bodyHtml,
+                        ];
 
-                            $mail->Subject = 'Password Reset Link';
-                            $mail->isHTML(true);
+                        $url = 'https://api.elasticemail.com/v2/email/send';
 
-                            // Define the email body here (you can use HTML)
-                            $emailBody = "
-                                <p>Hello $username,</p>
-                                <p>You have requested a password reset. Please click the following link to reset your password:</p>
-                                <p><a href='$resetLink'>$resetLink</a></p>
-                                <p>If you did not request this, please ignore this email.</p>
-                                <p>Regards,<br>The GoFit ChatBot Team</p>
-                            ";
+                        $ch = curl_init($url);
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-                            $mail->Body = $emailBody;
+                        $response = curl_exec($ch);
 
-                            $mail->send();
+                        if ($response !== false) {
                             echo "<script>alert('Password reset link sent to your email.');</script>";
-                        } catch (Exception $e) {
-                            echo "<script>alert('Error sending the password reset email: " . $mail->ErrorInfo . "');</script>";
+                        } else {
+                            echo "<script>alert('Error sending the password reset email.');</script>";
                         }
+
+                        curl_close($ch);
                     } else {
                         echo "<script>alert('Error updating reset token: " . $updateStmt->error . "');</script>";
                     }
