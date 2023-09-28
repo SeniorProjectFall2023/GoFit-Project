@@ -65,38 +65,6 @@
       left: 20px; /* Adjust the right position as needed */
     }
 
-                /* Add CSS for password input */
-                .password-input {
-                position: relative;
-            }
-
-            .password-toggle {
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                color: #777; /* Change the color to your preference */
-            }
-
-            .password-toggle:hover {
-                color: #333; /* Change the hover color to your preference */
-            }
-
-            /* Style the eye icon */
-            .password-toggle::before {
-                content: "\f06e"; /* Unicode for the eye icon */
-                font-family: "Font Awesome 5 Free";
-                font-weight: 900;
-                font-size: 18px; /* Adjust the size to your preference */
-            }
-
-            /* Hide the password input's browser-generated tooltip */
-            input[type="password"]::-ms-reveal,
-            input[type="password"]::-ms-clear {
-                display: none;
-            }
-
             /* Style the select container */
 .form-select {
     position: relative;
@@ -150,8 +118,48 @@
     margin-bottom: 0;
 }
 
+/* Style the password input container */
+.password-input {
+    position: relative;
+}
 
-    </style>
+/* Style the password container */
+.password-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Style the password input */
+.password-container input[type="password"] {
+    flex-grow: 1;
+}
+ 
+/* Center the eye icon */
+.password-toggle {
+    position: absolute;
+    right: 10px; /* Adjust the right position to your preference */
+    top: 60%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777; /* Change the color to your preference */
+}
+
+/* Style the eye icon */
+.password-toggle::before {
+    content: "\f06e"; /* Unicode for the eye icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 18px; /* Adjust the size to your preference */
+}
+
+/* Hide the password input's browser-generated tooltip */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+
+</style>
 
   	<body style="background-color: #e6e4e4;">
 			<!-- <div class="button-68-container">
@@ -165,7 +173,6 @@
             <br>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-Ff538cBED08fD6ab9EBA5A7f52FFf6e25Bc9b90b4b36f61d42f0f90e7d2d9615" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
@@ -209,10 +216,11 @@
 
                                 <div class="form-input password-input">
                                     <label for="password" class="required">Password</label>
-                                    <input type="password" name="password" placeholder="************" id="password" required/>
-                                    <span class="password-toggle" id="togglePasswordSignUp">
-                                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                                    </span>
+                                    <div class="password-container">
+                                        <input type="password" name="password" placeholder="************" id="password" required/>
+                                        <span class="password-toggle" id="togglePasswordSignUp">         
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -328,16 +336,16 @@
             }
         });
 
-        emailInput.addEventListener('input', function () {
-            const email = emailInput.value.trim();
-            const isGmail = /@gmail\.com$/.test(email);
+        // emailInput.addEventListener('input', function () {
+        //     const email = emailInput.value.trim();
+        //     const isGmail = /@gmail\.com$/.test(email);
 
-            if (isGmail) {
-                emailCaption.style.display = 'none';
-            } else {
-                emailCaption.style.display = 'block';
-            }
-        });
+        //     if (isGmail) {
+        //         emailCaption.style.display = 'none';
+        //     } else {
+        //         emailCaption.style.display = 'block';
+        //     }
+        // });
     });
     </script>
 </body>

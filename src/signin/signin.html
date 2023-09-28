@@ -11,6 +11,13 @@
     <link rel="icon" type="image/png" href="images/favicon-32x32.png">
 </head>
 <body style="background-color: #e6e4e4;">
+    <!-- <?php
+    // Check if an error message is present in the URL
+    if (isset($_GET['error'])) {
+        $errorMessage = urldecode($_GET['error']);
+        echo "<div class='error-message'>$errorMessage</div>";
+    }
+    ?> -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-7 col-lg-5">
@@ -57,6 +64,10 @@
         body {
         background-color: #e6e4e4;
         padding-top: 50px; /* Adjust the top padding as needed */
+    }
+
+    a:hover {
+        text-decoration: underline !important;
     }
 </style>
 </html>
