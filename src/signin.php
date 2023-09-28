@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$stmt) {
         echo "<script>alert('Error preparing statement: " . $db->error . "');</script>";
+        header("Location: /signin/signin.html?error=Error%20preparing%20statement:%20" . urlencode($db->error));
     } else {
         $stmt->bind_param("s", $username);
         if ($stmt->execute()) {
@@ -37,17 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['userID'] = $userID; // Optionally, set the user's ID in the session
 
                     // Redirect to the home page
-                    header("Location: index.html");
+                    header("Location: /index.html");
                     exit();
                 } else {
                     echo "<script>alert('Incorrect password.');</script>";
+                    echo "<script>window.location.href='/signin/signin.html?error=Incorrect%20password.';</script>";
                 }
             } else {
                 echo "<script>alert('User not found.');</script>";
+                echo "<script>window.location.href='/signin/signin.html?error=User%20not%20found.';</script>";
             }
             $stmt->close();
         } else {
             echo "<script>alert('Error executing statement: " . $stmt->error . "');</script>";
+            header("Location: /signin/signin.html?error=Error%20executing%20statement:%20" . urlencode($stmt->error));
         }
     }
 

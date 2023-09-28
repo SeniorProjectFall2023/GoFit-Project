@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <p>Regards,<br>The GoFit ChatBot Team</p>";
 
                         // Send the email using Elastic Email API
-                        $elasticEmailApiKey = '9C862B6CBB7060829F9EE853E8ADDBACD90E6E842C3F19EAB55348A067FDE1C98B2CE8CF1FE0F3B2123CC04D75789931';
+                        $elasticEmailApiKey = 'C85A2F0F8037A1687985B513E5D2C31596C33195608130C320109FF3569C930D7769D838370EF5E8760B73F8114BF7AE';
 
                         $data = [
                             'apikey' => $elasticEmailApiKey,
@@ -79,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         if ($response !== false) {
                             echo "<script>alert('Password reset link sent to your email.');</script>";
+                            echo "<script>window.location.href = '../index.html';</script>"; // Redirect to the home page
                         } else {
                             echo "<script>alert('Error sending the password reset email.');</script>";
                         }
