@@ -180,50 +180,6 @@ if (isset($_SESSION['user_name'])) {
 
             <div class="col-md-7 col-xl-8">
                 <div class="tab-content">
-                    <!-- <div class="tab-pane fade show active" id="account" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header"> -->
-                                <!-- <div class="card-actions float-right">
-                                    <div class="dropdown show">
-                                        <a href="#" data-toggle="dropdown" data-display="static"></a>
-                                        <div class="dropdown-menu dropdown-menu-right"></div>
-                                    </div> -->
-                                <!-- </div>  -->
-<!--                              
-                                <h5 class="card-title mb-0">Change Password <button type="button" id="showPasswordBtn">Show</button> </h5>
-                     
-                            </div> -->
-                            <!-- <div class="card-body">
-                      <form action="settings.php" method="POST">
-                        <input type="hidden" name="form_type" value="change_password">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <div class="form-group col-md-12">
-                                <label for="password">Current password</label>
-                                <input type="password" placeholder="************" class="form-control" id="password" name="password" value="<?php echo $_SESSION['password']; ?>">
-                              </div>
-                              <div class="form-group col-md-12">
-                                <label for="inputPasswordNew">New password</label>
-                                <input type="password" class="form-control" name="new_password" id="inputPasswordNew" >
-                              </div>
-                              <div class="form-group col-md-12">
-                                <label for="inputPasswordNew2">Verify password</label>
-                                <input type="password" class="form-control" name="confirm_password" id="inputPasswordNew2" >
-                                <small id="passwordMatchError" class="text-danger"></small> Error message -->
-                              <!-- </div>
-                            </div>
-                            <div class="col-md-4">
-                              <div class="text-center">
-                                <div class="mt-2"></div>
-                              </div>
-                            </div>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Save changes</button>
-                        </form>
-                      </div>
-                    </div>
-                  </div> -->
-
 
                   <div class="card">
                     <div class="card-header">
@@ -236,56 +192,55 @@ if (isset($_SESSION['user_name'])) {
                       <h5 class="card-title mb-0">Updater User Information</h5>
                     </div>
                     <div class="card-body">
-                      <form action="settings.php" method="POST">
+                      <form id="user-info-form" action="settings.php" method="POST">
                         <input type="hidden" name="form_type" value="update_user_info">
                         <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="inputUsername">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Johndoe23" value="<?php echo $_SESSION['username']; ?>">
-                          </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputFullName">Full Name</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" value="<?php echo $_SESSION['name']; ?>">
-
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="inputEmail4">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="johndoe@email.com" value="<?php echo $_SESSION['email']; ?>">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputWeight">Weight (lb)</label>
-                            <input type="number" class="form-control" name="weight" id="weight" placeholder="156" value="<?php echo $_SESSION['weight']; ?>">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="inputDateofbirth">Date Of Birth</label>
-                            <input type="date" class="form-control" name="dateofbirth" id="dateofbirth" placeholder="mm/dd/yyyy" value="<?php echo $_SESSION['dateofbirth']; ?>">
-                        </div>
+                            <div class="form-group col-md-6">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Johndoe23" value="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="name">Full Name</label>
+                                <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" value="">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="johndoe@email.com" value="">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="weight">Weight (lb)</label>
+                                <input type="number" class="form-control" name="weight" id="weight" placeholder="156" value="">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="dateofbirth">Date Of Birth</label>
+                                <input type="date" class="form-control" name="dateofbirth" id="dateofbirth" placeholder="mm/dd/yyyy" value="">
+                            </div>
                         </div>
                         <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="meal_preference">Fitness Goal</label>
-                            <select id="meal_preference" name="meal_preference" class="form-control">
-                              <option value="- Select -" <?php if ($_SESSION['meal_preference'] === "- Select -") echo "selected"; ?>>- Select -</option>
-                              <option value="Weight Loss" <?php if ($_SESSION['meal_preference'] === "Weight Loss") echo "selected"; ?>>Weight Loss</option>
-                              <option value="Muscle Gain" <?php if ($_SESSION['meal_preference'] === "Muscle Gain") echo "selected"; ?>>Muscle Gain</option>
-                              <option value="Endurance" <?php if ($_SESSION['meal_preference'] === "Endurance ") echo "selected"; ?>>Endurance</option>
-                              <option value="Balance" <?php if ($_SESSION['meal_preference'] === "Balance ") echo "selected"; ?>>Balance</option>
-                              <option value="Nutrition" <?php if ($_SESSION['meal_preference'] === "Nutrition ") echo "selected"; ?>>Nutrition</option>
-                              <option value="Stress Reduction" <?php if ($_SESSION['meal_preference'] === "Stress Reduction ") echo "selected"; ?>>Stress Reduction</option>
-                              <option value="Body Composition" <?php if ($_SESSION['meal_preference'] === "Body Composition ") echo "selected"; ?>>Body Composition</option>
-                              <option value="Weightlifting" <?php if ($_SESSION['meal_preference'] === "Weightlifting ") echo "selected"; ?>>Weightlifting</option>
-                              <option value="Bodybuilding" <?php if ($_SESSION['meal_preference'] === "Bodybuilding ") echo "selected"; ?>>Bodybuilding</option>
-                              <option value="CrossFit" <?php if ($_SESSION['meal_preference'] === "CrossFit ") echo "selected"; ?>>CrossFit</option>
-                            </select>
+                            <div class="form-group col-md-6">
+                                <label for="meal_preference">Fitness Goal</label>
+                                <select id="meal_preference" name="meal_preference" class="form-control">
+                                    <option value="- Select -">- Select -</option>
+                                    <option value="Weight Loss">Weight Loss</option>
+                                    <option value="Muscle Gain">Muscle Gain</option>
+                                    <option value="Endurance">Endurance</option>
+                                    <option value="Balance">Balance</option>
+                                    <option value="Nutrition">Nutrition</option>
+                                    <option value="Stress Reduction">Stress Reduction</option>
+                                    <option value="Body Composition">Body Composition</option>
+                                    <option value="Weightlifting">Weightlifting</option>
+                                    <option value="Bodybuilding">Bodybuilding</option>
+                                    <option value="CrossFit">CrossFit</option>
+                              </select>
                           </div>
                           <div class="form-group col-md-4">
                             <label for="gender">Gender</label>
                             <select id="gender" name="gender" class="form-control">
-                                <option value="- Select -" <?php if ($_SESSION['gender'] === "- Select -") echo "selected"; ?>>- Select -</option>
-                                <option value="Male" <?php if ($_SESSION['gender'] === "Male") echo "selected"; ?>>Male</option>
-                                <option value="Female" <?php if ($_SESSION['gender'] === "Female") echo "selected"; ?>>Female</option>
-                                <option value="Other" <?php if ($_SESSION['gender'] === "Other") echo "selected"; ?>>Other</option>
-                            </select>
+                              <option value="- Select -">- Select -</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Other">Other</option>
+                          </select>                          
                           </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -295,64 +250,67 @@ if (isset($_SESSION['user_name'])) {
               </div>
 
 
+
               <script>
                 document.addEventListener('DOMContentLoaded', function () {
-                  // Fetch user data from the server
-                  fetch('settings.php') // Update the URL as needed
-                    .then(response => response.json())
-                    .then(data => {
-                      if (data) {
-                        document.getElementById('name').value = data.name;
-                        document.getElementById('username').value = data.username;
-                        document.getElementById('email').value = data.email;
-                        document.getElementById('weight').value = data.weight;
-                        document.getElementById('dateofbirth').value = data.dateofbirth;
-              
-                        // Handle the meal_preference and gender fields appropriately
-                        const mealPreference = data.meal_preference;
-                        const gender = data.gender;
-              
-                        // Update the meal_preference and gender fields based on their values
-                        // You may need to modify this part to match your HTML structure
-                        // For example, for select elements:
-                        const mealPreferenceSelect = document.getElementById('meal_preference');
-                        mealPreferenceSelect.value = mealPreference;
-              
-                        const genderRadios = document.getElementsByName('gender');
-                        for (let i = 0; i < genderRadios.length; i++) {
-                          if (genderRadios[i].value === gender) {
-                            genderRadios[i].checked = true;
-                          }
-                        }
-                      }
-                    })
-                    .catch(error => {
-                      console.error('Error fetching user data:', error);
+                    // Fetch user data from the server
+                    fetch('settings.php') // Update the URL as needed
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data) {
+                                document.getElementById('name').value = data.name;
+                                document.getElementById('username').value = data.username;
+                                document.getElementById('email').value = data.email;
+                                document.getElementById('weight').value = data.weight;
+                                document.getElementById('dateofbirth').value = data.dateofbirth;
+            
+                                // Handle the meal_preference and gender fields appropriately
+                                const mealPreference = data.meal_preference;
+                                const gender = data.gender;
+            
+                                // Update the meal_preference and gender fields based on their values
+                                const mealPreferenceSelect = document.getElementById('meal_preference');
+                                mealPreferenceSelect.value = mealPreference;
+            
+                                const genderSelect = document.getElementById('gender');
+                                genderSelect.value = gender;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching user data:', error);
+                        });
+            
+            
+                    // Add this code for form submission with AJAX
+                    const userInfoForm = document.getElementById('user-info-form');
+            
+                    userInfoForm.addEventListener('submit', function (event) {
+                        event.preventDefault(); // Prevent the form from submitting normally
+            
+                        const formData = new FormData(this);
+            
+                        // Send the form data to settings.php using AJAX
+                        $.ajax({
+                            type: 'POST',
+                            url: 'settings.php',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                // Handle the response from settings.php
+                                console.log(response); // You can log the response for debugging
+                                // You can also handle success/failure here and provide user feedback
+                            },
+                            error: function (xhr, status, error) {
+                                // Handle errors here
+                                console.error(error); // Log the error for debugging
+                            }
+                        });
                     });
-              
-                  // Show/Hide Password functionality
-                  const passwordInput = document.getElementById('password');
-                  const showPasswordBtn = document.getElementById('showPasswordBtn');
-                  const newPassword = document.getElementById('inputPasswordNew');
-                  const verifyPassword = document.getElementById('inputPasswordNew2');
-                  const passwordMatchError = document.getElementById('passwordMatchError');
-              
-                  showPasswordBtn.addEventListener('click', function () {
-                    if (passwordInput.type === 'password') {
-                      passwordInput.type = 'text';
-                      newPassword.type = 'text'; // Show new password
-                      verifyPassword.type = 'text'; // Show verify password
-                      showPasswordBtn.textContent = 'Hide';
-                    } else {
-                      passwordInput.type = 'password';
-                      newPassword.type = 'password'; // Hide new password
-                      verifyPassword.type = 'password'; // Hide verify password
-                      showPasswordBtn.textContent = 'Show';
-                    }
-                  });
                 });
-              </script>
-              
+            </script>
+
+
             
               <div class="tab-pane fade show active" id="privacy-security-content" role="tabpanel">
                   <div class="card">
