@@ -34,8 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($password, $db_password)) {
                     // Sign-in successful, create a session
                     session_start();
-                    $_SESSION['user_name'] = $db_username; // Set the username in the session
-                    $_SESSION['userID'] = $userID; // Optionally, set the user's ID in the session
+                    $_SESSION['user_name'] = $db_username; // Store the username
+                    $_SESSION['userID'] = $userID; // Store the user's ID
 
                     // Redirect to the home page
                     header("Location: /index.html");
