@@ -42,28 +42,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $db->prepare($query);
 
     if (!$stmt) {
-        ?>
-        <script>
-            alert("Error: <?php echo $db->error; ?>");
-            window.location.href = '/signup/signup.html';
-        </script>
-        <?php
+        $errorMessage = "Error: " . $db->error;
+        header("Location: /signup/signup.html?error=" . urlencode($errorMessage));
+        exit();
     } else {
         $stmt->bind_param("ssssssss", $name, $username, $email, $password, $meal_preference, $gender, $weight, $dateofbirth);
         if ($stmt->execute()) {
-            ?>
-            <script>
-                alert("Registration Successful!\nThank you for signing up with GoFit.");
-                window.location.href = '/signin/signin.html';
-            </script>
-            <?php
+            // Store user information in the session
+            $_SESSION['user_name'] = $username; // Store the username
+            $_SESSION['userID'] = $stmt->insert_id; // Store the user's ID
+            header("Location: /index.html");
+            exit();
         } else {
-            ?>
-            <script>
-                alert("Error: <?php echo $stmt->error; ?>");
-                window.location.href = '/signup/signup.html';
-            </script>
-            <?php
+            $errorMessage = "Error: " . $stmt->error;
+            header("Location: /signup/signup.html?error=" . urlencode($errorMessage));
+            exit();
         }
         $stmt->close();
     }
