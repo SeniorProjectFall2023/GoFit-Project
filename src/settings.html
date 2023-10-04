@@ -253,62 +253,50 @@ if (isset($_SESSION['user_name'])) {
 
               <script>
                 document.addEventListener('DOMContentLoaded', function () {
-                    // Fetch user data from the server
-                    fetch('settings.php') // Update the URL as needed
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data) {
-                                document.getElementById('name').value = data.name;
-                                document.getElementById('username').value = data.username;
-                                document.getElementById('email').value = data.email;
-                                document.getElementById('weight').value = data.weight;
-                                document.getElementById('dateofbirth').value = data.dateofbirth;
-            
-                                // Handle the meal_preference and gender fields appropriately
-                                const mealPreference = data.meal_preference;
-                                const gender = data.gender;
-            
-                                // Update the meal_preference and gender fields based on their values
-                                const mealPreferenceSelect = document.getElementById('meal_preference');
-                                mealPreferenceSelect.value = mealPreference;
-            
-                                const genderSelect = document.getElementById('gender');
-                                genderSelect.value = gender;
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error fetching user data:', error);
-                        });
-            
-            
-                    // Add this code for form submission with AJAX
-                    const userInfoForm = document.getElementById('user-info-form');
-            
-                    userInfoForm.addEventListener('submit', function (event) {
-                        event.preventDefault(); // Prevent the form from submitting normally
-            
-                        const formData = new FormData(this);
-            
-                        // Send the form data to settings.php using AJAX
-                        $.ajax({
-                            type: 'POST',
-                            url: 'settings.php',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                // Handle the response from settings.php
-                                console.log(response); // You can log the response for debugging
-                                // You can also handle success/failure here and provide user feedback
-                            },
-                            error: function (xhr, status, error) {
-                                // Handle errors here
-                                console.error(error); // Log the error for debugging
-                            }
-                        });
+                  // Fetch user data from the server
+                  fetch('settings.php', { method: 'GET' }) // Use GET method for fetching data
+                    .then(response => response.json())
+                    .then(data => {
+                      if (data) {
+                        // Update your form fields with the fetched data here
+                        document.getElementById('name').value = data.name;
+                        document.getElementById('username').value = data.username;
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('weight').value = data.weight;
+                        document.getElementById('dateofbirth').value = data.dateofbirth;
+                        document.getElementById('meal_preference').value = data.meal_preference;
+                        document.getElementById('gender').value = data.gender;
+                      }
+                    })
+                    .catch(error => {
+                      console.error('Error fetching user data:', error);
                     });
+            
+                  // Handle form submission with AJAX
+                  const userInfoForm = document.getElementById('user-info-form');
+                  userInfoForm.addEventListener('submit', function (event) {
+                    event.preventDefault(); // Prevent the form from submitting normally
+            
+                    const formData = new FormData(this);
+            
+                    // Send the form data to settings.php using AJAX
+                    fetch('settings.php', {
+                      method: 'POST',
+                      body: formData
+                    })
+                      .then(response => response.text()) // Assuming settings.php returns text
+                      .then(response => {
+                        // Handle the response from settings.php
+                        console.log(response); // You can log the response for debugging
+                        // You can also handle success/failure here and provide user feedback
+                      })
+                      .catch(error => {
+                        // Handle errors here
+                        console.error('Error submitting form:', error);
+                      });
+                  });
                 });
-            </script>
+              </script>
 
 
             
