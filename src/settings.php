@@ -7,23 +7,29 @@ if (!isset($_SESSION['userID'])) {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Establish a database connection if needed
+// Function to establish a database connection
+function connectToDatabase() {
     $db_host = "localhost";
     $db_user = "root";
     $db_password = "cosc4360-McCurry";
     $db_name = "GoFit";
-
     $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Fetch user data from the database based on userID from the session
+    return $conn;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Fetch user data from the database and return it as JSON
+    $conn = connectToDatabase();
+
+    // Fetch user data based on userID from the session
     $userID = $_SESSION['userID'];
 
-    $query = "SELECT name, email, dateofbirth, gender, meal_preference, weight FROM users WHERE userID = ?";
+    $query = "SELECT name, email, dateofbirth, gender, meal_preference, weight FROM user WHERE userID = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $userID);
     $stmt->execute();
@@ -46,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         echo json_encode($userData);
     } else {
         // User not found
-        echo 'User not found';
+        echo json_encode(['error' => 'User not found']);
     }
 
     // Close the statement and database connection
@@ -54,19 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $conn->close();
 } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle form submission to update user information here
-    // You need to parse the POST data, update the user's information in the database, and return a response accordingly
-
-    // Establish a new database connection for the POST request
-    $db_host = "localhost";
-    $db_user = "root";
-    $db_password = "cosc4360-McCurry";
-    $db_name = "GoFit";
-
-    $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $conn = connectToDatabase();
 
     // Retrieve user ID from the session
     $userID = $_SESSION['userID'];
@@ -80,16 +74,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
 
     // Update user information in the database
-    $query = "UPDATE users SET name=?, email=?, dateofbirth=?, gender=?, meal_preference=?, weight=? WHERE userID=?";
+    $query = "UPDATE user SET name=?, email=?, dateofbirth=?, gender=?, meal_preference=?, weight=? WHERE userID=?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ssssssd", $name, $email, $dateofbirth, $gender, $meal_preference, $weight, $userID);
 
     if ($stmt->execute()) {
         // User information updated successfully
-        echo "User information updated successfully.";
+        echo json_encode(["success" => true, "message" => "User information updated successfully"]);
     } else {
         // Error updating user information
-        echo "Error updating user information: " . $stmt->error;
+        echo json_encode(["success" => false, "message" => "Error updating user information: " . $stmt->error]);
     }
 
     // Close the statement and database connection
