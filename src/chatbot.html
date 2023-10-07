@@ -145,89 +145,244 @@ if (isset($_SESSION['user_name'])) {
   </div>
 </section><!-- End Breadcrumbs -->
 
+<style>
+  /* Chatbot container styles */
+  #chatbot-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #f8f8f8;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+  }
+
+  /* Message alignment */
+  .user {
+      text-align: right;
+      background-color: #1bbd36; /* User response background color */
+      color: #fff; /* User response text color */
+      margin-left: auto;
+  }
+
+  .chatbot {
+      text-align: left;
+      background-color: #ccc; /* Chatbot response background color (grey) */
+      color: #000; /* Chatbot response text color (black) */
+  }
+
+  /* Message styles */
+  .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 80%;
+  }
+
+  /* User input (textarea) styles */
+  #user-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+      outline: none;
+      resize: none; /* Disable manual resizing */
+      min-height: 40px; /* Minimum height */
+      overflow-y: auto; /* Add vertical scrollbar if content overflows */
+  }
+
+  /* Send button style */
+  #send-button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #1bbd36; /* Button background color */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+  }
+
+  #send-button:hover {
+      background-color: #009e2b; /* Hover color for the button */
+  }
+
+  /* Sticky footer styles */
+  footer {
+      margin-top: auto;
+  }
+</style>
+
+
+
+
      <!-- ======= Services Section ======= -->
   <section id="services" class="services section-bg">
     
-              <!-- Add the chatbot container -->
+
+   
             <!-- Chatbot container -->
             <div id="chatbot-container">
               <div id="chatbot-messages"></div>
-              <input type="text" id="user-input" placeholder="Type your message...">
+
+              <textarea id="user-input" placeholder="Type your message..." oninput="autoExpand(this)"></textarea>
+
               <button id="send-button">Send</button>
-            </div>
+          </div>
 
-            <script>
-              // Define your OpenAI API key
-              const apiKey = "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";
-          
-              // Function to send a message to the chatbot and get a response
-              async function sendMessage(message) {
-                //try {
-                  console.log("message: " + message)
-                  const apiUrl = 'https://api.openai.com/v1/engines/text-davinci-003/completions'
-                const prompt1 = 'Translate the following English text to French: "Hello, how are you?"';
 
-                const requestOptions = {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`,
-                  },
-                  body: JSON.stringify({
-                    prompt1,
-                    max_tokens: 50, // Adjust as needed
-                  }),
-                };
 
-                fetch(apiUrl, requestOptions)
-                  .then((response) => {
-                    //if (!response.ok) {
-                    //  throw new Error(`HTTP error! Status: ${response.status}`);
-                    //}
-                    return response.json();
-                  })
-                  .then((data) => {
-                    const generatedText = data.choices[0].text;
-                    console.log(generatedText);
-                  })
-                  .catch((error) => {
-                    console.error('Error:', error);
-                  });
-                //} catch (error) {
-                //  console.error("Error calling OpenAI API:", error);
-                //  return null;
-                //}
-              }
-          
-              // Function to append a message to the chat
-              function appendMessage(text, sender) {
-                const chatbotMessages = document.getElementById("chatbot-messages");
-                const messageDiv = document.createElement("div");
-                messageDiv.className = `message ${sender}`;
-                messageDiv.innerText = text;
-                chatbotMessages.appendChild(messageDiv);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-              }
-          
-              // Add event listener to the "Send" button
-              document.getElementById("send-button").addEventListener("click", async () => {
-                
-                
-                
-                const userInput = document.getElementById("user-input");
-                const userMessage = userInput.value.trim();
-          
-                if (userMessage !== "") {
-                  appendMessage(userMessage, "user");
-                  userInput.value = "";
-          
-                  const chatbotResponse = await sendMessage(userMessage);
-                  if (chatbotResponse !== null) {
-                    appendMessage(chatbotResponse, "chatbot");
-                  }
-                }
-              });
-            </script>
+
+          <script>
+            // Define your OpenAI API key
+            const apiKey = "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"; // Replace with your actual OpenAI API key
+            const apiUrl = "https://gofit.site/openai-proxy.php"; // Replace with your actual domain and path
+        
+            // Function to send a message to the chatbot and get a response
+    async function sendMessage(prompt) {
+        try {
+            // Append "in 150 words please" to the user's input
+            const promptWithLimit = `${prompt} . Also, make sure to end off the response with a complete sentence please, do not cut off, if you have to cut off just stop responding at the last period please.`;
+
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`,
+            };
+
+            const requestBody = {
+                "model": "gpt-3.5-turbo",
+                "messages": [{
+                    "role": "user",
+                    "content": promptWithLimit
+                }],
+                "max_tokens": 300, 
+            };
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) {
+                console.error('Error:', response.statusText);
+                return null;
+            }
+
+            const data = await response.json();
+
+            if (!data.choices || data.choices.length === 0) {
+                console.error('Error: Empty response from OpenAI API');
+                return null;
+            }
+
+            let chatbotResponse = data.choices[0].message.content;
+
+            // Check if the response exceeds the specified max_tokens
+            if (data.choices[0].message.length >= 300) {
+                // Truncate the response to a reasonable length (e.g., at the last sentence)
+                chatbotResponse = truncateResponse(chatbotResponse, 300);
+            }
+
+            console.log("Response: " + chatbotResponse);
+            return chatbotResponse;
+        } catch (error) {
+            console.error("Error calling OpenAI API:", error);
+            return null;
+        }
+    }
+
+    // Function to truncate a response at the last complete sentence or paragraph
+    function truncateResponse(text, maxTokens) {
+        // Split the text into sentences
+        const sentences = text.split('. ');
+
+        // Initialize variables to keep track of the truncated text and token count
+        let truncatedText = '';
+        let tokenCount = 0;
+
+        // Iterate through the sentences and add them to the truncated text until the token limit is reached
+        for (const sentence of sentences) {
+            const sentenceTokens = sentence.split(' ');
+            const sentenceTokenCount = sentenceTokens.length;
+
+            // Check if adding the sentence would exceed the token limit
+            if (tokenCount + sentenceTokenCount <= maxTokens) {
+                truncatedText += sentence + '. ';
+                tokenCount += sentenceTokenCount;
+            } else {
+                break; // Stop when exceeding the token limit
+            }
+        }
+
+        return truncatedText.trim(); // Remove trailing space
+    }
+
+    // Function to append a message to the chat
+    function appendMessage(text, sender) {
+        const chatbotMessages = document.getElementById("chatbot-messages");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${sender}`;
+
+        // Check if the message is from the chatbot, and add a <p> element for each line
+        if (sender === "chatbot") {
+            const lines = text.split('\n');
+            lines.forEach((line) => {
+                const p = document.createElement("p");
+                p.innerText = line;
+                messageDiv.appendChild(p);
+            });
+        } else {
+            messageDiv.innerText = text;
+        }
+
+        chatbotMessages.appendChild(messageDiv);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scroll to the bottom of the chat
+    }
+
+    // Function to handle "Enter" key press
+    function handleInput(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent the default form submission
+            document.getElementById("send-button").click(); // Trigger a click on the "Send" button
+        }
+    }
+
+    // Function to automatically expand the textarea based on its content
+    function autoExpand(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+    }
+
+    // Add event listener to the "Send" button
+    document.getElementById("send-button").addEventListener("click", async () => {
+        console.log("clicked");
+
+        const userInput = document.getElementById("user-input");
+        const userMessage = userInput.value.trim();
+
+        if (userMessage !== "") {
+            appendMessage(userMessage, "user");
+            userInput.value = "";
+
+            console.log("Sending Message: " + userMessage);
+            const chatbotResponse = await sendMessage(userMessage);
+            if (chatbotResponse !== null) {
+                appendMessage(chatbotResponse, "chatbot");
+            }
+
+            console.log("Response: " + chatbotResponse);
+        }
+    });
+</script>
+        
+            
+
+            
     </main><!-- End #main -->
 
       </div>
