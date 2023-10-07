@@ -78,12 +78,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $response = curl_exec($ch);
 
                         if ($response !== false) {
-                            echo "<script>alert('Password reset link sent to your email.');</script>";
+                            echo "<script>alert('A password reset link has been sent to your email address.\nPlease check your email inbox and, if not found, kindly check your Spam folder. Be sure to mark it as \"Not Spam\" to receive future emails from us.');</script>";
+
                             echo "<script>window.location.href = '../index.html';</script>"; // Redirect to the home page
                         } else {
                             echo "<script>alert('Error sending the password reset email.');</script>";
                         }
-
                         curl_close($ch);
                     } else {
                         echo "<script>alert('Error updating reset token: " . $updateStmt->error . "');</script>";
