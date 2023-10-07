@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +19,7 @@ if (isset($_SESSION['user_name'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Home - GoFit ChatBot</title>
+  <title>Contact</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -159,10 +158,10 @@ if (isset($_SESSION['user_name'])) {
               </div>
               <div class="my-3">
                   <div class="loading" style="display: none;">Loading...</div>
-                  <div class="error-message" style="display: none;"></div>
+                  <!-- <div class="error-message" style="display: none;"></div> -->
                   <div class="sent-message" style="display: none;">Your message has been sent. Thank you!</div>
               </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
+              <div class="text-center"><button type="submit" id="sendMessageBtn">Send Message</button></div>
           </form>
         </div>
 
@@ -172,6 +171,14 @@ if (isset($_SESSION['user_name'])) {
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("sendMessageBtn").addEventListener("click", function () {
+        alert("Message Successfully Sent!");
+      });
+    });
+    </script>
 
   <!-- ======= Footer ======= -->
   <footer id="footer">

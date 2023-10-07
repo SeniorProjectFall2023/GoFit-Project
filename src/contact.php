@@ -18,20 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Create a new PHPMailer instance
         $mail = new PHPMailer();
 
-        // SMTP configuration (replace with your Elastic Email API details)
+        // SMTP configuration
         $mail->isSMTP();
         $mail->Host = 'smtp.elasticemail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = '6509A77CDD87F4427D783C83FFF48851D2E450F99E673AECE1B49D1BB993DFEECB40C3436C92C49F3E7EFB495F05148B'; // Replace with your Elastic Email API key
-        $mail->Password = ''; // Leave this empty
+        $mail->Username = 'fayzan23@gmail.com'; // Replace with your Elastic Email username
+        $mail->Password = '5A3A1BD816AC17D84661469B5A246EA8A128'; // Replace with your Elastic Email password
         $mail->Port = 2525; // Elastic Email SMTP port
         $mail->SMTPSecure = 'tls'; // Use TLS encryption
 
-        // Get the recipient's email address from the form
-        $recipientEmail = $_POST['email'];
+        // Sender (your email address)
+        $mail->setFrom('fayzan23@gmail.com', 'Fayzan Bhatti'); // Replace with your email and name
 
-        // Add the recipient's email address dynamically
-        $mail->addAddress($recipientEmail);
+        // Recipient (the email address you want to send the message to)
+        $mail->addAddress('fayzan23@gmail.com'); // Replace with your email address
 
         // Email content
         $mail->isHTML(true);
@@ -40,12 +40,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Send the email
         if ($mail->send()) {
-            echo "success"; // Return a success response
+            // Display success message with a green background
+            echo '<div style="background-color: green; color: white; padding: 10px;">Message Successfully Sent!</div>';
         } else {
-            echo "error"; // Return an error response
+            // Display error message
+            echo "ERROR: Message Could Not Be Sent!";
         }
     } catch (Exception $e) {
-        echo "error"; // Return an error response
+        // Display error message
+        echo "ERROR: Message Could Not Be Sent!";
     }
 }
 ?>
