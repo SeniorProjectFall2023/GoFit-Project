@@ -1,4 +1,5 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Query the database to check if the user exists
-    $query = "SELECT userID, username, password FROM `user` WHERE username=?";
+    $query = "SELECT userID, username, password, name, email, dateofbirth, gender, meal_preference, weight FROM `user` WHERE username=?";
     $stmt = $db->prepare($query);
 
     if (!$stmt) {
@@ -25,19 +26,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $stmt->bind_param("s", $username);
         if ($stmt->execute()) {
-            $stmt->store_result();
+            $result = $stmt->get_result();
 
-            if ($stmt->num_rows == 1) {
-                $stmt->bind_result($userID, $db_username, $db_password);
-                $stmt->fetch();
+            if ($result->num_rows == 1) {
+                $row = $result->fetch_assoc();
 
-                if (password_verify($password, $db_password)) {
+                if (password_verify($password, $row['password'])) {
                     // Sign-in successful, create a session
-                    session_start();
-                    $_SESSION['user_name'] = $db_username; // Store the username
-                    $_SESSION['userID'] = $userID; // Store the user's ID
+                    $_SESSION['user_name'] = $row['username']; // Store the username
+                    $_SESSION['userID'] = $row['userID']; // Store the user's ID
+                    $_SESSION['name'] = $row['name'];
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['dateofbirth'] = $row['dateofbirth'];
+                    $_SESSION['gender'] = $row['gender'];
+                    $_SESSION['meal_preference'] = $row['meal_preference'];
+                    $_SESSION['weight'] = $row['weight'];
 
-                    // Redirect to the home page
+                    // Store user data for the chatbot
+                    $userData = [
+                        'name' => $_SESSION['name'],
+                        'email' => $_SESSION['email'],
+                        'dateofbirth' => $_SESSION['dateofbirth'],
+                        'gender' => $_SESSION['gender'],
+                        'meal_preference' => $_SESSION['meal_preference'],
+                        'weight' => $_SESSION['weight'],
+                    ];
+                    $_SESSION['user_data'] = $userData;
+
+                    // Redirect to the home page (index.html)
                     header("Location: /index.html");
                     exit();
                 } else {
