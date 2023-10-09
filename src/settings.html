@@ -2,13 +2,24 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<!-- <?php
 session_start();
 if (isset($_SESSION['user_name'])) {
     $userName = $_SESSION['user_name'];
 } else {
     $userName = "Guest"; // Default value if user is not logged in
 }
+?> -->
+<?php
+session_start();
+if (!isset($_SESSION['user_name'])) {
+    // User is not logged in, redirect to the login page or display a message
+    header("Location: /signin/signin.html"); // Redirect to the login page
+    exit(); // Stop further execution
+}
+
+// User is logged in, proceed with rendering the chatbot page
+$userName = $_SESSION['user_name'];
 ?>
 
 <head>
@@ -278,7 +289,7 @@ if (isset($_SESSION['user_name'])) {
             
                 // Handle form submission with AJAX (if needed)
                 const userInfoForm = document.getElementById('user-info-form');
-                userInfoForm.addEventListener('submit', function (event) {
+                userInfoForm.addEventListener('submit', async function (event) {
                   event.preventDefault();
                   const formData = new FormData(this);
             
@@ -293,6 +304,23 @@ if (isset($_SESSION['user_name'])) {
                         // Show success alert
                         document.getElementById('success-alert').style.display = 'block';
                         document.getElementById('error-alert').style.display = 'none';
+            
+                        // Create an object with updated user data
+                        const updatedUserData = {
+                          name: document.getElementById('name').value,
+                          email: document.getElementById('email').value,
+                          dateofbirth: document.getElementById('dateofbirth').value,
+                          gender: document.getElementById('gender').value,
+                          meal_preference: document.getElementById('meal_preference').value,
+                          weight: parseFloat(document.getElementById('weight').value),
+                        };
+            
+                        // Convert the object to a JSON string
+                        const updatedUserDataJson = JSON.stringify(updatedUserData);
+            
+                        // Append the JSON string to the URL and redirect to the chatbot page
+                        const chatbotUrl = `/settings.html?user_data=${encodeURIComponent(updatedUserDataJson)}`;
+                        window.location.href = chatbotUrl;
                       } else {
                         // Show error alert
                         document.getElementById('success-alert').style.display = 'none';
