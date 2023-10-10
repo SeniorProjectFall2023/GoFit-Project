@@ -3,8 +3,8 @@
 
 <?php
 session_start();
-if (isset($_SESSION['user_name'])) {
-    $userName = $_SESSION['user_name'];
+if (isset($_SESSION['name'])) {
+    $userName = $_SESSION['name'];
 } else {
     $userName = "Guest"; // Default value if user is not logged in
 }
