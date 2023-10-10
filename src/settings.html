@@ -2,24 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- <?php
-session_start();
-if (isset($_SESSION['user_name'])) {
-    $userName = $_SESSION['user_name'];
-} else {
-    $userName = "Guest"; // Default value if user is not logged in
-}
-?> -->
+
 <?php
 session_start();
-if (!isset($_SESSION['user_name'])) {
+if (!isset($_SESSION['name'])) {
     // User is not logged in, redirect to the login page or display a message
     header("Location: /signin/signin.html"); // Redirect to the login page
     exit(); // Stop further execution
 }
 
 // User is logged in, proceed with rendering the chatbot page
-$userName = $_SESSION['user_name'];
+$userName = $_SESSION['name'];
 ?>
 
 <head>
@@ -305,7 +298,7 @@ $userName = $_SESSION['user_name'];
                         document.getElementById('success-alert').style.display = 'block';
                         document.getElementById('error-alert').style.display = 'none';
             
-                        // Create an object with updated user data
+                        // Optionally, you can update the user data on the chatbot page without a redirect
                         const updatedUserData = {
                           name: document.getElementById('name').value,
                           email: document.getElementById('email').value,
@@ -318,9 +311,9 @@ $userName = $_SESSION['user_name'];
                         // Convert the object to a JSON string
                         const updatedUserDataJson = JSON.stringify(updatedUserData);
             
-                        // Append the JSON string to the URL and redirect to the chatbot page
-                        const chatbotUrl = `/settings.html?user_data=${encodeURIComponent(updatedUserDataJson)}`;
-                        window.location.href = chatbotUrl;
+                        // Store the updated user data in a JavaScript variable or local storage
+                        // for use on the chatbot page (without a redirect)
+                        window.updatedUserData = updatedUserDataJson;
                       } else {
                         // Show error alert
                         document.getElementById('success-alert').style.display = 'none';
@@ -336,7 +329,6 @@ $userName = $_SESSION['user_name'];
                 });
               });
             </script>
-
 
             
               <div class="tab-pane fade show active" id="privacy-security-content" role="tabpanel">
