@@ -1,22 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- <?php
-session_start();
-if (isset($_SESSION['name'])) {
-    $userName = $_SESSION['name'];
-} else {
-    $userName = "Guest"; // Default value if user is not logged in
-}
-?> -->
 <?php
 session_start();
-
-// Initialize the chat log in the session
-if (!isset($_SESSION['chat_log'])) {
-    $_SESSION['chat_log'] = [];
-}
-
 if (!isset($_SESSION['name'])) {
     // User is not logged in, redirect to the login page or display a message
     header("Location: /signin/signin.html"); // Redirect to the login page
@@ -25,21 +11,8 @@ if (!isset($_SESSION['name'])) {
 
 // User is logged in, proceed with rendering the chatbot page
 $userName = $_SESSION['name'];
-$userData = [
-    'name' => $_SESSION['name'],
-    'email' => $_SESSION['email'],
-    'dateofbirth' => $_SESSION['dateofbirth'],
-    'gender' => $_SESSION['gender'],
-    'meal_preference' => $_SESSION['meal_preference'],
-    'weight' => $_SESSION['weight'],
-];
-
-// Convert the user data to JSON format
-$userDataJson = json_encode($userData);
-
-// Retrieve the chat log from the session
-$chatLog = $_SESSION['chat_log'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
