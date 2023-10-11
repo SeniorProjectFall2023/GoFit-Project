@@ -5,6 +5,12 @@
 
 <?php
 session_start();
+
+// Initialize the chat log in the session
+if (!isset($_SESSION['chatLog'])) {
+    $_SESSION['chatLog'] = [];
+}
+
 if (!isset($_SESSION['name'])) {
     // User is not logged in, redirect to the login page or display a message
     header("Location: /signin/signin.html"); // Redirect to the login page
@@ -25,6 +31,8 @@ $userData = [
 // Convert the user data to JSON format
 $userDataJson = json_encode($userData);
 
+// Retrieve the chat log from the session
+$chatLog = $_SESSION['chatLog'];
 ?>
 
 
@@ -68,52 +76,34 @@ $userDataJson = json_encode($userData);
   ======================================================== -->
 
       <style>
-        body {
+  body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             margin: 0;
         }
 
-        #chatbot-container {
-            flex: 1;
-            border: 1px solid #ccc;
-            padding: 10px;
-            max-width: 400px;
-            margin: 0 auto;
-            background-color: #f8f8f8;
-        }
-
         .message {
-            margin: 5px;
+    
             padding: 5px;
             background-color: #fff;
             border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .user {
-            text-align: right;
-        }
-
-        .chatbot {
-            text-align: left;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width:fit-content;
+            max-height: fit-content;
         }
 
         /* Sticky footer styles */
         footer {
             margin-top: auto;
         }
-
-
-
-
-
-        
+ 
         
                   /* Chatbot container styles */
           #chatbot-container {
-              max-width: 400px;
+              max-width: 1050px;
               margin: 0 auto;
               background-color: #f8f8f8;
               border: 1px solid #ccc;
@@ -128,20 +118,15 @@ $userDataJson = json_encode($userData);
               background-color: #1bbd36; /* User response background color */
               color: #fff; /* User response text color */
               margin-left: auto;
+
           }
+
 
           .chatbot {
               text-align: left;
               background-color: #f0f2f785; /* Chatbot response background color (grey) */
               color: #131212; /* Chatbot response text color (black) */
-          }
-
-          /* Message styles */
-          .message {
-              margin: 10px 0;
-              padding: 10px;
-              border-radius: 10px;
-              max-width: 80%;
+              width: auto;
           }
 
           /* User input (textarea) styles */
@@ -160,7 +145,7 @@ $userDataJson = json_encode($userData);
           /* Send button style */
           #send-button {
               display: block;
-              width: 100%;
+              width: 25%;
               padding: 10px;
               background-color: #1bbd36; /* Button background color */
               color: #fff;
@@ -175,6 +160,28 @@ $userDataJson = json_encode($userData);
           #send-button:hover {
               background-color: #009e2b; /* Hover color for the button */
           }
+
+                  /* Loading message styles */
+        #loading-message {
+            text-align: center;
+            display: none;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #888;
+        }
+
+        /* Container for user input and loading message */
+        #user-input-container {
+            display: flex;
+            align-items: center;
+        }
+
+          .gofit-logo {
+      max-width: 95px; /* Adjust the value as needed to control the size */
+      max-height: 45px; /* Adjust the value as needed to control the size */
+  }
+
+
 
     </style>
 
@@ -240,16 +247,18 @@ $userDataJson = json_encode($userData);
   <section id="services" class="services section-bg">
     
 
-      <!-- Move the userDataMessage outside the textarea -->
+      <!-- Chatbot container -->
       <div id="chatbot-container">
         <div id="chatbot-messages" style="text-align: left;">
-            <!-- Display the user data message in the chat when the page loads -->
-            <div class="message user" style="display: none;" style="text-align: right;" id="user-data-message"></div>
+          <div class="message user" style="display: none;" style="text-align: right;" id="user-data-message"></div>
         </div>
-        <textarea id="user-input" placeholder="Type your message..." oninput="autoExpand(this)"></textarea>
+        <div id="loading-message" class="loading">Generating Response...</div>
+        <div id="user-input-container">
+          <textarea id="user-input" placeholder="Send a message" oninput="autoExpand(this)"></textarea>
+        </div>
         <button id="send-button">Send</button>
       </div>
-        
+      
       <script>
     // Define your OpenAI API key
     const apiKey = "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"; // Replace with your actual OpenAI API key
@@ -268,7 +277,7 @@ $userDataJson = json_encode($userData);
 
     // Use the userData object as needed on the chatbot page
     // For example, you can display the user's name:
-    const greetingMessage = `Hello, ${userName}, how can I help you today?`;
+    const greetingMessage = `👋 Hello ${userName}, How can I help you today?`;
     appendMessage(greetingMessage, "chatbot");
 
 
@@ -276,7 +285,11 @@ $userDataJson = json_encode($userData);
         async function sendMessage(prompt) {
             try {
                 // Append "in 150 words please" to the user's input
-                const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}), Fitness Goal (${userData.meal_preference}), Name (${userData.name}), and Gender (${userData.gender}), use this information to generate better responses for me. Also, make sure to end off the response with a complete sentence please, do not cut off, if you have to cut off just stop responding at the last period please.`;
+                const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}), Fitness Goal (${userData.meal_preference}), Name (${userData.name}), and Gender (${userData.gender}), 
+                use this information to generate better responses for me. 
+                Also, make sure to end off the response with a complete sentence please, do not cut off, 
+                if you have to cut off just stop responding at the last period please, 
+                and remember your role is to help users with health and fitness advice based off their information given to you`;
     
                 const headers = {
                     'Content-Type': 'application/json',
@@ -352,27 +365,61 @@ $userDataJson = json_encode($userData);
             return truncatedText.trim(); // Remove trailing space
         }
     
-        // Function to append a message to the chat
         function appendMessage(text, sender) {
-            const chatbotMessages = document.getElementById("chatbot-messages");
-            const messageDiv = document.createElement("div");
-            messageDiv.className = `message ${sender}`;
-    
-            // Check if the message is from the chatbot, and add a <p> element for each line
-            if (sender === "chatbot") {
-                const lines = text.split('\n');
-                lines.forEach((line) => {
-                    const p = document.createElement("p");
-                    p.innerText = line;
-                    messageDiv.appendChild(p);
-                });
-            } else {
-                messageDiv.innerText = text;
-            }
-    
-            chatbotMessages.appendChild(messageDiv);
-            chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scroll to the bottom of the chat
-        }
+  const chatbotMessages = document.getElementById("chatbot-messages");
+
+  if (sender === "chatbot") {
+    // Create an image element for the GoFit logo
+    const logoImage = document.createElement("img");
+    logoImage.src = "assets/img/GoFitLogo.png"; // Update the source path accordingly
+    logoImage.alt = "GoFit Logo";
+    logoImage.classList.add("gofit-logo");
+
+    chatbotMessages.appendChild(logoImage);
+  }
+
+  const messageDiv = document.createElement("div");
+  messageDiv.className = `message ${sender}`;
+
+  // Check if the message is from the chatbot, and add a <p> element for each line
+  if (sender === "chatbot") {
+    const lines = text.split('\n');
+    lines.forEach((line) => {
+      const p = document.createElement("p");
+      p.innerText = line;
+      messageDiv.appendChild(p);
+    });
+  } else {
+    messageDiv.innerText = text;
+  }
+
+  chatbotMessages.appendChild(messageDiv);
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scroll to the bottom of the chat
+
+  // Send the message to the server for saving in the session
+  saveMessageToSession(text, sender);
+}
+
+    // Function to save a message in the session
+    function saveMessageToSession(message, sender) {
+        // Send an AJAX request to the server to save the message
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "save_message.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(`message=${encodeURIComponent(message)}&sender=${sender}`);
+    }
+    // Function to load the chat log from the session and display it
+    function loadChatLog() {
+      const chatLogJSON = "<?php echo json_encode(isset($_SESSION['chatLog']) ? $_SESSION['chatLog'] : array()); ?>";
+        const chatLog = JSON.parse(chatLogJSON);
+        chatLog.forEach((entry) => {
+            appendMessage(entry.message, entry.sender);
+        });
+    }
+
+    // Call the function to load the chat log when the page loads
+    loadChatLog();
+
     
         // Function to handle "Enter" key press
         function handleInput(event) {
@@ -390,24 +437,27 @@ $userDataJson = json_encode($userData);
     
         // Add event listener to the "Send" button
         document.getElementById("send-button").addEventListener("click", async () => {
-            console.log("clicked");
-    
-            const userInput = document.getElementById("user-input");
-            const userMessage = userInput.value.trim();
-    
-            if (userMessage !== "") {
-                appendMessage(userMessage, "user");
-                userInput.value = "";
-    
-                console.log("Sending Message: " + userMessage);
-                const chatbotResponse = await sendMessage(userMessage);
-                if (chatbotResponse !== null) {
-                    appendMessage(chatbotResponse, "chatbot");
-                }
-    
-                console.log("Response: " + chatbotResponse);
-            }
-        });
+      const userInput = document.getElementById("user-input");
+      const loadingMessage = document.getElementById("loading-message"); // Get the loading message element
+
+      // Show the loading message when the user clicks "Send"
+      loadingMessage.style.display = "block";
+
+      const userMessage = userInput.value.trim();
+
+      if (userMessage !== "") {
+          appendMessage(userMessage, "user");
+          userInput.value = "";
+
+          const chatbotResponse = await sendMessage(userMessage);
+
+          if (chatbotResponse !== null) {
+              // Hide the loading message when a response is received
+              loadingMessage.style.display = "none";
+              appendMessage(chatbotResponse, "chatbot");
+          }
+      }
+  });
 </script>
   
 

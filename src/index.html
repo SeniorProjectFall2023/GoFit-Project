@@ -9,6 +9,23 @@ if (isset($_SESSION['name'])) {
 } else {
     $userName = "Guest"; // Default value if user is not logged in
 }
+
+// User is logged in, proceed with rendering the chatbot page
+$userName = $_SESSION['name'];
+$userData = [
+    'name' => $_SESSION['name'],
+    'email' => $_SESSION['email'],
+    'dateofbirth' => $_SESSION['dateofbirth'],
+    'gender' => $_SESSION['gender'],
+    'meal_preference' => $_SESSION['meal_preference'],
+    'weight' => $_SESSION['weight'],
+];
+
+// Convert the user data to JSON format
+$userDataJson = json_encode($userData);
+
+// Retrieve the chat log from the session
+$chatLog = $_SESSION['chat_log'];
 ?>
 
 <!DOCTYPE html>

@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Send the email
         if ($mail->send()) {
             // Display success message with a green background
-            echo '<div style="background-color: green; color: white; padding: 10px;">Message Successfully Sent!</div>';
+            echo '<div style="background-color: green; color: white; padding: 10px;">Message Successfully Sent! <br>Please check your email inbox and, if not found, kindly check your Spam folder. Be sure to mark it as "Not Spam" to receive future emails from us.</div>';
         } else {
             // Display error message
             echo "ERROR: Message Could Not Be Sent!";
