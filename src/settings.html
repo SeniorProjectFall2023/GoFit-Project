@@ -11,8 +11,13 @@ if (!isset($_SESSION['name'])) {
     exit(); // Stop further execution
 }
 
-// User is logged in, proceed with rendering the chatbot page
+// User is logged in, proceed with rendering the settings page
 $userName = $_SESSION['name'];
+
+// Initialize the chat log in the session if it doesn't exist
+if (!isset($_SESSION['chatLog'])) {
+    $_SESSION['chatLog'] = [];
+}
 ?>
 
 <head>
@@ -229,7 +234,7 @@ $userName = $_SESSION['name'];
                         </div>
                         <div class="form-group col-md-4">
                           <label for="meal_preference">Fitness Goal</label>
-                          <select id="meal_preference" name="meal_preference" class="form-control" required>
+                          <select id="meal_preference" name="meal_preference" id="meal_preference" class="form-control" required>
                             <option value="- Select -">- Select -</option>
                             <option value="Weight Loss">Weight Loss</option>
                             <option value="Muscle Gain">Muscle Gain</option>
@@ -245,7 +250,7 @@ $userName = $_SESSION['name'];
                         </div>
                         <div class="form-group col-md-4">
                           <label for="gender">Gender</label>
-                          <select id="gender" name="gender" class="form-control" required>
+                          <select id="gender" name="gender" id="gender" class="form-control" required>
                             <option value="- Select -">- Select -</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -253,7 +258,6 @@ $userName = $_SESSION['name'];
                           </select>
                         </div>
                       </div>
-                      <br>
                       <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
                   </div>
@@ -298,22 +302,13 @@ $userName = $_SESSION['name'];
                         document.getElementById('success-alert').style.display = 'block';
                         document.getElementById('error-alert').style.display = 'none';
             
-                        // Optionally, you can update the user data on the chatbot page without a redirect
-                        const updatedUserData = {
-                          name: document.getElementById('name').value,
-                          email: document.getElementById('email').value,
-                          dateofbirth: document.getElementById('dateofbirth').value,
-                          gender: document.getElementById('gender').value,
-                          meal_preference: document.getElementById('meal_preference').value,
-                          weight: parseFloat(document.getElementById('weight').value),
-                        };
-            
-                        // Convert the object to a JSON string
-                        const updatedUserDataJson = JSON.stringify(updatedUserData);
-            
-                        // Store the updated user data in a JavaScript variable or local storage
-                        // for use on the chatbot page (without a redirect)
-                        window.updatedUserData = updatedUserDataJson;
+                        // Update user interface with the new data
+                        document.getElementById('name').innerText = formData.get('name'); // Update the name element
+                        document.getElementById('email').innerText = formData.get('email'); // Update the email element
+                        document.getElementById('dateofbirth').innerText = formData.get('dateofbirth'); // Update the dateofbirth element
+                        document.getElementById('gender').innerText = formData.get('gender'); // Update the gender element
+                        document.getElementById('meal_preference').innerText = formData.get('meal_preference'); // Update the meal_preference element
+                        document.getElementById('weight').innerText = formData.get('weight'); // Update the weight element
                       } else {
                         // Show error alert
                         document.getElementById('success-alert').style.display = 'none';
@@ -363,7 +358,6 @@ $userName = $_SESSION['name'];
   </div>
 </div>
 
-</main>
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

@@ -9,9 +9,17 @@ if (!isset($_SESSION['name'])) {
     exit(); // Stop further execution
 }
 
-// User is logged in, proceed with rendering the chatbot page
+// User is logged in, proceed with rendering the settings page
 $userName = $_SESSION['name'];
+
+// Initialize the chat log in the session if it doesn't exist
+if (!isset($_SESSION['chatLog'])) {
+    $_SESSION['chatLog'] = [];
+}
 ?>
+
+
+
 
 
 <!DOCTYPE html>
