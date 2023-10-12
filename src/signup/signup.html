@@ -11,52 +11,52 @@
  
 
     <style>
-		.button-68 {
-		appearance: none;
-		backface-visibility: hidden;
-		background-color: #1bbd36;
-		border-radius: 8px;
-		border-style: none;
-		box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
-		box-sizing: border-box;
-		color: #fff;
-		cursor: pointer;
-		display: inline-block;
-		font-family: Inter,-apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
-		font-size: 16px;
-		font-weight: 600;
-		letter-spacing: normal;
-		line-height: 1.5;
-		outline: none;
-		overflow: hidden;
-		padding: 13px 20px;
-		position: relative;
-		text-align: center;
-		text-decoration: none;
-		transform: translate3d(0, 0, 0);
-		transition: all .3s;
-		user-select: none;
-		-webkit-user-select: none;
-		touch-action: manipulation;
-		vertical-align: top;
-		white-space: nowrap;
-		}
+        .button-68 {
+        appearance: none;
+        backface-visibility: hidden;
+        background-color: #1bbd36;
+        border-radius: 8px;
+        border-style: none;
+        box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Inter,-apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: normal;
+        line-height: 1.5;
+        outline: none;
+        overflow: hidden;
+        padding: 13px 20px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        transform: translate3d(0, 0, 0);
+        transition: all .3s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: top;
+        white-space: nowrap;
+        }
 
-		.button-68:hover {
-		background-color: #1e8449;
-		opacity: 1;
-		transform: translateY(0);
-		transition-duration: .35s;
-		}
+        .button-68:hover {
+        background-color: #1e8449;
+        opacity: 1;
+        transform: translateY(0);
+        transition-duration: .35s;
+        }
 
-		.button-68:active {
-		transform: translateY(2px);
-		transition-duration: .35s;
-		}
+        .button-68:active {
+        transform: translateY(2px);
+        transition-duration: .35s;
+        }
 
-		.button-68:hover {
-		box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
-		}
+        .button-68:hover {
+        box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
+        }
 
     /* Position the button in the top right corner */
     .button-68-container {
@@ -161,12 +161,12 @@ input[type="password"]::-ms-clear {
 
 </style>
 
-  	<body style="background-color: #e6e4e4;">
-			<!-- <div class="button-68-container">
-			  <a href="../index.html"> Add this anchor tag
-				<button class="button-68" role="button">Home</button>  
-			  </a>
-			</div> -->
+    <body style="background-color: #e6e4e4;">
+            <!-- <div class="button-68-container">
+              <a href="../index.html"> Add this anchor tag
+                <button class="button-68" role="button">Home</button>  
+              </a>
+            </div> -->
             <br>
             <br>
             <br>
@@ -186,7 +186,7 @@ input[type="password"]::-ms-clear {
         <div class="container">
             <div class="signup-content">
                 <div class="signup-img">
-                    <img style="height: 635px;" src="images/signupImg.jpg" alt="">
+                    <img style="height: 730px;" src="images/signupImg.jpg" alt="">
                     <div class="signup-img-content">
                         <h2 style="color: white;">Sign Up</h2>
                     </div>
@@ -221,6 +221,21 @@ input[type="password"]::-ms-clear {
                                         </span>
                                     </div>
                                 </div>
+
+                                <div class="form-select">
+                                    <div class="label-flex">
+                                        <label for="activity_level" class="required">Current Activity Level</label>
+                                    </div>
+                                    <div class="select-list">
+                                        <select name="activity_level" id="activity_level" required style="margin-bottom: 0;">
+                                            <option value="" selected disabled>- Select -</option>
+                                            <option value="Sedentary">Sedentary (Little or no exercise)</option>
+                                            <option value="Moderately Active">Moderately Active (Light exercise or sports 1-3 days a week)</option>
+                                            <option value="Highly Active">Highly Active (Moderate to high-intensity exercise 5-7 days a week)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
                             </div>
 
                             <div class="form-group">
@@ -279,6 +294,12 @@ input[type="password"]::-ms-clear {
                                     <label for="weight" class="required">Weight (lb)</label>
                                     <input type="number" name="weight" placeholder="156" id="weight" />
                                 </div>
+
+                                <div class="form-input">
+                                    <label for="height" class="required">Height (inches)</label>
+                                    <input type="number" name="height" placeholder="70" id="height" />
+                                </div>
+                                
                 
                                 <div class="form-input">
                                     <label for="dateofbirth" class="required">Date of Birth</label>

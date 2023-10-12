@@ -278,6 +278,8 @@ function saveMessageToSession($message, $sender) {
             gender: "<?php echo isset($_SESSION['gender']) ? $_SESSION['gender'] : ''; ?>",
             meal_preference: "<?php echo isset($_SESSION['meal_preference']) ? $_SESSION['meal_preference'] : ''; ?>",
             weight: "<?php echo isset($_SESSION['weight']) ? $_SESSION['weight'] : ''; ?>",
+            height: "<?php echo isset($_SESSION['height']) ? $_SESSION['height'] : ''; ?>",
+            activity_level: "<?php echo isset($_SESSION['activity_level']) ? $_SESSION['activity_level'] : ''; ?>",
         };
       
         const greetingMessage = `👋 Hello ${userName}, How can I help you today?`;
@@ -287,7 +289,7 @@ function saveMessageToSession($message, $sender) {
         async function sendMessage(prompt) {
             try {
                 // Append "in 150 words please" to the user's input
-                const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}), Fitness Goal (${userData.meal_preference}), Name (${userData.name}), and Gender (${userData.gender}), 
+                const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}), Fitness Goal (${userData.meal_preference}), Name (${userData.name}), Activity Level (${userData.activity_level}), Height (${userData.height}), and Gender (${userData.gender}), 
                 use this information to generate better responses for me. 
                 Also, make sure to end off the response with a complete sentence please, do not cut off, 
                 if you have to cut off just stop responding at the last period please, 
