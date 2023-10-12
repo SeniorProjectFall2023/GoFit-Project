@@ -29,11 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Fetch user data based on userID from the session
     $userID = $_SESSION['userID'];
 
-    $query = "SELECT name, email, dateofbirth, gender, meal_preference, weight FROM user WHERE userID = ?";
+    $query = "SELECT name, email, dateofbirth, gender, meal_preference, weight, height, activity_level FROM user WHERE userID = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $userID);
     $stmt->execute();
-    $stmt->bind_result($name, $email, $dateofbirth, $gender, $meal_preference, $weight);
+    $stmt->bind_result($name, $email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level);
 
     // Fetch the user's data
     if ($stmt->fetch()) {
@@ -45,6 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             'gender' => $gender,
             'meal_preference' => $meal_preference,
             'weight' => $weight,
+            'height' => $height, // Added height field
+            'activity_level' => $activity_level, // Added activity_level field
         ];
 
         // Return user data as JSON
@@ -65,18 +67,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Retrieve user ID from the session
     $userID = $_SESSION['userID'];
 
-    // Retrieve and sanitize form data
+    // Retrieve and sanitize form data, including the new fields
     $name = custom_sanitize($_POST['name']);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $dateofbirth = custom_sanitize($_POST['dateofbirth']);
     $gender = custom_sanitize($_POST['gender']);
     $meal_preference = custom_sanitize($_POST['meal_preference']);
     $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
+    $height = filter_var($_POST['height'], FILTER_VALIDATE_FLOAT); // Added height field
+    $activity_level = custom_sanitize($_POST['activity_level']); // Added activity_level field
 
     // Update user information in the database
-    $query = "UPDATE user SET name=?, email=?, dateofbirth=?, gender=?, meal_preference=?, weight=? WHERE userID=?";
+    $query = "UPDATE user SET name=?, email=?, dateofbirth=?, gender=?, meal_preference=?, weight=?, height=?, activity_level=? WHERE userID=?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssssssd", $name, $email, $dateofbirth, $gender, $meal_preference, $weight, $userID);
+    $stmt->bind_param("ssssssdsd", $name, $email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level, $userID);
 
     if ($stmt->execute()) {
         // User information updated successfully

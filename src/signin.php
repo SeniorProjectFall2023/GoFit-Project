@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Query the database to check if the user exists
-    $query = "SELECT userID, username, password, name, email, dateofbirth, gender, meal_preference, weight FROM `user` WHERE username=?";
+    $query = "SELECT userID, username, password, name, email, dateofbirth, gender, meal_preference, weight, height, activity_level FROM `user` WHERE username=?";
     $stmt = $db->prepare($query);
 
     if (!$stmt) {
@@ -41,6 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['gender'] = $row['gender'];
                     $_SESSION['meal_preference'] = $row['meal_preference'];
                     $_SESSION['weight'] = $row['weight'];
+                    $_SESSION['height'] = $row['height'];
+                    $_SESSION['activity_level'] = $row['activity_level'];
 
                     // Initialize the chat log in the session if it doesn't exist
                     if (!isset($_SESSION['chatLog'])) {
@@ -55,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         'gender' => $_SESSION['gender'],
                         'meal_preference' => $_SESSION['meal_preference'],
                         'weight' => $_SESSION['weight'],
+                        'height' => $_SESSION['height'],
+                        'activity_level' => $_SESSION['activity_level']                        
                     ];
                     $_SESSION['user_data'] = $userData;
 
