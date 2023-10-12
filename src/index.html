@@ -7,9 +7,15 @@ session_start();
 if (isset($_SESSION['name'])) {
     $userName = $_SESSION['name'];
 } else {
-    $userName = "Guest"; // Default value if user is not logged in
+    $userName = "Guest"; // Default value if the user is not logged in
+}
+
+// Initialize the chat log in the session if it doesn't exist
+if (!isset($_SESSION['chatLog'])) {
+    $_SESSION['chatLog'] = [];
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

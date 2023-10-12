@@ -42,6 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['meal_preference'] = $row['meal_preference'];
                     $_SESSION['weight'] = $row['weight'];
 
+                    // Initialize the chat log in the session if it doesn't exist
+                    if (!isset($_SESSION['chatLog'])) {
+                        $_SESSION['chatLog'] = [];
+                    }
+
                     // Store user data for the chatbot
                     $userData = [
                         'name' => $_SESSION['name'],
@@ -52,6 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         'weight' => $_SESSION['weight'],
                     ];
                     $_SESSION['user_data'] = $userData;
+
+                    // Initialize the chat log in the session if it doesn't exist
+                    if (!isset($_SESSION['chatLog'])) {
+                        $_SESSION['chatLog'] = [];
+                    }
 
                     // Redirect to the home page (index.html)
                     header("Location: /index.html");
