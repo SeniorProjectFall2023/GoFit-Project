@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Store user information in the session
             $_SESSION['user_name'] = $username; // Store the username
             $_SESSION['userID'] = $stmt->insert_id; // Store the user's ID
-            header("Location: /index.html");
+            header("Location: /signin/signin.html");
             exit();
         } else {
             $errorMessage = "Error: " . $stmt->error;
