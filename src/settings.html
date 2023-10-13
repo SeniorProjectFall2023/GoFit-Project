@@ -286,13 +286,15 @@ if (!isset($_SESSION['chatLog'])) {
                   .then(response => response.json())
                   .then(data => {
                     if (data) {
-                      // Update your form fields with the fetched data here
-                      document.getElementById('name').value = data.name;
-                      document.getElementById('email').value = data.email;
-                      document.getElementById('dateofbirth').value = data.dateofbirth;
-                      document.getElementById('gender').value = data.gender;
-                      document.getElementById('meal_preference').value = data.meal_preference;
-                      document.getElementById('weight').value = data.weight;
+                        // Update user interface with the new data
+                        document.getElementById('name').value = data.name;
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('dateofbirth').value = data.dateofbirth;
+                        document.getElementById('gender').value = data.gender; // Update the value of the gender select
+                        document.getElementById('meal_preference').value = data.meal_preference; // Update the value of the meal_preference select
+                        document.getElementById('weight').value = data.weight;
+                        document.getElementById('activity_level').value = data.activity_level; // Update the value of the activity_level select
+                        document.getElementById('height').value = data.height;
                     }
                   })
                   .catch(error => {
@@ -324,6 +326,9 @@ if (!isset($_SESSION['chatLog'])) {
                         document.getElementById('gender').innerText = formData.get('gender'); // Update the gender element
                         document.getElementById('meal_preference').innerText = formData.get('meal_preference'); // Update the meal_preference element
                         document.getElementById('weight').innerText = formData.get('weight'); // Update the weight element
+                        document.getElementById('activity_level').innerText = formData.get('activity_level'); // Update the meal_preference element
+                        document.getElementById('height').innerText = formData.get('height'); // Update the weight element
+
                       } else {
                         // Show error alert
                         document.getElementById('success-alert').style.display = 'none';
