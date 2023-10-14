@@ -29,17 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Fetch user data based on userID from the session
     $userID = $_SESSION['userID'];
 
-    $query = "SELECT name, email, dateofbirth, gender, meal_preference, weight, height, activity_level FROM user WHERE userID = ?";
+    $query = "SELECT email, dateofbirth, gender, meal_preference, weight, height, activity_level FROM user WHERE userID = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $userID);
     $stmt->execute();
-    $stmt->bind_result($name, $email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level);
+    $stmt->bind_result($email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level);
 
     // Fetch the user's data
     if ($stmt->fetch()) {
         // Store the fetched data in an array
         $userData = [
-            'name' => $name,
             'email' => $email,
             'dateofbirth' => $dateofbirth,
             'gender' => $gender,
@@ -68,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $userID = $_SESSION['userID'];
 
     // Retrieve and sanitize form data, including the new fields
-    $name = custom_sanitize($_POST['name']);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $dateofbirth = custom_sanitize($_POST['dateofbirth']);
     $gender = custom_sanitize($_POST['gender']);
@@ -78,9 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $activity_level = custom_sanitize($_POST['activity_level']); // Added activity_level field
 
     // Update user information in the database
-    $query = "UPDATE user SET name=?, email=?, dateofbirth=?, gender=?, meal_preference=?, weight=?, height=?, activity_level=? WHERE userID=?";
+    $query = "UPDATE user SET email=?, dateofbirth=?, gender=?, meal_preference=?, weight=?, height=?, activity_level=? WHERE userID=?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssssssdsd", $name, $email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level, $userID);
+    $stmt->bind_param("sssssdsd", $email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level, $userID);
 
     if ($stmt->execute()) {
         // User information updated successfully
