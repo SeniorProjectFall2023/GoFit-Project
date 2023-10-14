@@ -216,21 +216,17 @@ if (!isset($_SESSION['chatLog'])) {
                     <form id="user-info-form" action="settings.php" method="POST">
                       <input type="hidden" name="form_type" value="update_user_info">
                       <div class="form-row">
-                        <div class="form-group col-md-5">
-                          <label for="name">Full Name</label>
-                          <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" value="" required>
-                        </div>
                         <div class="form-group col-md-4">
                           <label for="email">Email</label>
                           <input type="email" class="form-control" id="email" name="email" placeholder="johndoe@email.com" value="" required>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                           <label for="weight">Weight (lb)</label>
                           <input type="number" class="form-control" name="weight" id="weight" placeholder="156" value="" required>
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="dateofbirth">Date Of Birth</label>
-                          <input type="date" class="form-control" name="dateofbirth" id="dateofbirth" placeholder="mm/dd/yyyy" value="" required>
+                          <label for="height">Height (inches)</label>
+                          <input type="number" class="form-control" name="height" id="height" placeholder="70" value="" required>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="meal_preference">Fitness Goal</label>
@@ -257,6 +253,10 @@ if (!isset($_SESSION['chatLog'])) {
                             <option value="Other">Other</option>
                           </select>
                         </div>
+                        <div class="form-group col-md-4">
+                          <label for="dateofbirth">Date Of Birth</label>
+                          <input type="date" class="form-control" name="dateofbirth" id="dateofbirth" placeholder="mm/dd/yyyy" value="" required>
+                        </div>
                         <div class="form-group col-md-8">
                           <label for="activity_level">Activity Level</label>
                           <select id="activity_level" name="activity_level" class="form-control" required>
@@ -266,12 +266,7 @@ if (!isset($_SESSION['chatLog'])) {
                               <option value="Highly Active">Highly Active (Moderate to high-intensity exercise 5-7 days a week)</option>
                           </select>
                       </div>
-                      
-                      <div class="form-group col-md-4">
-                          <label for="height">Height (inches)</label>
-                          <input type="number" class="form-control" name="height" id="height" placeholder="70" value="" required>
-                      </div>
-                      
+
                       </div>
                       <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
@@ -279,71 +274,84 @@ if (!isset($_SESSION['chatLog'])) {
                 </div>
               </div>
             </div>
-            <script>
-              document.addEventListener('DOMContentLoaded', function () {
-                // Fetch user data from the server
-                fetch('settings.php', { method: 'GET' })
-                  .then(response => response.json())
-                  .then(data => {
-                    if (data) {
-                        // Update user interface with the new data
-                        document.getElementById('name').value = data.name;
-                        document.getElementById('email').value = data.email;
-                        document.getElementById('dateofbirth').value = data.dateofbirth;
-                        document.getElementById('gender').value = data.gender; // Update the value of the gender select
-                        document.getElementById('meal_preference').value = data.meal_preference; // Update the value of the meal_preference select
-                        document.getElementById('weight').value = data.weight;
-                        document.getElementById('activity_level').value = data.activity_level; // Update the value of the activity_level select
-                        document.getElementById('height').value = data.height;
-                    }
-                  })
-                  .catch(error => {
-                    console.error('Error fetching user data:', error);
-                  });
-            
-                // Handle form submission with AJAX (if needed)
-                const userInfoForm = document.getElementById('user-info-form');
-                userInfoForm.addEventListener('submit', async function (event) {
-                  event.preventDefault();
-                  const formData = new FormData(this);
-            
-                  // Send the form data to settings.php using AJAX
-                  fetch('settings.php', {
-                    method: 'POST',
-                    body: formData
-                  })
-                    .then(response => response.json())
-                    .then(response => {
-                      if (response.success) {
-                        // Show success alert
-                        document.getElementById('success-alert').style.display = 'block';
-                        document.getElementById('error-alert').style.display = 'none';
-            
-                        // Update user interface with the new data
-                        document.getElementById('name').innerText = formData.get('name'); // Update the name element
-                        document.getElementById('email').innerText = formData.get('email'); // Update the email element
-                        document.getElementById('dateofbirth').innerText = formData.get('dateofbirth'); // Update the dateofbirth element
-                        document.getElementById('gender').innerText = formData.get('gender'); // Update the gender element
-                        document.getElementById('meal_preference').innerText = formData.get('meal_preference'); // Update the meal_preference element
-                        document.getElementById('weight').innerText = formData.get('weight'); // Update the weight element
-                        document.getElementById('activity_level').innerText = formData.get('activity_level'); // Update the meal_preference element
-                        document.getElementById('height').innerText = formData.get('height'); // Update the weight element
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Fetch user data from the server
+    fetch('settings.php', { method: 'GET' })
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          // Update user interface with the new data
+          document.getElementById('email').value = data.email;
+          document.getElementById('dateofbirth').value = data.dateofbirth;
+          
+          // Update the value of the gender select
+          document.getElementById('gender').value = data.gender;
+          
+          // Update the value of the meal_preference select
+          document.getElementById('meal_preference').value = data.meal_preference;
+          
+          document.getElementById('weight').value = data.weight;
+          
+          // Update the value of the activity_level select
+          document.getElementById('activity_level').value = data.activity_level;
+          
+          document.getElementById('height').value = data.height;
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
 
-                      } else {
-                        // Show error alert
-                        document.getElementById('success-alert').style.display = 'none';
-                        document.getElementById('error-alert').style.display = 'block';
-                      }
-                    })
-                    .catch(error => {
-                      console.error('Error submitting form:', error);
-                      // Show error alert
-                      document.getElementById('success-alert').style.display = 'none';
-                      document.getElementById('error-alert').style.display = 'block';
-                    });
-                });
-              });
-            </script>
+    // Handle form submission with AJAX (if needed)
+    const userInfoForm = document.getElementById('user-info-form');
+    userInfoForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+
+      // Send the form data to settings.php using AJAX
+      fetch('settings.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(response => {
+          if (response.success) {
+            // Show success alert
+            document.getElementById('success-alert').style.display = 'block';
+            document.getElementById('error-alert').style.display = 'none';
+
+            // Update user interface with the new data
+            document.getElementById('email').value = formData.get('email');
+            document.getElementById('dateofbirth').value = formData.get('dateofbirth');
+            
+            // Update the value of the gender select
+            document.getElementById('gender').value = formData.get('gender');
+            
+            // Update the value of the meal_preference select
+            document.getElementById('meal_preference').value = formData.get('meal_preference');
+            
+            document.getElementById('weight').value = formData.get('weight');
+            
+            // Update the value of the activity_level select
+            document.getElementById('activity_level').value = formData.get('activity_level');
+            
+            document.getElementById('height').value = formData.get('height');
+          } else {
+            // Show error alert
+            document.getElementById('success-alert').style.display = 'none';
+            document.getElementById('error-alert').style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error submitting form:', error);
+          // Show error alert
+          document.getElementById('success-alert').style.display = 'none';
+          document.getElementById('error-alert').style.display = 'block';
+        });
+    });
+  });
+</script>
 
             
               <div class="tab-pane fade show active" id="privacy-security-content" role="tabpanel">
