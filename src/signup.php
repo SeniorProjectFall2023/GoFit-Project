@@ -32,9 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
     $dateofbirth = custom_sanitize($_POST['dateofbirth']);
-    
+
     // New fields: Height and Current Activity Level
-    $height = filter_var($_POST['height'], FILTER_VALIDATE_FLOAT);
+    $heightFeet = filter_var($_POST['heightFeet'], FILTER_VALIDATE_INT);
+    $heightInches = filter_var($_POST['heightInches'], FILTER_VALIDATE_INT);
+
+    // Convert height to the desired format "5ft 7in"
+    $height = $heightFeet . 'ft ' . $heightInches . 'in';
+
     $activity_level = isset($_POST['activity_level']) ? custom_sanitize($_POST['activity_level']) : null;
 
     // Perform additional validation as needed
@@ -72,4 +77,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<h1>This page is working.</h1>";
 }
 ?>
-
