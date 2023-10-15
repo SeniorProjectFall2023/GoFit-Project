@@ -72,7 +72,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $gender = custom_sanitize($_POST['gender']);
     $meal_preference = custom_sanitize($_POST['meal_preference']);
     $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
-    $height = filter_var($_POST['height'], FILTER_VALIDATE_FLOAT); // Added height field
+
+    $heightFeet = filter_var($_POST['heightFeet'], FILTER_VALIDATE_INT);
+    $heightInches = filter_var($_POST['heightInches'], FILTER_VALIDATE_INT);
+
+    // Convert height to the desired format "5ft 7in"
+    $height = $heightFeet . 'ft ' . $heightInches . 'in';
+
     $activity_level = custom_sanitize($_POST['activity_level']); // Added activity_level field
 
     // Update user information in the database
