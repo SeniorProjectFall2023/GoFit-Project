@@ -32,13 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
     $dateofbirth = custom_sanitize($_POST['dateofbirth']);
-
-    // New fields: Height and Current Activity Level
-    $heightFeet = filter_var($_POST['heightFeet'], FILTER_VALIDATE_INT);
-    $heightInches = filter_var($_POST['heightInches'], FILTER_VALIDATE_INT);
-
-    // Convert height to the desired format "5ft 7in"
-    $height = $heightFeet . 'ft ' . $heightInches . 'in';
+    
+    // Extract the selected height from the dropdown
+    $height = custom_sanitize($_POST['height']);
 
     $activity_level = isset($_POST['activity_level']) ? custom_sanitize($_POST['activity_level']) : null;
 
@@ -76,4 +72,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Display a message if the page is accessed without a POST request
     echo "<h1>This page is working.</h1>";
 }
-?>

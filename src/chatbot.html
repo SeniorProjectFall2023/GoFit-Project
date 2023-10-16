@@ -6,11 +6,6 @@
 <?php
 session_start();
 
-// Initialize the chat log in the session
-if (!isset($_SESSION['chatLog'])) {
-    $_SESSION['chatLog'] = [];
-}
-
 if (!isset($_SESSION['name'])) {
     // User is not logged in, redirect to the login page or display a message
     header("Location: /signin/signin.html"); // Redirect to the login page
@@ -31,18 +26,7 @@ $userData = [
 // Convert the user data to JSON format
 $userDataJson = json_encode($userData);
 
-// Retrieve the chat log from the session
-$chatLog = $_SESSION['chatLog'];
-
-function saveMessageToSession($message, $sender) {
-  $_SESSION['chatLog'][] = ['message' => $message, 'sender' => $sender];
-}
-
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -166,20 +150,36 @@ function saveMessageToSession($message, $sender) {
               background-color: #009e2b; /* Hover color for the button */
           }
 
-                  /* Loading message styles */
+                /* Loading message styles */
         #loading-message {
-            text-align: center;
-            display: none;
-            margin: 10px 0;
-            font-weight: bold;
-            color: #888;
+          text-align: center;
+          display: none;
+          margin: 10px 0;
+          font-weight: bold;
+          color: #888;
+        }
+
+        .loader {
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #1bbd36;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          animation: spin 2s linear infinite;
+          display: inline-block;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
 
         /* Container for user input and loading message */
         #user-input-container {
-            display: flex;
-            align-items: center;
+          display: flex;
+          align-items: center;
         }
+
 
           .gofit-logo {
       max-width: 95px; /* Adjust the value as needed to control the size */
@@ -257,7 +257,9 @@ function saveMessageToSession($message, $sender) {
         <div id="chatbot-messages" style="text-align: left;">
           <div class="message user" style="display: none;" style="text-align: right;" id="user-data-message"></div>
         </div>
-        <div id="loading-message" class="loading">Generating Response...</div>
+        <div id="loading-message" class="loading">
+          <div class="loader"></div>
+        </div>
         <div id="user-input-container">
           <textarea id="user-input" placeholder="Send a message" oninput="autoExpand(this)"></textarea>
         </div>
@@ -285,11 +287,19 @@ function saveMessageToSession($message, $sender) {
         const greetingMessage = `👋 Hello ${userName}, How can I help you today?`;
         appendMessage(greetingMessage, "chatbot");
 
+        
+            function getCurrentDateTime() {
+            const now = new Date();
+            const dateTimeString = now.toLocaleString();
+            return dateTimeString;
+        }
+
         // Function to send a message to the chatbot and get a response
         async function sendMessage(prompt) {
             try {
-                // Append "in 150 words please" to the user's input
-                const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}), Fitness Goal (${userData.meal_preference}), Name (${userData.name}), Activity Level (${userData.activity_level}), Height (${userData.height}), and Gender (${userData.gender}), 
+                const currentDateTime = getCurrentDateTime(); // Get the current date and time
+                const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}) (here is the current date and time to get my age correct: ${currentDateTime}), 
+                Fitness Goal (${userData.meal_preference}), Name (${userData.name}), Activity Level (${userData.activity_level}), Height (${userData.height}), and Gender (${userData.gender}), 
                 use this information to generate better responses for me. 
                 Also, make sure to end off the response with a complete sentence please, do not cut off, 
                 if you have to cut off just stop responding at the last period please, 
@@ -306,7 +316,7 @@ function saveMessageToSession($message, $sender) {
                         "role": "user",
                         "content": promptWithLimit
                     }],
-                    "max_tokens": 500,
+                    "max_tokens": 700,
                 };
       
                 const response = await fetch(apiUrl, {
@@ -330,9 +340,9 @@ function saveMessageToSession($message, $sender) {
                 let chatbotResponse = data.choices[0].message.content;
       
                 // Check if the response exceeds the specified max_tokens
-                if (data.choices[0].message.length >= 500) {
+                if (data.choices[0].message.length >= 700) {
                     // Truncate the response to a reasonable length (e.g., at the last sentence)
-                    chatbotResponse = truncateResponse(chatbotResponse, 500);
+                    chatbotResponse = truncateResponse(chatbotResponse, 700);
                 }
       
                 console.log("Response: " + chatbotResponse);
@@ -400,32 +410,7 @@ function saveMessageToSession($message, $sender) {
       chatbotMessages.appendChild(messageDiv);
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scroll to the bottom of the chat
 
-      // Send the message to the server for saving in the session
-      saveMessageToSession(text, sender);
     }
-
-        function saveMessageToSession(message, sender) {
-        const url = 'save_message.php';
-        const data = new URLSearchParams();
-        data.append('message', message);
-        data.append('sender', sender);
-
-        fetch(url, {
-            method: 'POST',
-            body: data,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        }).then(response => {
-            if (response.ok) {
-                // Message saved successfully
-            } else {
-                // Handle the error here
-                console.error('Failed to save message:', response.statusText);
-            }
-        });
-    }
-
 
       
         // Function to handle "Enter" key press
@@ -442,7 +427,6 @@ function saveMessageToSession($message, $sender) {
           textarea.style.height = (textarea.scrollHeight) + 'px';
       }
 
-    
 
         // Add event listener to the "Send" button
         document.getElementById("send-button").addEventListener("click", async () => {
@@ -468,10 +452,8 @@ function saveMessageToSession($message, $sender) {
             }
         });
 
-        // loadChatLog();
-</script>
-  
-
+    
+      </script>
 
             
     </main><!-- End #main -->

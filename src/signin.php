@@ -58,7 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         'meal_preference' => $_SESSION['meal_preference'],
                         'weight' => $_SESSION['weight'],
                         'height' => $_SESSION['height'],
-                        'activity_level' => $_SESSION['activity_level']                        
+                        'activity_level' => $_SESSION['activity_level']   
+
+                                         
                     ];
                     $_SESSION['user_data'] = $userData;
 

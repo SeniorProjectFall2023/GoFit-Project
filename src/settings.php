@@ -72,23 +72,21 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $gender = custom_sanitize($_POST['gender']);
     $meal_preference = custom_sanitize($_POST['meal_preference']);
     $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
+    $height = custom_sanitize($_POST['height']);
+    $activity_level = custom_sanitize($_POST['activity_level']);
 
-    $heightFeet = filter_var($_POST['heightFeet'], FILTER_VALIDATE_INT);
-    $heightInches = filter_var($_POST['heightInches'], FILTER_VALIDATE_INT);
-
-    // Convert height to the desired format "5ft 7in"
-    $height = $heightFeet . 'ft ' . $heightInches . 'in';
-
-    $activity_level = custom_sanitize($_POST['activity_level']); // Added activity_level field
 
     // Update user information in the database
     $query = "UPDATE user SET email=?, dateofbirth=?, gender=?, meal_preference=?, weight=?, height=?, activity_level=? WHERE userID=?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssssdsd", $email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level, $userID);
+    $stmt->bind_param("sssssssd", $email, $dateofbirth, $gender, $meal_preference, $weight, $height, $activity_level, $userID);
 
     if ($stmt->execute()) {
         // User information updated successfully
         echo json_encode(["success" => true, "message" => "User information updated successfully"]);
+
+        // Add this line to set a session variable
+        $_SESSION['update_success'] = true;
     } else {
         // Error updating user information
         echo json_encode(["success" => false, "message" => "Error updating user information: " . $stmt->error]);
