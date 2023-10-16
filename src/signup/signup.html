@@ -9,8 +9,6 @@
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="images/favicon-32x32.png">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@16.3.0/distribute/nouislider.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/nouislider@16.3.0/distribute/nouislider.js"></script>
  
 
     <style>
@@ -161,17 +159,16 @@ input[type="password"]::-ms-clear {
     display: none;
 }
 
-/* Add this CSS to style the height inputs side by side */
-.height-input {
-    display: flex;
-    align-items: center;
-}
-
-.height-input input {
-    margin-right: 10px; /* Adjust this margin as needed to space out the inputs */
-}
-
-
+.slider-container {
+            display: flex;
+            align-items: center;
+        }
+        .slider-label {
+            margin-right: 10px;
+        }
+        .slider {
+            width: 100%;
+        }
 
 </style>
 
@@ -189,7 +186,6 @@ input[type="password"]::-ms-clear {
     <!-- Font Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
@@ -309,17 +305,62 @@ input[type="password"]::-ms-clear {
                                     <input type="number" name="weight" placeholder="156" id="weight" />
                                 </div>
 
-                  
-                                <div class="form-input">
-                                    <label for="heightFeet" class="required">Height</label>
-                                    <div class="height-input">
-                                        <input type="number" name="heightFeet" placeholder="5" id="heightFeet" min="1" max="7" required style="width: 75px; margin-right: 15px;"/>
-                                        <span style="position:inherit;">ft</span>
-                                        <input type="number" name="heightInches" placeholder="0" id="heightInches" min="0" max="12" required style="width: 75px; margin-left: 15px;"/>
-                                        <span style="position: inherit;">in</span>
+                           
+                                    <div class="form-select">
+                                        <div class="label-flex">
+                                            <label for="height" class="required">Height (ft' in")</label>
+                                        </div>
+                                        <div class="select-list">
+                                            <select name="height" id="height" required>
+                                                <option value="" selected disabled>- Select -</option>
+                                                <option value="Below than 4 ft">Below 4 ft</option>
+                                                <option value="4 ft 0 in">4 ft 0 in</option>
+                                                <option value="4 ft 1 in">4 ft 1 in</option>
+                                                <option value="4 ft 2 in">4 ft 2 in</option>
+                                                <option value="4 ft 3 in">4 ft 3 in</option>
+                                                <option value="4 ft 4 in">4 ft 4 in</option>
+                                                <option value="4 ft 5 in">4 ft 5 in</option>
+                                                <option value="4 ft 6 in">4 ft 6 in</option>
+                                                <option value="4 ft 7 in">4 ft 7 in</option>
+                                                <option value="4 ft 8 in">4 ft 8 in</option>
+                                                <option value="4 ft 9 in">4 ft 9 in</option>
+                                                <option value="4 ft 10 in">4 ft 10 in</option>
+                                                <option value="4 ft 11 in">4 ft 11 in</option>
+                                                <option value="5 ft 0 in">5 ft 0 in</option>
+                                                <option value="5 ft 1 in">5 ft 1 in</option>
+                                                <option value="5 ft 2 in">5 ft 2 in</option>
+                                                <option value="5 ft 3 in">5 ft 3 in</option>
+                                                <option value="5 ft 4 in">5 ft 4 in</option>
+                                                <option value="5 ft 5 in">5 ft 5 in</option>
+                                                <option value="5 ft 6 in">5 ft 6 in</option>
+                                                <option value="5 ft 7 in">5 ft 7 in</option>
+                                                <option value="5 ft 8 in">5 ft 8 in</option>
+                                                <option value="5 ft 9 in">5 ft 9 in</option>
+                                                <option value="5 ft 10 in">5 ft 10 in</option>
+                                                <option value="5 ft 11 in">5 ft 11 in</option>
+                                                <option value="6 ft 0 in">6 ft 0 in</option>
+                                                <option value="6 ft 1 in">6 ft 1 in</option>
+                                                <option value="6 ft 2 in">6 ft 2 in</option>
+                                                <option value="6 ft 3 in">6 ft 3 in</option>
+                                                <option value="6 ft 4 in">6 ft 4 in</option>
+                                                <option value="6 ft 5 in">6 ft 5 in</option>
+                                                <option value="6 ft 6 in">6 ft 6 in</option>
+                                                <option value="6 ft 7 in">6 ft 7 in</option>
+                                                <option value="6 ft 8 in">6 ft 8 in</option>
+                                                <option value="6 ft 9 in">6 ft 9 in</option>
+                                                <option value="6 ft 10 in">6 ft 10 in</option>
+                                                <option value="6 ft 11 in">6 ft 11 in</option>
+                                                <option value="7 ft 0 in">7 ft 0 in</option>
+                                                <option value="7 ft 1 in">7 ft 1 in</option>
+                                                <option value="7 ft 2 in">7 ft 2 in</option>
+                                                <option value="7 ft 3 in">7 ft 3 in</option>
+                                                <option value="7 ft 4 in">7 ft 4 in</option>
+                                                <option value="Taller than 7 ft 4 in">Taller than 7 ft 4 in</option>                                                
+                                            </select>
+                                        </div>
                                     </div>
-                                    <span class="error" id="heightError"></span>
-                                </div>
+
+                                
                 
                                 <div class="form-input">
                                     <label for="dateofbirth" class="required">Date of Birth</label>
@@ -351,7 +392,6 @@ input[type="password"]::-ms-clear {
 
     <!-- JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/nouislider/nouislider.min.js"></script>
     <script src="vendor/wnumb/wNumb.js"></script>
     <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="vendor/jquery-validation/dist/additional-methods.min.js"></script>
@@ -379,35 +419,6 @@ input[type="password"]::-ms-clear {
     });
 });
     </script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const heightFeetInput = document.getElementById('heightFeet');
-    const heightInchesInput = document.getElementById('heightInches');
-    const heightError = document.getElementById('heightError');
-    
-    // Validate height input on form submission
-    document.getElementById('register-form').addEventListener('submit', function (event) {
-        const feet = parseInt(heightFeetInput.value);
-        const inches = parseInt(heightInchesInput.value);
-        
-        if (feet < 1 || feet > 7 || inches < 0 || inches > 12) {
-            event.preventDefault(); // Prevent form submission
-            heightError.textContent = 'Please enter a valid height (between 1ft - 7ft and 0in - 12in).';
-        } else {
-            heightError.textContent = ''; // Clear any previous error message
-        }
-    });
-    
-    // Clear the error message when the inputs change
-    heightFeetInput.addEventListener('input', clearHeightError);
-    heightInchesInput.addEventListener('input', clearHeightError);
-    
-    function clearHeightError() {
-        heightError.textContent = '';
-    }
-});
-</script>
 
 </body>
 </html>
