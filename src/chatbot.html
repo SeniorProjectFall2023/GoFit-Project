@@ -26,6 +26,7 @@ $userData = [
 // Convert the user data to JSON format
 $userDataJson = json_encode($userData);
 
+
 ?>
 
 <head>
@@ -267,6 +268,37 @@ $userDataJson = json_encode($userData);
       </div>
       
       <script>
+
+            let chatHistory = [];
+
+
+            async function getChatHistory() {
+            try {
+                const response = await fetch('get_chat_history.php');
+                if (response.ok) {
+                    chatHistory = await response.json();
+                }
+            } catch (error) {
+                console.error('Error fetching chat history:', error);
+            }
+        }
+
+        // Function to retrieve and display chat history from the session
+        function displayChatHistory() {
+            const chatbotMessages = document.getElementById("chatbot-messages");
+
+            chatHistory.forEach((message) => {
+                appendMessage(message.user_message, "user");
+                appendMessage(message.chatbot_response, "chatbot");
+            });
+        }
+
+        // Call the function to fetch chat history and then display it
+        getChatHistory().then(() => {
+            displayChatHistory();
+        });
+
+        
         // Define your OpenAI API key
         const apiKey = "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"; // Replace with your actual OpenAI API key
         const apiUrl = "https://gofit.site/openai-proxy.php"; // Replace with your actual domain and path
@@ -428,33 +460,59 @@ $userDataJson = json_encode($userData);
       }
 
 
-        // Add event listener to the "Send" button
-        document.getElementById("send-button").addEventListener("click", async () => {
-            const userInput = document.getElementById("user-input");
-            const loadingMessage = document.getElementById("loading-message"); // Get the loading message element
+    // Function to save messages to the server
+    async function saveMessages(userMessage, chatbotResponse) {
+        const messageData = {
+            userMessage: userMessage,
+            chatbotResponse: chatbotResponse,
+        };
 
-            // Show the loading message when the user clicks "Send"
-            loadingMessage.style.display = "block";
+        try {
+            const response = await fetch('chatbot.php', {
+                method: 'POST',
+                body: JSON.stringify(messageData),
+            });
 
-            const userMessage = userInput.value.trim();
-
-            if (userMessage !== "") {
-                appendMessage(userMessage, "user");
-                userInput.value = "";
-
-                const chatbotResponse = await sendMessage(userMessage);
-
-                if (chatbotResponse !== null) {
-                    // Hide the loading message when a response is received
-                    loadingMessage.style.display = "none";
-                    appendMessage(chatbotResponse, "chatbot");
-                }
+            if (response.ok) {
+                console.log('Messages saved successfully');
+            } else {
+                console.error('Error saving messages:', response.statusText);
             }
-        });
+        } catch (error) {
+            console.error('Error saving messages:', error);
+        }
+    }
 
-    
+    // Add event listener to the "Send" button
+    document.getElementById("send-button").addEventListener("click", async () => {
+        const userInput = document.getElementById("user-input");
+        const loadingMessage = document.getElementById("loading-message"); // Get the loading message element
+
+        // Show the loading message when the user clicks "Send"
+        loadingMessage.style.display = "block";
+
+        const userMessage = userInput.value.trim();
+
+        if (userMessage !== "") {
+            appendMessage(userMessage, "user");
+            userInput.value = "";
+
+            const chatbotResponse = await sendMessage(userMessage);
+
+            if (chatbotResponse !== null) {
+                // Hide the loading message when a response is received
+                loadingMessage.style.display = "none";
+                appendMessage(chatbotResponse, "chatbot");
+
+                // Save messages to the server
+                saveMessages(userMessage, chatbotResponse);
+            }
+        }
+    });
+
       </script>
 
+      
             
     </main><!-- End #main -->
 
