@@ -15,7 +15,7 @@ If you wish to clone this GitHub repository onto your local machine, follow thes
 1. Open a terminal on your local machine.
 2. Navigate to the directory where you want to clone the repository.
 3. Obtain the HTTPS URL for the repository you want to clone. This URL can be found on the GitHub repository page by clicking the "Clone" button, selecting "HTTPS," and copying the URL.
-4. In your terminal, execute the following command, replacing [repository URL] with the HTTPS URL you copied: git clone [repository URL].
+4. In your terminal, execute the following command, replacing [https://github.com/SeniorProjectFall2023/GoFit-Project.git] with the HTTPS URL you copied: git clone [https://github.com/SeniorProjectFall2023/GoFit-Project.git].
 5. Press Enter to run the command. Git will download the repository files to your local machine, creating a new directory with the same name as the repository. 
 
 Once the cloning process is complete, you can start working with the repository on your local machine. If you make changes to the files, you can use Git to push those changes back to the repository on GitHub.
