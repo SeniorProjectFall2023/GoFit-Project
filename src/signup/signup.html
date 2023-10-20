@@ -210,17 +210,19 @@ input[type="password"]::-ms-clear {
                                 <div class="form-input">
                                     <label for="name" class="required">Full Name</label>
                                     <input type="text" name="name" placeholder="John Doe" id="name" required/>
+                                    <div class="error-message"></div>
                                 </div>
 
                                 <div class="form-input">
                                     <label for="username" class="required">Username</label>
                                     <input type="text" name="username" placeholder="Johndoe23" id="username" required/>
+                                    <div class="error-message"></div>
                                 </div>
 
-                                <!-- Email input with Gmail validation -->
                                 <div class="form-input">
                                     <label for="email" class="required">Email</label>
                                     <input type="email" name="email" placeholder="johndoe@gmail.com" id="email" required/>
+                                    <div class="error-message"></div>
                                 </div>
 
                                 <div class="form-input password-input">
@@ -229,6 +231,7 @@ input[type="password"]::-ms-clear {
                                         <input type="password" name="password" placeholder="************" id="password" required/>
                                         <span class="password-toggle" id="togglePasswordSignUp">         
                                         </span>
+                                        <div class="error-message"></div>
                                     </div>
                                 </div>
 
@@ -365,6 +368,7 @@ input[type="password"]::-ms-clear {
                                 <div class="form-input">
                                     <label for="dateofbirth" class="required">Date of Birth</label>
                                     <input type="date" name="dateofbirth" id="dateofbirth" required />
+                                    <div class="error-message"></div>
                                 </div>
                 
                                 <br>
@@ -418,6 +422,67 @@ input[type="password"]::-ms-clear {
         }
     });
 });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('register-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const dateOfBirthInput = document.getElementById('dateofbirth');
+            const errorMessages = document.querySelectorAll('.error-message');
+
+            form.addEventListener('submit', function (event) {
+                let valid = true;
+
+                // Validate Full Name (Only alphabets and spaces)
+                const namePattern = /^[a-zA-Z ]+$/;
+                if (!namePattern.test(nameInput.value)) {
+                    valid = false;
+                    nameInput.classList.add('error');
+                    errorMessages[0].textContent = 'Please enter a valid name.';
+                } else {
+                    nameInput.classList.remove('error');
+                    errorMessages[0].textContent = '';
+                }
+
+                // Validate Email (Simple email pattern)
+                const emailPattern = /^\S+@\S+\.\S+$/;
+                if (!emailPattern.test(emailInput.value)) {
+                    valid = false;
+                    emailInput.classList.add('error');
+                    errorMessages[1].textContent = 'Please enter a valid email address.';
+                } else {
+                    emailInput.classList.remove('error');
+                    errorMessages[1].textContent = '';
+                }
+
+                // Validate Password (At least 8 characters)
+                if (passwordInput.value.length < 8) {
+                    valid = false;
+                    passwordInput.classList.add('error');
+                    errorMessages[2].textContent = 'Password must be at least 8 characters.';
+                } else {
+                    passwordInput.classList.remove('error');
+                    errorMessages[2].textContent = '';
+                }
+
+                // Validate Date of Birth (Must be a past date)
+                const currentDate = new Date();
+                const selectedDate = new Date(dateOfBirthInput.value);
+                if (selectedDate >= currentDate) {
+                    valid = false;
+                    dateOfBirthInput.classList.add('error');
+                    errorMessages[3].textContent = 'Please select a valid date of birth.';
+                } else {
+                    dateOfBirthInput.classList.remove ('error');
+                    errorMessages[3].textContent = '';
+                }
+
+                if (!valid) {
+                    event.preventDefault();
+                }
+            });
+        });
     </script>
 
 </body>

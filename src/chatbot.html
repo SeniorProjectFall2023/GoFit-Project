@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -283,20 +282,26 @@ $userDataJson = json_encode($userData);
             }
         }
 
-        // Function to retrieve and display chat history from the session
-        function displayChatHistory() {
-            const chatbotMessages = document.getElementById("chatbot-messages");
+    // Function to retrieve and display chat history from the session
+    async function displayChatHistory() {
+        try {
+            const response = await fetch('get_chat_history.php');
+            if (response.ok) {
+                const chatHistory = await response.json();
 
-            chatHistory.forEach((message) => {
-                appendMessage(message.user_message, "user");
-                appendMessage(message.chatbot_response, "chatbot");
-            });
+                // Loop through the chat history and display messages
+                chatHistory.forEach((message) => {
+                    appendMessage(message.user_message, "user");
+                    appendMessage(message.chatbot_response, "chatbot");
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching chat history:', error);
         }
+    }
 
-        // Call the function to fetch chat history and then display it
-        getChatHistory().then(() => {
-            displayChatHistory();
-        });
+    // Call the function to fetch chat history and then display it when the page loads
+    displayChatHistory();
 
         
         // Define your OpenAI API key
