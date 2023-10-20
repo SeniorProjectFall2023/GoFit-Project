@@ -38,8 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $activity_level = isset($_POST['activity_level']) ? custom_sanitize($_POST['activity_level']) : null;
 
-    // Perform additional validation as needed
-
     // Insert user data into the database
     $query = "INSERT INTO `user` (name, username, email, password, meal_preference, gender, weight, dateofbirth, height, activity_level)
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
