@@ -44,6 +44,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['height'] = $row['height'];
                     $_SESSION['activity_level'] = $row['activity_level'];
 
+                    // Check if the "Remember Me" checkbox is selected
+                    if (isset($_POST['remember_me'])) {
+                        // If selected, set cookies for username and token
+                        $remembered_username = $_POST['remembered_username'];
+                        $remembered_token = $_POST['remembered_token'];
+                        
+                        setcookie('remembered_username', $remembered_username, time() + 60 * 60 * 24 * 7);
+                        setcookie('remembered_token', $remembered_token, time() + 60 * 60 * 24 * 7);
+                    } else {
+                        // If not selected, clear any existing "Remember Me" cookies
+                        setcookie('remembered_username', "", time() - 3600);
+                        setcookie('remembered_token', "", time() - 3600);
+                    }
+
                     // Initialize the chat log in the session if it doesn't exist
                     if (!isset($_SESSION['chatLog'])) {
                         $_SESSION['chatLog'] = [];
@@ -58,9 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         'meal_preference' => $_SESSION['meal_preference'],
                         'weight' => $_SESSION['weight'],
                         'height' => $_SESSION['height'],
-                        'activity_level' => $_SESSION['activity_level']   
-
-                                         
+                        'activity_level' => $_SESSION['activity_level']
                     ];
                     $_SESSION['user_data'] = $userData;
 
