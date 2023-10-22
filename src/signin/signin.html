@@ -46,8 +46,15 @@
                                 <label class="form-control-placeholder" for="password">Password</label>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
+
+                            <!-- Add Remember Me checkbox and hidden fields -->
+                            <div class="form-group">
+                                 <input type="checkbox" name="remember_me" id="remember_me"> Remember me
+                                 <a href="../forgotPassword/forgotPassword.html" style="float: right; margin-top: 0px; color:#1bbd36">Forgot your password?</a>
+                                 <input type="hidden" name="remembered_username" id="remembered_username">
+                                 <input type="hidden" name="remembered_token" id="remembered_token">
+                            </div>
                             
-                            <a href="../forgotPassword/forgotPassword.html">Forgot your password?</a>
                             
                             <div class="form-group">
                                 <br>
@@ -64,6 +71,18 @@
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+        // Check if cookies exist
+        const rememberedUsername = document.cookie.replace(/(?:(?:^|.*;\s*)remembered_username\s*=\s*([^;]*).*$)|^.*$/, "$1");
+        const rememberedToken = document.cookie.replace(/(?:(?:^|.*;\s*)remembered_token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    
+        if (rememberedUsername && rememberedToken) {
+            // If cookies exist, pre-fill the username field
+            document.querySelector('input[name="username"]').value = rememberedUsername;
+        }
+    </script>
+    
 </body>
 <style>
         body {
