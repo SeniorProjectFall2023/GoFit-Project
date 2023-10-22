@@ -206,7 +206,8 @@ if (!isset($_SESSION['chatLog'])) {
                       <div class="form-row">
                         <div class="form-group col-md-4">
                           <label for="email">Email</label>
-                          <input type="email" class="form-control" id="email" name="email" placeholder="johndoe@email.com" value="" required>
+                          <input type="email" class="form-control" name="email" placeholder="johndoe@gmail.com" id="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                          title="Email must be at least 4 characters long, and must contain letters, numbers, and @" required/>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="weight">Weight (Lb)</label>
