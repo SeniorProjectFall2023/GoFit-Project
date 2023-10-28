@@ -78,8 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $response = curl_exec($ch);
 
                         if ($response !== false) {
-                            echo "<script>alert('A password reset link has been sent to your email address.\nPlease check your email inbox and, if not found, kindly check your Spam folder. Be sure to mark it as \"Not Spam\" to receive future emails from us.');</script>";
-
+                            echo "<script>alert('A password reset link has been sent to your email address. Please check your email inbox and, if not found, kindly check your Spam folder. Be sure to mark it as \"Not Spam\" to receive future emails from us.');</script>";
                             echo "<script>window.location.href = '../index.html';</script>"; // Redirect to the home page
                         } else {
                             echo "<script>alert('Error sending the password reset email.');</script>";
@@ -93,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<script>alert('Error preparing update statement: " . $db->error . "');</script>";
                 }
             } else {
-                echo "<script>alert('Email not found.');</script>";
+                echo "<script>alert('Email not found.'); window.location.href = 'forgotPassword.html';</script>";
             }
             $stmt->close();
         } else {

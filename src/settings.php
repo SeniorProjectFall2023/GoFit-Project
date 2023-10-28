@@ -68,13 +68,26 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     // Retrieve and sanitize form data, including the new fields
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
+    // Check if the email is already taken
+    $query = "SELECT userID FROM user WHERE email = ? AND userID != ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("si", $email, $userID);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+        // Email is already taken
+        echo json_encode(["success" => false, "message" => "The email is already taken"]);
+        exit;
+    }
+    
+    // Continue updating user information
     $dateofbirth = custom_sanitize($_POST['dateofbirth']);
     $gender = custom_sanitize($_POST['gender']);
     $meal_preference = custom_sanitize($_POST['meal_preference']);
     $weight = filter_var($_POST['weight'], FILTER_VALIDATE_FLOAT);
     $height = custom_sanitize($_POST['height']);
     $activity_level = custom_sanitize($_POST['activity_level']);
-
 
     // Update user information in the database
     $query = "UPDATE user SET email=?, dateofbirth=?, gender=?, meal_preference=?, weight=?, height=?, activity_level=? WHERE userID=?";
