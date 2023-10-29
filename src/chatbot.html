@@ -187,6 +187,33 @@ $userDataJson = json_encode($userData);
   }
 
 
+  /* Button for scrolling to the bottom */
+.back-to-bottom {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #1bbd36;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 24px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+
+
+
+    
+}
+
+
+.back-to-bottom:hover {
+    background-color: #009e2b;
+    color: #fff;
+}
+
 
     </style>
 
@@ -594,7 +621,29 @@ $userDataJson = json_encode($userData);
       </div>
     </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-bottom d-flex align-items-center justify-content-center"><i class="bi bi-arrow-down-short"></i></a>
+
+  <!-- <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a> -->
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const scrollToBottomButton = document.querySelector(".back-to-bottom");
+    
+        scrollToBottomButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth"
+            });
+        });
+    });
+    </script>
+
+
+
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
