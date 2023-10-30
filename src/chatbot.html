@@ -367,7 +367,9 @@ $userDataJson = json_encode($userData);
                 use this information to generate better responses for me. 
                 Also, make sure to end off the response with a complete sentence please, do not cut off, 
                 if you have to cut off just stop responding at the last period please, 
-                and remember your role is to help users with health and fitness advice based off their information given to you`;
+                and remember your role is to help users with health and fitness advice based off their information given to you,
+                if the user provides a question that isnt related to health and fitness questions do not answer the questions,
+                 instead state that you can only answer health and fitness related questions`;
       
                 const headers = {
                     'Content-Type': 'application/json',
