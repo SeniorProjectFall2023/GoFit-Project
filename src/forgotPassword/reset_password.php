@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $updateStmt->bind_param("si", $resetToken, $userID);
                     if ($updateStmt->execute()) {
                         // Send an email with a reset link to the user's email address
-                        $resetLink = "http://143.110.228.26/forgotPassword/reset_password_form.html?token=" . $resetToken;
+                        $resetLink = "http://gofit.site/forgotPassword/reset_password_form.html?token=" . $resetToken;
 
                         // Compose the email message
                         $subject = 'Password Reset Link';
