@@ -286,6 +286,7 @@ $userDataJson = json_encode($userData);
         </div>
         <div id="loading-message" class="loading">
           <div class="loader"></div>
+          <div id="countdown-time">Estimated response time: Calculating...</div>
         </div>
         <div id="user-input-container">
           <textarea id="user-input" placeholder="Send a message (e.g. How should I start my fitness goal?)" oninput="autoExpand(this)"></textarea>
@@ -358,67 +359,101 @@ $userDataJson = json_encode($userData);
             return dateTimeString;
         }
 
-        // Function to send a message to the chatbot and get a response
-        async function sendMessage(prompt) {
-            try {
-                const currentDateTime = getCurrentDateTime(); // Get the current date and time
-                const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}) (here is the current date and time to get my age correct: ${currentDateTime}), 
-                Fitness Goal (${userData.meal_preference}), Name (${userData.name}), Activity Level (${userData.activity_level}), Height (${userData.height}), and Gender (${userData.gender}), 
-                use this information to generate better responses for me. 
-                Also, make sure to end off the response with a complete sentence please, do not cut off, 
-                if you have to cut off just stop responding at the last period please, 
-                and remember your role is to help users with health and fitness advice based off their information given to you,
-                if the user provides a question that isnt related to health and fitness questions do not answer the questions,
-                 instead state that you can only answer health and fitness related questions`;
-      
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`,
-                };
-      
-                const requestBody = {
-                    "model": "gpt-3.5-turbo",
-                    "messages": [{
-                        "role": "user",
-                        "content": promptWithLimit
-                    }],
-                    "max_tokens": 700,
-                };
-      
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(requestBody),
-                });
-      
-                if (!response.ok) {
-                    console.error('Error:', response.statusText);
-                    return null;
-                }
-      
-                const data = await response.json();
-      
-                if (!data.choices || data.choices.length === 0) {
-                    console.error('Error: Empty response from OpenAI API');
-                    return null;
-                }
-      
-                let chatbotResponse = data.choices[0].message.content;
-      
-                // Check if the response exceeds the specified max_tokens
-                if (data.choices[0].message.length >= 700) {
-                    // Truncate the response to a reasonable length (e.g., at the last sentence)
-                    chatbotResponse = truncateResponse(chatbotResponse, 700);
-                }
-      
-                console.log("Response: " + chatbotResponse);
-                return chatbotResponse;
-            } catch (error) {
-                console.error("Error calling OpenAI API:", error);
-                return null;
-            }
-        }
-      
+      // Function to send a message to the chatbot and get a response
+      async function sendMessage(prompt) {
+          const startTimestamp = Date.now(); // Record the start time
+
+          let countdownTimeInSeconds = null; // Variable to hold the countdown time
+
+          try {
+              const currentDateTime = getCurrentDateTime(); // Get the current date and time
+              const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}) (here is the current date and time to get my age correct: ${currentDateTime}), 
+              Fitness Goal (${userData.meal_preference}), Name (${userData.name}), Activity Level (${userData.activity_level}), Height (${userData.height}), and Gender (${userData.gender}), 
+              use this information to generate better responses for me. 
+              Also, make sure to end off the response with a complete sentence please, do not cut off, 
+              if you have to cut off just stop responding at the last period please, 
+              and remember your role is to help users with health and fitness advice based off their information given to you,
+              if the user provides a question that isnt related to health and fitness questions do not answer the questions,
+              instead state that you can only answer health and fitness related questions`;
+
+              const headers = {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${apiKey}`,
+              };
+
+              const requestBody = {
+                  "model": "gpt-3.5-turbo",
+                  "messages": [{
+                      "role": "user",
+                      "content": promptWithLimit
+                  }],
+                  "max_tokens": 700,
+              };
+
+              const response = await fetch(apiUrl, {
+                  method: 'POST',
+                  headers: headers,
+                  body: JSON.stringify(requestBody),
+              });
+
+              if (!response.ok) {
+                  console.error('Error:', response.statusText);
+                  return null;
+              }
+
+              const data = await response.json();
+
+              if (!data.choices || data.choices.length === 0) {
+                  console.error('Error: Empty response from OpenAI API');
+                  return null;
+              }
+
+              let chatbotResponse = data.choices[0].message.content;
+
+              // Check if the response exceeds the specified max_tokens
+              if (data.choices[0].message.length >= 700) {
+                  // Truncate the response to a reasonable length (e.g., at the last sentence)
+                  chatbotResponse = truncateResponse(chatbotResponse, 700);
+              }
+
+              // Calculate the response time
+              const endTimestamp = Date.now();
+              const responseTimeInSeconds = Math.floor((endTimestamp - startTimestamp) / 1000);
+
+              // Update the countdown time
+              countdownTimeInSeconds = responseTimeInSeconds;
+
+              return chatbotResponse;
+          } catch (error) {
+              console.error("Error calling OpenAI API:", error);
+              return null;
+          } finally {
+              // Display the response time in the countdown
+              if (countdownTimeInSeconds !== null) {
+                  displayCountdown(countdownTimeInSeconds);
+              }
+          }
+      }
+
+      // Function to update and display the countdown
+      function displayCountdown(timeInSeconds) {
+          const countdownTime = document.getElementById("countdown-time");
+
+          let remainingTime = timeInSeconds;
+          countdownTime.innerText = `Estimated Response Time: ${remainingTime} Seconds`;
+
+          const countdownInterval = setInterval(() => {
+              remainingTime--;
+
+              if (remainingTime <= 0) {
+                  clearInterval(countdownInterval);
+                  countdownTime.innerText = "Response Received";
+              } else {
+                  countdownTime.innerText = `Estimated Response Time: ${remainingTime} Seconds`;
+              }
+          }, 1000);
+      }
+
         // Function to truncate a response at the last complete sentence or paragraph
         function truncateResponse(text, maxTokens) {
             // Split the text into sentences
