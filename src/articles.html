@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<?php
+session_start();
+if (isset($_SESSION['name'])) {
+    $userName = $_SESSION['name'];
+} else {
+    $userName = "Guest"; // Default value if the user is not logged in
+}
+
+// Initialize the chat log in the session if it doesn't exist
+if (!isset($_SESSION['chatLog'])) {
+    $_SESSION['chatLog'] = [];
+}
+?>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Articles</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Company
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/company-free-html-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <!-- Insert the GoFit logo here -->
+      <h1 class="logo me-auto">
+        <a href="index.html"> 
+          <img src="assets/img/GoFitLogo.png" alt="GoFit Logo"> 
+           <span>GoFit<br></span>ChatBot
+        </a>
+      </h1>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="chatbot.html">Chatbot</a></li>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="articles.html" class="active">Articles</a></li>
+          <li><a href="faqs.html">FAQs</a></li> 
+          <li><a href="contact.html">Contact</a></li> 
+          <li><a>Hello, <?php echo "  " . $userName; ?></a></li>
+          <?php if ($userName === "Guest"): ?>
+          <li><a href="/signin/signin.html"><u><i>Sign In</i></u></a></li> 
+          <li><a>|</a></li> <!-- Adjust the margin-right to reduce spacing -->
+          <li><a href="/signup/signup.html"><u><i>Sign Up</i></u></a></li> 
+          <?php endif; ?>
+          <?php if ($userName !== "Guest"): ?>
+          <li><a href="logout.php" class="logout-button" style="color: red"><u>Logout</u></a></li>
+          <?php endif; ?>
+      </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= --><br>
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Articles</h2>
+          <ol>
+            <li><a href="index.html"><u>Home</u></a></li>
+            <li>Articles</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+
+            <article class="entry">
+
+              <div class="entry-img">
+                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="https://www.everydayhealth.com/fitness/rock-climbing/guide/">Rock Climbing Workout: Health Benefits, How to Get Started, and How to Get Better</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> Lauren Bedosky</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> November 1, 2023</time></a></li>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  Many of us climbed trees and scaled fences for fun as kids but gave it up once we got older. Rock climbing offers a way to relive those childhood moments while getting an incredible full-body workout. Read on to learn what makes rock climbing a workout, the potential health benefits, and how to get started.
+                </p>
+                <div class="read-more">
+                  <a href="https://www.everydayhealth.com/fitness/rock-climbing/guide/">Read More</a>
+                </div>
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <article class="entry">
+
+              <div class="entry-img">
+                <img src="assets/img/blog/blog-2.jpg" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="https://www.everydayhealth.com/fitness/quick-fixes-for-sore-muscles.aspx">Quick Fixes for Sore Muscles</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> Lauren Bedosky</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> October 31, 2023</a></li>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  Sore muscles are one of the less pleasant side effects of exercise. Depending on the type and intensity of the workout, muscle soreness after a workout can range from barely noticeable to extremely painful.
+                </p>
+                <div class="read-more">
+                  <a href="https://www.everydayhealth.com/fitness/quick-fixes-for-sore-muscles.aspx">Read More</a>
+                </div>
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <article class="entry">
+
+              <div class="entry-img">
+                <img src="assets/img/blog/blog-3.jpg" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="https://www.everydayhealth.com/fitness/brief-daily-exercise-can-lower-your-risk-of-dying-from-too-much-sitting/">Brief Daily Exercise Can Lower Your Risk of Death From Too Much Sitting</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> Don Rauf</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> October 25, 2023</time></a></li>
+
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  It may seem the opposite of dangerous, but sitting all day can kill you.
+                  <br><br>
+                  Past studies have shown that sedentary behavior is linked to poor health outcomes, including heart disease, type 2 diabetes, cancer, and early death.
+                  <br><br>
+                  New research published this week, however, found that even short periods of exercise — 20 to 25 minutes per day — can make a major dent in the risk of death for those who sit for long stretches.
+                  <br><br>
+                  “The effect of doing physical activity on a regular basis is astonishing — you could say exercise is both prevention and medicine, like brushing your teeth for avoiding cavities,” says Edvard Sagelv, PhD, an author of the study and a researcher in the school of sport sciences at the UiT the Arctic University of Norway, in Tromsø.
+                </p>
+                <div class="read-more">
+                  <a href="https://www.everydayhealth.com/fitness/brief-daily-exercise-can-lower-your-risk-of-dying-from-too-much-sitting/">Read More</a>
+                </div>
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <article class="entry">
+
+              <div class="entry-img">
+                <img src="assets/img/blog/blog-4.jpg" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="https://www.everydayhealth.com/fitness/how-to-start-running-an-absolute-beginners-guide/">How to Start Running: An Absolute Beginners Guide</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> Elizabeth Millard</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> October 17, 2023</time></a></li>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  If you want to start running, whether you are already active in other ways or you’re truly in couch-to-5K mode, the biggest question tends to be: Where do you start?
+                  <br><br>
+                  Yes, it can be as simple as lacing up your sneakers and hitting the pavement. But putting some thought into what your goals are, your pacing, what to wear, and how to schedule other activities and workouts can go a long way when it comes to avoiding injuries and making progress.
+                  <br><br>
+                  Here are some top tips from running experts on how to start running, along with a basic four-week training plan.
+                </p>
+                <div class="read-more">
+                  <a href="https://www.everydayhealth.com/fitness/how-to-start-running-an-absolute-beginners-guide/">Read More</a>
+                </div>
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <article class="entry">
+
+              <div class="entry-img">
+                <img src="assets/img/blog/blog-5.jpg" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="https://www.everydayhealth.com/yoga/beginners-what-know-before-you-go/">Yoga for Beginners: What You Should Know Before Your First Class</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> Becky Upham</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> October 5, 2023</time></a></li>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  Although it can be intimidating when you first walk into a yoga studio, it’s important to remember that everyone was a beginner at some point. Being brave enough to try it gives you a chance to practice a key tenet of yoga: self-compassion.
+                  <br><br>
+                  “There are a lot of misconceptions about yoga that can make people nervous about trying it,” says Judi Bar, the yoga program manager at Cleveland Clinic Wellness and Preventive Medicine, who has an individual yoga therapist certification (C-IAYT) from the International Association of Yoga Therapists and who is also certified by Yoga Alliance, the world’s largest nonprofit yoga association that certifies teachers and schools.
+                  <br><br>
+                  Some people think you can’t do yoga if you aren’t flexible or you can’t touch your toes, she says. “They see pictures of a very fit younger person standing on one foot holding their hands over their head in a pose and think that yoga is out of the question for them,” she says.
+                </p>
+                <div class="read-more">
+                  <a href="https://www.everydayhealth.com/yoga/beginners-what-know-before-you-go/">Read More</a>
+                </div>
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <!-- <div class="blog-pagination">
+              <ul class="justify-content-center">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+              </ul>
+            </div> -->
+
+          </div><!-- End blog entries list -->
+
+          <div class="col-lg-4">
+
+            <div class="sidebar">
+
+              
+
+              <h3 class="sidebar-title" style="text-align: center;">Additional Readings</h3>
+              <br>
+              <div class="sidebar-item recent-posts">
+                <div class="post-item clearfix">
+                  <img src="assets/img/blog/blog-recent-1.jpg" alt="">
+                  <h4><a href="https://www.everydayhealth.com/fitness/the-best-exercises-for-strengthening-every-muscle-in-your-arms/">The Best Exercises for Strengthening Every Muscle in Your Arms</a></h4>
+                  <time datetime="2020-01-01">Oct 2, 2023</time>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/blog/blog-recent-2.jpg" alt="">
+                  <h4><a href="https://www.everydayhealth.com/fitness/jump-rope-workouts/guide/">Jump Rope Workouts: Health Benefits, How to Get Started, and How to Get Better</a></h4>
+                  <time datetime="2020-01-01">Sep 28, 2023</time>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/blog/blog-recent-3.jpg" alt="">
+                  <h4><a href="https://www.everydayhealth.com/fitness/anaerobic-exercise-vs-aerobic-exercise-whats-the-difference/">Anaerobic Exercise vs. Aerobic Exercise: What's the Difference?</a></h4>
+                  <time datetime="2020-01-01">Sep 26, 2023</time>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/blog/blog-recent-4.jpg" alt="">
+                  <h4><a href="https://www.everydayhealth.com/fitness/warm-up-exercises/guide/">Warm-Up Exercises: Health Benefits, How to Get Started, and More</a></h4>
+                  <time datetime="2020-01-01">Sep 26, 2023</time>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/blog/blog-recent-5.jpg" alt="">
+                  <h4><a href="https://www.everydayhealth.com/fitness/ways-to-exercise-that-are-perfect-for-fall/">6 Ways to Exercise That Are Perfect for Fall (and Don’t Even Feel Like Workouts)</a></h4>
+                  <time datetime="2020-01-01">Sep 4, 2023</time>
+                </div>
+
+              </div><!-- End sidebar recent posts-->
+
+        
+
+            </div><!-- End sidebar -->
+
+          </div><!-- End blog sidebar -->
+
+        </div>
+
+      </div>
+    </section><!-- End Blog Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>GoFit ChatBot</h3>
+            <p>
+              3001 S Congress Ave <br>
+              Austin, TX 78704<br>
+              United States <br><br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="index.html">HOME</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="chatbot.html">CHATBOT</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="settings.html">SETTINGS</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="articles.html"><u>ARTICLES</u></a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="faqs.html">FAQS</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="contact.html">CONTACT</a></li>
+            </ul>
+          </div>
+
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Our Mission</h4>
+            <p>At GoFit ChatBot, our mission is to empower individuals on their journey to better health and fitness. 
+              We believe that everyone deserves accessible and personalized guidance to achieve their wellness goals. 
+              Our chatbot serves as your trusted companion, providing you with the knowledge, motivation, and support 
+              needed to kickstart and sustain a healthier lifestyle.</p>
+        </div>
+        
+        
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright" style="text-align: center;">
+          Copyright &copy; 2023 <strong><span>GoFit ChatBot</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+       
+        </div>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

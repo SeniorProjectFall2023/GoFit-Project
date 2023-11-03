@@ -240,6 +240,7 @@ $userDataJson = json_encode($userData);
           <li><a href="index.html">Home</a></li>
           <li><a href="chatbot.html" class="active">Chatbot</a></li>
           <li><a href="settings.html">Settings</a></li>
+          <li><a href="articles.html">Articles</a></li>
           <li><a href="faqs.html">FAQs</a></li> 
           <li><a href="contact.html">Contact</a></li> 
           <li><a>Hello, <?php echo "  " . $userName; ?></a></li>
@@ -286,8 +287,9 @@ $userDataJson = json_encode($userData);
         </div>
         <div id="loading-message" class="loading">
           <div class="loader"></div>
-          <div id="countdown-time">Estimated response time: Calculating...</div>
+          <div id="countdown-time">Generating Response... <div id="health-fitness-tip"></div> </div>
         </div>
+        <!-- <div id="health-fitness-tip"></div>     -->
         <div id="user-input-container">
           <textarea id="user-input" placeholder="Send a message (e.g. How should I start my fitness goal?)" oninput="autoExpand(this)"></textarea>
         </div>
@@ -361,9 +363,14 @@ $userDataJson = json_encode($userData);
 
       // Function to send a message to the chatbot and get a response
       async function sendMessage(prompt) {
-          const startTimestamp = Date.now(); // Record the start time
+          // Get a random health and fitness tip
+          const randomTip = getRandomHealthFitnessTip();
 
+          const startTimestamp = Date.now(); // Record the start time
           let countdownTimeInSeconds = null; // Variable to hold the countdown time
+
+          // Display the random tip during loading
+          displayRandomHealthFitnessTip();
 
           try {
               const currentDateTime = getCurrentDateTime(); // Get the current date and time
@@ -423,17 +430,41 @@ $userDataJson = json_encode($userData);
               // Update the countdown time
               countdownTimeInSeconds = responseTimeInSeconds;
 
+              // Hide the random tip and display the response time
+              hideHealthFitnessTip();
+              displayCountdown(responseTimeInSeconds);
+
               return chatbotResponse;
           } catch (error) {
               console.error("Error calling OpenAI API:", error);
               return null;
-          } finally {
-              // Display the response time in the countdown
-              if (countdownTimeInSeconds !== null) {
-                  displayCountdown(countdownTimeInSeconds);
-              }
           }
       }
+
+      // Function to display a random health and fitness tip
+      function displayRandomHealthFitnessTip() {
+          let tipContainer = document.getElementById("health-fitness-tip");
+
+          if (!tipContainer) {
+              // Create a new tip element if it doesn't exist
+              tipContainer = document.createElement("div");
+              tipContainer.id = "health-fitness-tip";
+              tipContainer.className = "chatbot-response tip";
+              document.getElementById("loading-message").appendChild(tipContainer);
+          }
+
+          // Get a random tip and set it as the text content
+          const randomTip = getRandomHealthFitnessTip();
+          tipContainer.textContent = randomTip;
+      }
+
+
+        // Function to hide the health and fitness tip
+        function hideHealthFitnessTip() {
+            const tipContainer = document.getElementById("health-fitness-tip");
+            tipContainer.textContent = "";
+        }
+
 
       // Function to update and display the countdown
       function displayCountdown(timeInSeconds) {
@@ -453,6 +484,67 @@ $userDataJson = json_encode($userData);
               }
           }, 1000);
       }
+
+      const healthFitnessTips = [
+    "Tip: Remember to stay hydrated by drinking plenty of water throughout the day.",
+    "Tip: Incorporate a mix of cardio and strength training exercises into your fitness routine.",
+    "Tip: A balanced diet with a variety of fruits and vegetables is essential for good health.",
+    "Tip: Get enough sleep to support your body's recovery and muscle growth.",
+    "Tip: Set achievable fitness goals to stay motivated and track your progress.",
+    "Tip: Stay consistent with your workout routine for better results.",
+    "Tip: Include protein in your diet to support muscle growth.",
+    "Tip: Take short breaks during desk work to stretch and move.",
+    "Tip: Aim for 30 minutes of daily physical activity.",
+    "Tip: Reduce sugar intake for a healthier lifestyle.",
+    "Tip: Incorporate yoga for flexibility and stress relief.",
+    "Tip: Prioritize sleep; it's essential for recovery.",
+    "Tip: Warm up before exercising to prevent injuries.",
+    "Tip: Practice portion control for weight management.",
+    "Tip: Stay hydrated for optimal performance.",
+    "Tip: Choose whole grains over refined carbs.",
+    "Tip: Engage in outdoor activities for fresh air.",
+    "Tip: Avoid excessive processed foods.",
+    "Tip: Switch to healthy cooking oils like olive or coconut oil.",
+    "Tip: Listen to your body; rest when needed.",
+    "Tip: Get a fitness buddy for motivation.",
+    "Tip: Set specific goals to stay on track.",
+    "Tip: Monitor your heart rate during cardio workouts.",
+    "Tip: Don't skip breakfast for sustained energy.",
+    "Tip: Stretch before and after workouts to improve flexibility.",
+    "Tip: Include nuts and seeds in your diet for healthy fats.",
+    "Tip: Try high-intensity interval training (HIIT) for efficient workouts.",
+    "Tip: Practice deep breathing exercises to reduce stress.",
+    "Tip: Vary your workouts to prevent boredom and plateaus.",
+    "Tip: Limit alcohol consumption for better health and fitness.",
+    "Tip: Consult a fitness professional for personalized guidance.",
+    "Tip: Enjoy a cheat meal occasionally to satisfy cravings.",
+    "Tip: Find a physical activity you love to make exercise enjoyable.",
+    "Tip: Use proper form and technique during exercises to prevent injuries.",
+    "Tip: Consider strength training for increased muscle mass and metabolism.",
+    "Tip: Choose lean sources of protein like chicken, fish, and tofu.",
+    "Tip: Keep a workout journal to track your progress.",
+    "Tip: Engage in stress-reducing activities like meditation and mindfulness.",
+    "Tip: Invest in comfortable workout shoes for support and safety.",
+    "Tip: Stay up-to-date with your health check-ups and screenings.",
+    "Tip: Plan your meals and snacks in advance for healthier eating.",
+    "Tip: Experiment with new healthy recipes to keep your meals exciting.",
+    "Tip: Avoid excessive late-night snacking for better sleep quality.",
+    "Tip: Use resistance bands for versatile and effective workouts.",
+    "Tip: Don't compare your fitness journey to others; focus on your progress.",
+    "Tip: Stay committed to your health and fitness goals for long-term success.",
+    "Tip: Join a fitness class or group to stay motivated and accountable.",
+    "Tip: Incorporate regular stretching routines to improve flexibility and prevent injuries.",
+    "Tip: Find a workout time that suits your schedule and energy levels.",
+    "Tip: Include a variety of colorful fruits and vegetables in your diet for a range of nutrients.",
+];
+
+        // Function to get a random tip
+        function getRandomHealthFitnessTip() {
+          const randomIndex = Math.floor(Math.random() * healthFitnessTips.length);
+          return healthFitnessTips[randomIndex];
+        }
+
+
 
         // Function to truncate a response at the last complete sentence or paragraph
         function truncateResponse(text, maxTokens) {
@@ -552,8 +644,8 @@ $userDataJson = json_encode($userData);
         }
     }
 
-    // Add event listener to the "Send" button
-    document.getElementById("send-button").addEventListener("click", async () => {
+      // Add an event listener to call sendMessage when the "Send" button is clicked
+      document.getElementById("send-button").addEventListener("click", async () => {
         const userInput = document.getElementById("user-input");
         const loadingMessage = document.getElementById("loading-message"); // Get the loading message element
 
@@ -563,21 +655,21 @@ $userDataJson = json_encode($userData);
         const userMessage = userInput.value.trim();
 
         if (userMessage !== "") {
-            appendMessage(userMessage, "user");
-            userInput.value = "";
+          appendMessage(userMessage, "user");
+          userInput.value = "";
 
-            const chatbotResponse = await sendMessage(userMessage);
+          const chatbotResponse = await sendMessage(userMessage);
 
-            if (chatbotResponse !== null) {
-                // Hide the loading message when a response is received
-                loadingMessage.style.display = "none";
-                appendMessage(chatbotResponse, "chatbot");
+          if (chatbotResponse !== null) {
+            // Hide the loading message when a response is received
+            loadingMessage.style.display = "none";
+            appendMessage(chatbotResponse, "chatbot");
 
-                // Save messages to the server
-                saveMessages(userMessage, chatbotResponse);
-            }
+            // Save messages to the server
+            saveMessages(userMessage, chatbotResponse);
+          }
         }
-    });
+      });
 
       </script>
 
@@ -612,6 +704,7 @@ $userDataJson = json_encode($userData);
                 <li><i class="bx bx-chevron-right"></i> <a href="index.html">HOME</a></li>
                 <li><i class="bx bx-chevron-right"></i> <a href="chatbot.html"><u>CHATBOT</u></a></li>
                 <li><i class="bx bx-chevron-right"></i> <a href="settings.html">SETTINGS</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="articles.html">ARTICLES</a></li>
                 <li><i class="bx bx-chevron-right"></i> <a href="faqs.html">FAQS</a></li>
                 <li><i class="bx bx-chevron-right"></i> <a href="contact.html">CONTACT</a></li>
               </ul>
