@@ -214,6 +214,24 @@ $userDataJson = json_encode($userData);
     color: #fff;
 }
 
+/* Style for the Next Tip button */
+#next-tip-button {
+  margin-left: 10px;
+    background-color: #1bbd36; /* Button background color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px; /* Adjust padding as needed */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#next-tip-button:hover {
+    background-color: #009e2b; /* Hover color for the button */
+}
+
+
 
     </style>
 
@@ -287,9 +305,9 @@ $userDataJson = json_encode($userData);
         </div>
         <div id="loading-message" class="loading">
           <div class="loader"></div>
-          <div id="countdown-time">Generating Response... <div id="health-fitness-tip"></div> </div>
+          <div id="countdown-time">Generating Response...<div id="health-fitness-tip"></div> </div>
+          <button id="next-tip-button" onclick="showNextTip()">Next Tip</button>
         </div>
-        <!-- <div id="health-fitness-tip"></div>     -->
         <div id="user-input-container">
           <textarea id="user-input" placeholder="Send a message (e.g. How should I start my fitness goal?)" oninput="autoExpand(this)"></textarea>
         </div>
@@ -536,6 +554,26 @@ $userDataJson = json_encode($userData);
     "Tip: Incorporate regular stretching routines to improve flexibility and prevent injuries.",
     "Tip: Find a workout time that suits your schedule and energy levels.",
     "Tip: Include a variety of colorful fruits and vegetables in your diet for a range of nutrients.",
+    "Tip: Practice mindful eating to savor and enjoy your meals.",
+    "Tip: Incorporate balance exercises to improve stability and prevent falls.",
+    "Tip: Stay active throughout the day, not just during structured workouts.",
+    "Tip: Experiment with different types of workouts to discover what you enjoy most.",
+    "Tip: Choose stairs over the elevator for a quick burst of physical activity.",
+    "Tip: Schedule active breaks during long periods of sitting.",
+    "Tip: Include fermented foods like yogurt for gut health.",
+    "Tip: Mix up your routine with recreational sports for added fun.",
+    "Tip: Reduce screen time before bedtime for better sleep quality.",
+    "Tip: Learn proper postural alignment for desk-bound activities.",
+    "Tip: Join a fitness challenge to add excitement to your routine.",
+    "Tip: Incorporate mindfulness practices into your warm-up or cooldown.",
+    "Tip: Prioritize flexibility training for overall joint health.",
+    "Tip: Create a workout playlist with your favorite energizing tunes.",
+    "Tip: Practice gratitude for your body's capabilities and progress.",
+    "Tip: Opt for whole, unprocessed snacks like fruit or raw nuts.",
+    "Tip: Use a fitness tracker to monitor your daily activity levels.",
+    "Tip: Explore outdoor activities like hiking, biking, or trail running.",
+    "Tip: Include laughter in your routine; it's a great stress reliever.",
+    "Tip: Gradually increase the intensity of your workouts for continued improvement.",
 ];
 
         // Function to get a random tip
@@ -672,6 +710,20 @@ $userDataJson = json_encode($userData);
       });
 
       </script>
+      <script>    // Function to display the next health and fitness tip
+        function showNextTip() {
+            const tipContainer = document.getElementById("health-fitness-tip");
+            const currentTip = tipContainer.textContent;
+    
+            // Get the index of the current tip in the array
+            const currentIndex = healthFitnessTips.indexOf(currentTip);
+    
+            // Calculate the index of the next tip, considering the array length
+            const nextIndex = (currentIndex + 1) % healthFitnessTips.length;
+    
+            // Display the next tip
+            tipContainer.textContent = healthFitnessTips[nextIndex];
+        }</script>
 
       
             
