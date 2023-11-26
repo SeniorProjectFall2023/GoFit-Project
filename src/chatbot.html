@@ -394,12 +394,12 @@ $userDataJson = json_encode($userData);
               const currentDateTime = getCurrentDateTime(); // Get the current date and time
               const promptWithLimit = `${prompt} . Here is my Weight (${userData.weight}), Age (${userData.dateofbirth}) (here is the current date and time to get my age correct: ${currentDateTime}), 
               Fitness Goal (${userData.meal_preference}), Name (${userData.name}), Activity Level (${userData.activity_level}), Height (${userData.height}), and Gender (${userData.gender}), 
-              use this information to generate better responses for me. 
+              use this information to generate better responses for me, also could you please remember the previous responses for me.
               Also, make sure to end off the response with a complete sentence please, do not cut off, 
               if you have to cut off just stop responding at the last period please, 
               and remember your role is to help users with health and fitness advice based off their information given to you,
-              if the user provides a question that isnt related to health and fitness questions do not answer the questions,
-              instead state that you can only answer health and fitness related questions`;
+              if the user provides a question that IS NOT RELATED TO HEALTH AND FITNESS QUESTIONS DO NOT ANSWER THE QUESTION, INSTEAD STATE THAT YOU CAN ONLY ANSWER 
+              HEALTH AND FITNESS RELATED QUESTIONS THAT THE USER PROVIDES`;
 
               const headers = {
                   'Content-Type': 'application/json',
